@@ -1,0 +1,24 @@
+import {FC} from 'react';
+import {Route, Routes} from 'react-router-dom';
+import {PATH} from '../../common/constants/path';
+import {Login} from '../../features/Login/Login';
+import {Registration} from '../../features/Registration/Registration';
+import {Profile} from '../../features/Profile/Profile';
+import {Test} from '../../features/Test/Test';
+import {PasswordRecovery} from '../../features/PasswordRecovery/PasswordRecovery';
+import {NewPassword} from "../../features/NewPassword/NewPassword";
+import {Error404} from "../../features/Error404/Error404";
+
+export const Pages: FC = () => {
+    return (
+        <Routes>
+            <Route path={PATH.LOGIN} element={<Login/>}/>
+            <Route path={PATH.REGISTRATION} element={<Registration/>}/>
+            <Route path={PATH.PROFILE} element={<Profile/>}/>
+            <Route path={PATH.TEST} element={<Test/>}/>
+            <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery/>}/>
+            <Route path={PATH.NEW_PASSWORD} element={<NewPassword/>}/>
+            <Route path={PATH.ERROR404} element={<Error404/>}/>
+        </Routes>
+    )
+}

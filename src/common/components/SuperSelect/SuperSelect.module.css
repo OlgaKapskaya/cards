@@ -1,0 +1,53 @@
+/*стрелка*/
+.selectWrapper::after {
+    content: "";
+    position: absolute;
+    top: 40%;
+    right: 10px;
+    transform: translateY(-50%);
+    display: block;
+    pointer-events: none;
+
+    /*стрелка*/
+    background: url("chevron-down.svg");
+    width: 20px;
+    height: 20px;
+}
+
+.selectWrapper {
+    position: relative;
+    width: max-content;
+
+}
+
+.select {
+    /*убираем стандартный стиль и стрелку*/
+    appearance: none;
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    /*!*    *!*/
+    width: 180px;
+    background: transparent;
+    border: 1px solid #C2C2C2;
+    border-radius: 2px;
+    outline: none;
+    padding: 10px 35px 10px 15px;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-style: normal;
+}
+
+/*only Internet Explorer*/
+.select::-ms-expand {
+    display: none;
+}
+
+.select:focus {
+    outline: none;
+    box-shadow: 0 0 0 1px black;
+}
+
+.options:hover {
+
+}
+
