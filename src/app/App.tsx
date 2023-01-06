@@ -1,12 +1,13 @@
-import React from 'react';
-import {Pages} from './Routes/Pages';
+import React from 'react'
+
+import { Pages } from '../common/components/Pages/Pages'
 
 const App = () => {
   return (
-    <div className='App'>
-      <Pages/>
+    <div className="App">
+      <Pages />
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

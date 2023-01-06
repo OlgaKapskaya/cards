@@ -1,9 +1,5 @@
-import {FC} from "react";
+import { FC } from 'react'
 
 export const Profile: FC = () => {
-    return (
-        <div>
-            PROFILE
-        </div>
-    )
+  return <div>PROFILE</div>
 }
