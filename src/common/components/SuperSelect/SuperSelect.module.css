@@ -1,39 +1,45 @@
 /*стрелка*/
 .selectWrapper::after {
+  pointer-events: none;
   content: '';
+
   position: absolute;
   top: 40%;
   right: 10px;
   transform: translateY(-50%);
+
   display: block;
-  pointer-events: none;
+
+  width: 20px;
+  height: 20px;
 
   /*стрелка*/
   background: url('chevron-down.svg');
-  width: 20px;
-  height: 20px;
 }
 
 .selectWrapper {
   position: relative;
+
   width: max-content;
 }
 
 .select {
-  /*убираем стандартный стиль и стрелку*/
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
+  cursor: pointer;
   /*!*    *!*/
   width: 180px;
+  padding: 10px 35px 10px 15px;
+
+  font-family: 'Montserrat', sans-serif;
+  font-style: normal;
+
   background: transparent;
   border: 1px solid #c2c2c2;
   border-radius: 2px;
   outline: none;
-  padding: 10px 35px 10px 15px;
-  cursor: pointer;
-  font-family: 'Montserrat', sans-serif;
-  font-style: normal;
+  /*убираем стандартный стиль и стрелку*/
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  appearance: none;
 }
 
 /*only Internet Explorer*/

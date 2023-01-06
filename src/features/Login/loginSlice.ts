@@ -13,7 +13,7 @@ export const loginSlice = createSlice({
   name: 'login',
   initialState: {} as LoginStateType,
   reducers: {},
-  extraReducers: (builder) => {
+  extraReducers: builder => {
     // builder.addCase(
     //     getLoginDataTC.fulfilled,
     //     (state, action) => {

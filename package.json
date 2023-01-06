@@ -29,9 +29,10 @@
     "eject": "react-scripts eject",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
-    "lint": "eslint . --fix",
+    "lint": "yarn eslint --fix --ext .js,.jsx,.ts,.tsx src",
     "format": "prettier . --write",
-    "fix-code": "yarn lint && yarn format"
+    "style-format": "stylelint yarn stylelint \"**/*.{css,scss}\" --fix",
+    "fix-code": "yarn lint && yarn format && style-format"
   },
   "eslintConfig": {
     "extends": [

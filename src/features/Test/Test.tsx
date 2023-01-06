@@ -1,13 +1,15 @@
 import { FC } from 'react'
+
 import SuperButton from '../../common/components/SuperButton/SuperButton'
-import SuperInputText from '../../common/components/SuperInputText/SuperInputText'
-import s from './Test.module.css'
 import SuperCheckbox from '../../common/components/SuperCheckbox/SuperCheckbox'
 import SuperEditableSpan from '../../common/components/SuperEditableSpan/SuperEditableSpan'
-import SuperRadio from '../../common/components/SuperRadio/SuperRadio'
-import SuperSelect from '../../common/components/SuperSelect/SuperSelect'
-import SuperRange from '../../common/components/SuperRange/SuperRange'
+import SuperInputText from '../../common/components/SuperInputText/SuperInputText'
 import SuperPagination from '../../common/components/SuperPagination/SuperPagination'
+import SuperRadio from '../../common/components/SuperRadio/SuperRadio'
+import SuperRange from '../../common/components/SuperRange/SuperRange'
+import SuperSelect from '../../common/components/SuperSelect/SuperSelect'
+
+import s from './Test.module.css'
 
 export const Test: FC = () => {
   const options = [
@@ -15,6 +17,7 @@ export const Test: FC = () => {
     { id: 2, value: 'test 2' },
     { id: 3, value: 'test 3' },
   ]
+
   return (
     <div>
       <div className={s.container}>

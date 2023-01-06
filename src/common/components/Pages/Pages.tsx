@@ -1,12 +1,14 @@
 import { FC } from 'react'
+
 import { Route, Routes } from 'react-router-dom'
-import { PATH } from '../../constants/path'
+
 import { Login } from '../../../features/Login/Login'
-import { Registration } from '../../../features/Registration/Registration'
-import { Profile } from '../../../features/Profile/Profile'
-import { Test } from '../../../features/Test/Test'
-import { PasswordRecovery } from '../../../features/PasswordRecovery/PasswordRecovery'
 import { NewPassword } from '../../../features/NewPassword/NewPassword'
+import { PasswordRecovery } from '../../../features/PasswordRecovery/PasswordRecovery'
+import { Profile } from '../../../features/Profile/Profile'
+import { Registration } from '../../../features/Registration/Registration'
+import { Test } from '../../../features/Test/Test'
+import { PATH } from '../../constants/path'
 import { Error404 } from '../Error404/Error404'
 
 export const Pages: FC = () => {

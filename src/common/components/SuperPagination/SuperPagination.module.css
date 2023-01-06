@@ -1,14 +1,15 @@
 .pagination {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
+  justify-content: flex-start;
 }
 
 .text1,
 .text2 {
+  margin: 0 10px;
+
   font-family: 'Montserrat', sans-serif;
   font-size: 14px;
-  margin: 0 10px;
 }
 .pagination select {
   width: 70px;

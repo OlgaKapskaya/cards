@@ -1,7 +1,8 @@
 import React from 'react'
+
 import arrowDown from './img/down.svg'
-import arrowUp from './img/up.svg'
 import arrows from './img/none.svg'
+import arrowUp from './img/up.svg'
 
 // добавить в проект иконки и импортировать
 const downIcon = arrowDown

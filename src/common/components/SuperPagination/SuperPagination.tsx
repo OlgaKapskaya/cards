@@ -1,7 +1,10 @@
 import React, { ChangeEvent, useEffect, useState } from 'react'
+
 import { Pagination } from '@mui/material'
-import s from './SuperPagination.module.css'
+
 import SuperSelect from '../SuperSelect/SuperSelect'
+
+import s from './SuperPagination.module.css'
 
 export type SuperPaginationPropsType = {
   id?: string

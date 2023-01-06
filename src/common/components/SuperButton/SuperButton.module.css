@@ -1,33 +1,37 @@
 .button {
   display: flex;
   flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  padding: 5px 24px;
   gap: 10px;
+  align-items: center;
+  justify-content: center;
+
+  width: max-content;
+  min-width: 137px;
+  height: 30px;
+  padding: 5px 24px;
+
   font-family: 'Montserrat', sans-serif;
-  font-style: normal;
-  font-weight: 600;
   font-size: 14px;
+  font-weight: 600;
+  font-style: normal;
   line-height: 20px;
   color: #ffffff;
-  min-width: 137px;
-  width: max-content;
-  height: 30px;
 
   border-radius: 30px;
 }
 
 .disabled {
-  background: #004d99;
-  opacity: 0.5;
   color: #002e5c;
+
+  opacity: 0.5;
+  background: #004d99;
 }
 
 .secondary {
+  color: #0066cc;
+
   background: #ffffff;
   border: 1px solid #004d99;
-  color: #0066cc;
 }
 
 .default {

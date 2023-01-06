@@ -1,4 +1,5 @@
 import React, { ChangeEvent, DetailedHTMLProps, InputHTMLAttributes, ReactNode } from 'react'
+
 import s from './SuperInputText.module.css'
 
 // тип пропсов обычного инпута

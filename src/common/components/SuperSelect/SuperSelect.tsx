@@ -1,4 +1,5 @@
 import { SelectHTMLAttributes, DetailedHTMLProps, ChangeEvent, FC } from 'react'
+
 import s from './SuperSelect.module.css'
 
 type DefaultSelectPropsType = DetailedHTMLProps<
@@ -19,7 +20,7 @@ const SuperSelect: FC<SuperSelectPropsType> = ({
   ...restProps
 }) => {
   const mappedOptions: any[] = options
-    ? options.map((o) => (
+    ? options.map(o => (
         <option id={'hw7-option-' + o.id} className={s.option} key={o.id} value={o.id}>
           {o.value}
         </option>

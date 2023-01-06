@@ -1,7 +1,9 @@
 import { FC } from 'react'
+
+import SuperButton from '../SuperButton/SuperButton'
+
 import error404 from './404.svg'
 import s from './Error404.module.css'
-import SuperButton from '../SuperButton/SuperButton'
 
 export const Error404: FC = () => {
   return (
