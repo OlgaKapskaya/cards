@@ -27,46 +27,6 @@
   line-height: 27px;
 }
 
-.avatarContainer {
-  position: relative;
-
-  display: flex;
-  align-items: flex-end;
-  justify-content: flex-end;
-
-  width: 96px;
-  height: 96px;
-}
-
-.avatarContainer > button {
-  position: absolute;
-
-  color: #ffffff;
-
-  background-color: #808080;
-  border: 1px solid #ffffff;
-}
-
-.avatarContainer > button:hover {
-  background-color: #808080;
-  border: 1px solid #ffffff;
-}
-
-.addPhotoBtn {
-  width: 32px;
-  height: 32px;
-}
-
-.email {
-  margin: 7px;
-
-  font-size: 14px;
-  font-weight: 400;
-  line-height: 24px;
-
-  opacity: 0.5;
-}
-
 .logoutBtn {
   margin: 36px 0;
 
