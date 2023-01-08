@@ -21,9 +21,11 @@ const SuperButton: React.FC<SuperButtonPropsType> = ({
   const finalClassName =
     s.button +
     ' ' +
+    // eslint-disable-next-line no-nested-ternary
     (disabled
       ? s.disabled
-      : xType === 'red'
+      : // eslint-disable-next-line no-nested-ternary
+      xType === 'red'
       ? s.red
       : xType === 'secondary'
       ? s.secondary
