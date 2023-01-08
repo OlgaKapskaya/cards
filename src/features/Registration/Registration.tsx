@@ -18,7 +18,7 @@ import { signUp } from './registrationThunk'
 type IFormInput = {
   email: string
   password: string
-  pass2: string
+  confirmPassword: string
 }
 
 const schema = yup
@@ -94,7 +94,7 @@ export const Registration = () => {
                       </IconButton>
                     </InputAdornment>
                   }
-                  {...register('pass2')}
+                  {...register('confirmPassword')}
                 />
               </FormControl>
 

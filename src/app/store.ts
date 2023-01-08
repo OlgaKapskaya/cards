@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit'
 
+import { signUpSlice } from '../features/Registration/signUpSlice'
+
 import { appSlice } from './appSlice'
 
 export const store = configureStore({
   reducer: {
     app: appSlice.reducer,
+    signUp: signUpSlice.reducer,
   },
 })
 

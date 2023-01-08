@@ -8,16 +8,14 @@ import { registrationAPI, signUpPayloadType } from './registration-api'
 export const signUp = createAsyncThunk(
   'reg/signUp',
   async (payload: signUpPayloadType, { dispatch }) => {
-    debugger
     dispatch(setAppStatus('loading'))
     if (payload.password !== payload.pass2) dispatch(setAppError('Passwords dont match'))
     try {
-      debugger
       const res = await registrationAPI.signUp(payload)
 
       dispatch(setAppStatus('succeeded'))
+      dispatch(setAppStatus('idle'))
     } catch (e) {
-      debugger
       const err = e as Error | AxiosError<{ error: string }>
 
       if (axios.isAxiosError(err)) {
