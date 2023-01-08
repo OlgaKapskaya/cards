@@ -1,11 +1,10 @@
-import { ChangeEvent, KeyboardEvent, FC, ReactNode } from 'react'
+import { ChangeEvent, KeyboardEvent, FC, ReactNode, MouseEvent } from 'react'
 
 import { Button, Input, InputAdornment, InputLabel, InputProps } from '@mui/material'
 
 import s from './CustomInputWithButton.module.css'
 
 export type CustomInputWithButtonPropsType = InputProps & {
-  // и + ещё пропсы которых нет в стандартном инпуте
   onChangeText?: (value: string) => void
   onEnter?: () => void
   error?: ReactNode
@@ -37,6 +36,9 @@ export const CustomInputWithButton: FC<CustomInputWithButtonPropsType> = ({
     onEnter && e.key === 'Enter' && onEnter()
   }
 
+  const onMouseDownHandler = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+  }
   const buttonStyle = {
     background: '#366eff',
     color: '#fff',
@@ -57,7 +59,12 @@ export const CustomInputWithButton: FC<CustomInputWithButtonPropsType> = ({
         {...restProps}
         endAdornment={
           <InputAdornment position="end">
-            <Button className={s.inputButton} sx={buttonStyle}>
+            <Button
+              className={s.inputButton}
+              sx={buttonStyle}
+              onClick={onEnter}
+              onMouseDown={onMouseDownHandler}
+            >
               {buttonName}
             </Button>
           </InputAdornment>

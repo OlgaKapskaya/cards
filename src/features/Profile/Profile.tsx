@@ -1,19 +1,22 @@
 import { FC, useEffect } from 'react'
 
+import { useNavigate } from 'react-router-dom'
+
 import logout from '../../assets/img/logout.svg'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
-import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
+import { PATH } from '../../common/constants/path'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import s from './Profile.module.css'
 import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar'
 import { ProfilePersonalInfo } from './ProfilePersonalInfo/ProfilePersonalInfo'
-import { changeUserNameTC } from './profileSlice'
+import { changeUserData } from './profileSlice'
 
 export const Profile: FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    dispatch(changeUserNameTC('new name'))
+    dispatch(changeUserData('name'))
   }, [])
 
   return (

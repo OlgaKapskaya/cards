@@ -1,7 +1,8 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState, FC } from 'react'
 
+import editIcon from '../../../assets/img/edit-2.svg'
+
 import { CustomInputWithButton } from './CustomInputWithButton/CustomInputWithButton'
-import editIcon from './edit-2.svg'
 import s from './SuperEditableSpan.module.css'
 
 // тип пропсов обычного инпута
@@ -26,6 +27,7 @@ type SuperEditableSpanType = Omit<DefaultInputPropsType, 'type'> & {
 const SuperEditableSpan: FC<SuperEditableSpanType> = ({
   autoFocus,
   onBlur,
+  onChangeText,
   onEnter,
   spanProps,
   inputLabel,
@@ -53,15 +55,9 @@ const SuperEditableSpan: FC<SuperEditableSpanType> = ({
   return (
     <>
       {editMode ? (
-        // <SuperInputText
-        //   autoFocus={autoFocus || true}
-        //   onBlur={onBlurCallback}
-        //   onEnter={onEnterCallback}
-        //   className={s.input}
-        //   {...restProps} // отдаём инпуту остальные пропсы если они есть (value например там внутри)
-        // />
         <CustomInputWithButton
           onBlur={onBlurCallback}
+          onChangeText={onChangeText}
           autoFocus={autoFocus || true}
           onEnter={onEnterCallback}
           value={restProps.value}

@@ -14,7 +14,7 @@ export type ProfileResponseType = {
 }
 
 export const profileAPI = {
-  changeUserData(name: string) {
-    return instance.put<ProfileResponseType>('/auth/me', { name })
+  changeUserData(token: string, name: string, avatar?: string) {
+    return instance.put<ProfileResponseType>('/auth/me', { token, name, avatar })
   },
 }
