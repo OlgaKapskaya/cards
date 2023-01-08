@@ -58,7 +58,10 @@ export const profileSlice = createSlice({
     setUserData: (state, action: PayloadAction<UserType>) => {
       state.profile = action.payload
     },
+    setUserProfile: (state, action: PayloadAction<UserType>) => {
+      state.profile = action.payload
+    },
   },
 })
-export const { setUserData } = profileSlice.actions
+export const { setUserData, setUserProfile } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
