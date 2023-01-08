@@ -1,12 +1,11 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { AxiosError } from 'axios'
+import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import axios, { AxiosError } from 'axios'
 
 import { setAppError, setAppStatus } from '../../app/appSlice'
-import { AppDispatch, AppRootStateType } from '../../app/store'
 
-import { profileAPI } from './profileAPI'
+import { ChangeUserDataPayload, profileAPI } from './profileAPI'
 
-export interface UserInfoType {
+export interface UserType {
   _id: string
   email: string
   rememberMe: boolean
@@ -23,48 +22,43 @@ export interface UserInfoType {
 }
 
 interface ProfileStateType {
-  profile: UserInfoType
+  profile: UserType
 }
 
-export const changeUserData = createAsyncThunk<
-  UserInfoType,
-  string,
-  {
-    dispatch: AppDispatch
-    state: AppRootStateType
-  }
->('profile/changeUserName', async (name: string, { dispatch, getState }) => {
-  const token = getState().profile.profile.token
+export const changeUserDataTC = createAsyncThunk(
+  'profile/changeUserName',
+  async (data: ChangeUserDataPayload, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      const response = await profileAPI.changeUserData(data)
 
-  dispatch(setAppStatus('loading'))
-  try {
-    const response = await profileAPI.changeUserData(token, name)
+      dispatch(setAppStatus('succeeded'))
+      dispatch(setUserData(response.data.updateUser))
+    } catch (e) {
+      const err = e as Error | AxiosError<{ error: string }>
 
-    dispatch(setAppStatus('succeeded'))
+      if (axios.isAxiosError(err)) {
+        const error = err.response?.data.error ? err.response.data.error : err.message
 
-    return response.data.updateUser
-  } catch (e) {
-    if (e instanceof Error) {
-      dispatch(setAppError(e.message))
+        dispatch(setAppError(error))
+      } else {
+        dispatch(setAppError(`native error ${err.message}`))
+      }
+      dispatch(setAppStatus('failed'))
     }
-    if (e instanceof AxiosError) {
-      dispatch(setAppError(e.response?.data.error))
-    }
-    dispatch(setAppStatus('failed'))
-
-    return {} as UserInfoType
   }
-})
+)
 
 export const profileSlice = createSlice({
   name: 'profile',
   initialState: {
     profile: {},
   } as ProfileStateType,
-  reducers: {},
-  extraReducers: builder => {
-    builder.addCase(changeUserData.fulfilled, (state, action) => {
+  reducers: {
+    setUserData: (state, action: PayloadAction<UserType>) => {
       state.profile = action.payload
-    })
+    },
   },
 })
+export const { setUserData } = profileSlice.actions
+export const profileReducer = profileSlice.reducer

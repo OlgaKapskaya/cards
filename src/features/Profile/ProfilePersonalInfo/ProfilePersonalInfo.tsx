@@ -1,11 +1,8 @@
 import { FC, useEffect, useState } from 'react'
 
-import { useNavigate } from 'react-router-dom'
-
 import SuperEditableSpan from '../../../common/components/SuperEditableSpan/SuperEditableSpan'
-import { PATH } from '../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
-import { changeUserData } from '../profileSlice'
+import { changeUserDataTC } from '../profileSlice'
 
 import s from './ProfilePersonalInfo.module.css'
 
@@ -14,10 +11,11 @@ export const ProfilePersonalInfo: FC = () => {
 
   const userName = useAppSelector(state => state.profile.profile.name)
   const userEmail = useAppSelector(state => state.profile.profile.email)
+
   const [newName, setNewName] = useState<string>(userName)
 
   useEffect(() => {
-    if (JSON.stringify(userName) === JSON.stringify(newName)) return
+    if (userName === newName) return
     setNewName(userName)
   }, [userName])
 
@@ -25,11 +23,8 @@ export const ProfilePersonalInfo: FC = () => {
     setNewName(text)
   }
   const onChangeUserName = () => {
-    dispatch(changeUserData(newName))
+    dispatch(changeUserDataTC({ name: newName }))
   }
-  // const navigate = useNavigate()
-  //
-  //   !isAutorized && navigate(PATH.LOGIN)
 
   return (
     <div className={s.profileInfoContainer}>
