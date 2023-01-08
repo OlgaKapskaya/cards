@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../../common/components/Error404/Error404'
 import { PATH } from '../../common/constants/path'
@@ -14,7 +14,7 @@ import { Test } from '../../features/Test/Test'
 export const Pages: FC = () => {
   return (
     <Routes>
-      <Route path="/" element={<Profile />} />
+      <Route path="/" element={<Navigate to={PATH.PROFILE} />} />
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTRATION} element={<Registration />} />
       <Route path={PATH.PROFILE} element={<Profile />} />

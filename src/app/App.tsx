@@ -2,11 +2,11 @@ import React, { useEffect } from 'react'
 
 import { CircularProgress, LinearProgress } from '@mui/material'
 
+import { Pages } from '../app/Pages/Pages'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 
 import { me, RequestStatusType } from './appSlice'
 import { NavBar } from './NavBar/NavBar'
-import { Pages } from './Pages/Pages'
 
 const App = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)

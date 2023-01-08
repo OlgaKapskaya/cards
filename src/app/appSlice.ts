@@ -18,7 +18,7 @@ const initialState = {
   isLoggedIn: false,
 } as AppStateType
 
-export const me = createAsyncThunk('app/me', async () => {
+export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
   await appAPI.me()
 })
 
@@ -35,6 +35,9 @@ export const appSlice = createSlice({
     setAppInitialized(state, action: PayloadAction<boolean>) {
       state.isInitialized = action.payload
     },
+    setAppLogged(state, action: PayloadAction<boolean>) {
+      state.isLoggedIn = action.payload
+    },
   },
   extraReducers: builder => {
     builder
@@ -47,8 +50,10 @@ export const appSlice = createSlice({
         state.isLoggedIn = true
         state.status = 'succeeded'
         state.isInitialized = true
+        state.isLoggedIn = true
       })
       .addCase(me.rejected, (state, action) => {
+        console.log(action)
         state.isLoggedIn = false
         state.status = 'failed'
         state.isInitialized = true
