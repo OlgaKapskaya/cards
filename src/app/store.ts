@@ -4,6 +4,8 @@ import { profileSlice } from '../features/Profile/profileSlice'
 
 import { appSlice } from './appSlice'
 
+import { appSlice } from './appSlice'
+
 export const store = configureStore({
   reducer: {
     app: appSlice.reducer,
