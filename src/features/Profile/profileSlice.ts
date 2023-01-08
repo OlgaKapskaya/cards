@@ -25,22 +25,25 @@ interface ProfileStateType {
   profile: UserInfoType
 }
 
-export const changeUserNameTC = createAsyncThunk('profile/changeUserName', async (name: string) => {
-  try {
-    const response = await profileAPI.changeUserData(name)
+export const changeUserNameTC = createAsyncThunk(
+  'profile/changeUserName',
+  async (name: string, { dispatch }) => {
+    try {
+      const response = await profileAPI.changeUserData(name)
 
-    return response.data.updateUser
-  } catch (error) {
-    if (error instanceof AxiosError) {
-      setAppError(error.response?.data.error)
-    }
-    if (error instanceof Error) {
-      setAppError(error.message)
-    }
+      return response.data.updateUser
+    } catch (e) {
+      if (e instanceof Error) {
+        dispatch(setAppError(e.message))
+      }
+      if (e instanceof AxiosError) {
+        dispatch(setAppError(e.response?.data.error))
+      }
 
-    return {} as UserInfoType
+      return {} as UserInfoType
+    }
   }
-})
+)
 
 export const profileSlice = createSlice({
   name: 'profile',
