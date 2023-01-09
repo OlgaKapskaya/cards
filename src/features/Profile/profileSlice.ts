@@ -21,7 +21,7 @@ export type UserType = {
   avatar: string | null
 }
 
-interface ProfileStateType {
+type ProfileStateType = {
   profile: UserType
 }
 
