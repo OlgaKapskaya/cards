@@ -3,11 +3,13 @@ import React, { useState } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
+  Alert,
   createTheme,
   CssBaseline,
   IconButton,
   InputAdornment,
   InputLabel,
+  Snackbar,
   ThemeProvider,
 } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -21,10 +23,11 @@ import { NavLink } from 'react-router-dom'
 import * as yup from 'yup'
 
 import { PATH } from '../../common/constants/path'
-import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import s from './Registration.module.css'
 import { signUp } from './registrationThunk'
+import { signUpStatusCreator } from './signUpSlice'
 
 type IFormInput = {
   email: string
@@ -75,11 +78,17 @@ export const Registration = () => {
   } = useForm<IFormInput>({ resolver: yupResolver(schema), mode: 'onTouched' })
   const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
   const dispatch = useAppDispatch()
-
+  const signUpStatus = useAppSelector(state => state.signUp.isRegistered)
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+  }
+  const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    dispatch(signUpStatusCreator(false))
   }
 
   return (
@@ -100,7 +109,7 @@ export const Registration = () => {
         >
           <Paper elevation={3}>
             <div className={s.paper_container}>
-              <div className={s.title}>Sign in</div>
+              <div className={s.title}>Sign Up</div>
               <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
                 <TextField
                   className={s.email}
@@ -184,6 +193,27 @@ export const Registration = () => {
             </div>
           </Paper>
         </Box>
+        {signUpStatus && (
+          <Snackbar open={signUpStatus} autoHideDuration={6000} onClose={handleClose}>
+            <Alert
+              onClose={handleClose}
+              severity="success"
+              sx={{
+                width: '100%',
+                backgroundColor: '#2e7d32',
+                color: 'white',
+                '& .MuiAlert-icon': {
+                  color: 'white',
+                  marginTop: '18px',
+                  marginRight: '12px',
+                  padding: '3px 0',
+                },
+              }}
+            >
+              {<p>You are successfully registered</p>}
+            </Alert>
+          </Snackbar>
+        )}
       </ThemeProvider>
     </div>
   )

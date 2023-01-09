@@ -12,5 +12,11 @@ const initialState: registrationState = {
 export const signUpSlice = createSlice({
   name: 'signUp',
   initialState,
-  reducers: {},
+  reducers: {
+    signUpStatusCreator(state, action: PayloadAction<boolean>) {
+      state.isRegistered = action.payload
+    },
+  },
 })
+
+export const { signUpStatusCreator } = signUpSlice.actions

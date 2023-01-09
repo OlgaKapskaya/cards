@@ -1,32 +1,23 @@
 import { createAsyncThunk } from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
 
 import { setAppError, setAppStatus } from '../../app/appSlice'
+import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
 import { registrationAPI, signUpPayloadType } from './registration-api'
+import { signUpStatusCreator } from './signUpSlice'
 
 export const signUp = createAsyncThunk(
   'reg/signUp',
   async (payload: signUpPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+
     if (payload.password !== payload.pass2) dispatch(setAppError('Passwords dont match'))
     try {
-      const res = await registrationAPI.signUp(payload)
-
-      dispatch(setAppStatus('succeeded'))
+      await registrationAPI.signUp(payload)
+      dispatch(signUpStatusCreator(true))
       dispatch(setAppStatus('idle'))
     } catch (e) {
-      const err = e as Error | AxiosError<{ error: string }>
-
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message
-
-        dispatch(setAppError(error))
-        dispatch(setAppStatus('idle'))
-      } else {
-        dispatch(setAppError(`Native error ${err.message}`))
-        dispatch(setAppStatus('idle'))
-      }
+      errorNetworkUtil(dispatch, e)
     }
   }
 )
