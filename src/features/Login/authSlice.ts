@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
-import { setUserData } from '../Profile/profileSlice'
+import { setUserData, UserType } from '../Profile/profileSlice'
 
 import { authAPI, LoginRequestType } from './authAPI'
 
@@ -25,6 +25,19 @@ export const login = createAsyncThunk(
     }
   }
 )
+
+export const logout = createAsyncThunk('login/logout', async (_, { dispatch }) => {
+  dispatch(setAppStatus('loading'))
+  try {
+    await authAPI.logout()
+
+    dispatch(setLoggedIn(false))
+    dispatch(setUserData({} as UserType))
+    dispatch(setAppStatus('succeeded'))
+  } catch (e: any) {
+    errorNetworkUtil(dispatch, e)
+  }
+})
 
 export const authSlice = createSlice({
   name: 'login',
