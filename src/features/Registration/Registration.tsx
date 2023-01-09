@@ -120,7 +120,6 @@ export const Registration = () => {
                   {...register('email', { required: 'Email is required!' })}
                   error={!!errors.email}
                   helperText={errors.email?.message}
-                  required
                 />
                 <FormControl
                   className={s.password}
