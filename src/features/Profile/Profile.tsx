@@ -17,7 +17,7 @@ export const Profile: FC = () => {
 
   return (
     <div className={s.mainContainer}>
-      {/*!isLoggedIn && <Navigate to={PATH.LOGIN} />*/}
+      {!isLoggedIn && <Navigate to={PATH.LOGIN} />}
       <NavLink to={''} className={s.backLink}>
         <KeyboardBackspace />
         Back to Packs List

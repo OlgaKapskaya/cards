@@ -1,3 +1,5 @@
+import { AxiosResponse } from 'axios'
+
 import { instance } from '../../common/constants/instance'
 
 import { UserType } from './profileSlice'
@@ -14,6 +16,6 @@ export type ChangeUserDataPayload = {
 
 export const profileAPI = {
   changeUserData(payload: ChangeUserDataPayload) {
-    return instance.put<ProfileResponseType>('/auth/me', payload)
+    return instance.put<AxiosResponse<ProfileResponseType>>('/auth/me', payload)
   },
 }

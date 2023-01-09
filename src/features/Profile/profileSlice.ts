@@ -32,9 +32,9 @@ export const changeUserDataTC = createAsyncThunk(
     try {
       const response = await profileAPI.changeUserData(data)
 
+      dispatch(setUserData(response.data.data.updateUser))
       dispatch(setAppStatus('succeeded'))
-      dispatch(setUserData(response.data.updateUser))
-    } catch (e) {
+    } catch (e: any) {
       const err = e as Error | AxiosError<{ error: string }>
 
       if (axios.isAxiosError(err)) {
