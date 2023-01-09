@@ -1,5 +1,6 @@
 import { FC, useState, MouseEvent } from 'react'
 
+import { yupResolver } from '@hookform/resolvers/yup'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
@@ -14,7 +15,7 @@ import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
-// import * as yup from 'yup'
+import * as yup from 'yup'
 
 import s from './Login.module.css'
 
@@ -44,12 +45,12 @@ const theme = createTheme({
   },
 })
 
-// const schema = yup
-//   .object({
-//     email: yup.string().email().required(),
-//     password: yup.string().required(),
-//   })
-//   .required()
+const schema = yup
+  .object({
+    email: yup.string().email().required(),
+    password: yup.string().required(),
+  })
+  .required()
 
 export const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false)
@@ -60,10 +61,17 @@ export const Login: FC = () => {
 
   const {
     register,
+    // reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>()
+  } = useForm<Inputs>({
+    mode: 'onTouched',
+    resolver: yupResolver(schema),
+  })
   const onSubmit = (data: any) => {
+    // не зачищает check
+    // после зачистки не уходит фокус с password
+    // reset()
     alert(JSON.stringify(data))
   }
 
@@ -95,9 +103,8 @@ export const Login: FC = () => {
                   variant="standard"
                   {...register('email', { required: true, maxLength: 10 })}
                   error={!!errors.email}
-                  helperText={'ERROR'}
+                  helperText={errors.email?.message}
                 />
-                <span>span: {errors.email?.message}</span>
                 <FormControl
                   className={s.password}
                   sx={{ m: 1, width: '347px' }}
@@ -106,8 +113,9 @@ export const Login: FC = () => {
                   <InputLabel htmlFor="password">Password</InputLabel>
                   <Input
                     id="password"
-                    {...register('password', { required: true, maxLength: 80 })}
                     type={showPassword ? 'text' : 'password'}
+                    {...register('password', { required: true, maxLength: 80 })}
+                    error={!!errors.password}
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
@@ -120,6 +128,7 @@ export const Login: FC = () => {
                       </InputAdornment>
                     }
                   />
+                  {errors.password && <span className={s.error}>{errors.password?.message}</span>}
                 </FormControl>
                 <div className={s.checkbox}>
                   <Checkbox id="check" {...register('check')} />
