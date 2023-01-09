@@ -154,9 +154,9 @@ export const Login: FC = () => {
                 </Button>
               </form>
 
-              <div className={s.already}>Already have an account?</div>
+              <div className={s.already}>{`Don't have an account yet?`}</div>
               <NavLink className={s.singUp} to={PATH.REGISTRATION}>
-                Sing Up
+                Create one
               </NavLink>
             </div>
           </Paper>
