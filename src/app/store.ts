@@ -1,15 +1,19 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { signUpSlice } from '../features/Registration/signUpSlice'
+import { profileReducer, profileSlice, signUpSlice } from '../features/Profile/profileSlice'
 
 import { appSlice } from './appSlice'
 
 export const store = configureStore({
   reducer: {
     app: appSlice.reducer,
+    profile: profileReducer,
     signUp: signUpSlice.reducer,
   },
 })
 
 export type AppRootStateType = ReturnType<typeof store.getState>
 export type AppDispatch = typeof store.dispatch
+
+//@ts-ignore
+window.state = store
