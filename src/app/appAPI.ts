@@ -1,20 +1,10 @@
-import { instance } from '../common/constants/instance'
+import { AxiosResponse } from 'axios'
 
-export type MeResponseType = {
-  _id: string
-  email: string
-  name: string
-  avatar?: string
-  publicCardPacksCount: number
-  created: Date
-  updated: Date
-  isAdmin: boolean
-  verified: boolean
-  rememberMe: boolean
-}
+import { instance } from '../common/constants/instance'
+import { UserType } from '../features/Profile/profileSlice'
 
 export const appAPI = {
   me() {
-    return instance.post<MeResponseType>('auth/me', {})
+    return instance.post<AxiosResponse<UserType>>('auth/me', {})
   },
 }

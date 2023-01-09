@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import axios, { AxiosError } from 'axios'
 
-import { setAppError, setAppStatus } from '../../app/appSlice'
+import { setAppStatus } from '../../app/appSlice'
+import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
 import { ChangeUserDataPayload, profileAPI } from './profileAPI'
 
@@ -35,16 +35,7 @@ export const changeUserDataTC = createAsyncThunk(
       dispatch(setUserData(response.data.data.updateUser))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
-      const err = e as Error | AxiosError<{ error: string }>
-
-      if (axios.isAxiosError(err)) {
-        const error = err.response?.data ? err.response.data.error : err.message
-
-        dispatch(setAppError(error))
-      } else {
-        dispatch(setAppError(`native error ${err.message}`))
-      }
-      dispatch(setAppStatus('failed'))
+      errorNetworkUtil(dispatch, e)
     }
   }
 )

@@ -1,5 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
+import { errorNetworkUtil } from '../common/utils/errorNetworkUtil'
+import { setUserData } from '../features/Profile/profileSlice'
+
 import { appAPI } from './appAPI'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
@@ -19,14 +22,26 @@ const initialState = {
 } as AppStateType
 
 export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
-  await appAPI.me()
+  dispatch(setAppStatus('loading'))
+  try {
+    const response = await appAPI.me()
+
+    dispatch(setAppLogged(true))
+    dispatch(setUserData(response.data.data))
+    dispatch(setAppStatus('succeeded'))
+  } catch (e: any) {
+    dispatch(setAppLogged(false))
+    errorNetworkUtil(dispatch, e)
+  } finally {
+    dispatch(setAppInitialized(true))
+  }
 })
 
 export const appSlice = createSlice({
   name: 'app',
   initialState: initialState,
   reducers: {
-    setAppError(state, action: PayloadAction<string>) {
+    setAppError(state, action: PayloadAction<string | null>) {
       state.error = action.payload
     },
     setAppStatus(state, action: PayloadAction<RequestStatusType>) {
@@ -39,26 +54,6 @@ export const appSlice = createSlice({
       state.isLoggedIn = action.payload
     },
   },
-  extraReducers: builder => {
-    builder
-
-      .addCase(me.pending, state => {
-        state.status = 'loading'
-        state.error = null
-      })
-      .addCase(me.fulfilled, state => {
-        state.isLoggedIn = true
-        state.status = 'succeeded'
-        state.isInitialized = true
-        state.isLoggedIn = true
-      })
-      .addCase(me.rejected, (state, action) => {
-        console.log(action)
-        state.isLoggedIn = false
-        state.status = 'failed'
-        state.isInitialized = true
-        state.error = action.error.message ? action.error.message : 'Some error occurred'
-      })
-  },
 })
-export const { setAppError, setAppStatus, setAppInitialized } = appSlice.actions
+export const { setAppError, setAppStatus, setAppInitialized, setAppLogged } = appSlice.actions
+export const appReducer = appSlice.reducer

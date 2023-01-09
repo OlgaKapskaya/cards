@@ -15,9 +15,12 @@ import { ProfilePersonalInfo } from './ProfilePersonalInfo/ProfilePersonalInfo'
 export const Profile: FC = () => {
   const isLoggedIn = useAppSelector(state => state.app.isLoggedIn)
 
+  if (!isLoggedIn) {
+    return <Navigate to={PATH.LOGIN} />
+  }
+
   return (
     <div className={s.mainContainer}>
-      {!isLoggedIn && <Navigate to={PATH.LOGIN} />}
       <ProfileBackLink />
       <div className={s.profileContainer}>
         <span className={s.title}>Personal Information</span>

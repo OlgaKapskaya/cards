@@ -2,11 +2,13 @@ import React, { useEffect } from 'react'
 
 import { CircularProgress, LinearProgress } from '@mui/material'
 
-import { Pages } from '../app/Pages/Pages'
+import { Loader } from '../common/components/Loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 
 import { me, RequestStatusType } from './appSlice'
-import { NavBar } from './NavBar/NavBar'
+import { ErrorSnackbar } from './ErrorSnackbar/ErrorSnackbar'
+import { Header } from './Header/Header'
+import { Pages } from './Pages/Pages'
 
 const App = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
@@ -16,19 +18,17 @@ const App = () => {
   useEffect(() => {
     dispatch(me())
   }, [dispatch])
+
   if (!isInitialized) {
-    return (
-      <div style={{ position: 'fixed', top: '30%', textAlign: 'center', width: '100%' }}>
-        <CircularProgress />
-      </div>
-    )
+    return <Loader />
   }
 
   return (
     <div className="App">
-      <NavBar />
+      <Header />
       {status === 'loading' && <LinearProgress />}
       <Pages />
+      {status === 'failed' && <ErrorSnackbar />}
     </div>
   )
 }
