@@ -28,23 +28,20 @@
 }
 
 .forgot {
-    align-self: flex-end;
-
     margin-right: 10px;
 
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-
+    text-align: right;
 }
 
 .btn {
     width: 100%;
-    margin-top: 60px;
 
+    text-transform: none;
 
-    border-radius: 30px;
-    box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+    /*box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);*/
 }
 
 .already {

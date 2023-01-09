@@ -13,8 +13,16 @@ import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
+import { useForm } from 'react-hook-form'
+// import * as yup from 'yup'
 
 import s from './Login.module.css'
+
+type Inputs = {
+  email: string
+  password: string
+  check: boolean
+}
 
 const theme = createTheme({
   typography: {
@@ -36,11 +44,27 @@ const theme = createTheme({
   },
 })
 
+// const schema = yup
+//   .object({
+//     email: yup.string().email().required(),
+//     password: yup.string().required(),
+//   })
+//   .required()
+
 export const Login: FC = () => {
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
+  }
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<Inputs>()
+  const onSubmit = (data: any) => {
+    alert(JSON.stringify(data))
   }
 
   return (
@@ -62,40 +86,56 @@ export const Login: FC = () => {
           <Paper elevation={3}>
             <div className={s.paper_container}>
               <div className={s.title}>Sign in</div>
-              <TextField
-                className={s.email}
-                sx={{ m: 1, width: '347px' }}
-                id="email"
-                label="Email"
-                variant="standard"
-              />
-              <FormControl className={s.password} sx={{ m: 1, width: '347px' }} variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                <Input
-                  id="standard-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <TextField
+                  className={s.email}
+                  sx={{ m: 1, width: '347px' }}
+                  id="email"
+                  label="Email"
+                  variant="standard"
+                  {...register('email', { required: true, maxLength: 10 })}
+                  error={!!errors.email}
+                  helperText={'ERROR'}
                 />
-              </FormControl>
-              <div className={s.checkbox}>
-                <Checkbox defaultChecked />
-                <span>Remember me</span>
-              </div>
+                <span>span: {errors.email?.message}</span>
+                <FormControl
+                  className={s.password}
+                  sx={{ m: 1, width: '347px' }}
+                  variant="standard"
+                >
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    id="password"
+                    {...register('password', { required: true, maxLength: 80 })}
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                </FormControl>
+                <div className={s.checkbox}>
+                  <Checkbox id="check" {...register('check')} />
+                  <span>Remember me</span>
+                </div>
+                <div className={s.forgot}>Forgot Password?</div>
+                <Button
+                  type="submit"
+                  className={s.btn}
+                  sx={{ borderRadius: '30px', mt: '60px' }}
+                  variant="contained"
+                >
+                  Sign In
+                </Button>
+              </form>
 
-              <div className={s.forgot}>Forgot Password?</div>
-              <Button className={s.btn} variant="contained">
-                Sign In
-              </Button>
               <div className={s.already}>Already have an account?</div>
               <a href="#?">Sing Up</a>
             </div>
