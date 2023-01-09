@@ -19,7 +19,7 @@ import Input from '@mui/material/Input'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 
 import { PATH } from '../../common/constants/path'
@@ -89,6 +89,15 @@ export const Registration = () => {
       return
     }
     dispatch(signUpStatusCreator(false))
+  }
+
+  const navigate = useNavigate()
+
+  if (signUpStatus) {
+    setTimeout(() => {
+      navigate('/login')
+      dispatch(signUpStatusCreator(false))
+    }, 1500)
   }
 
   return (
