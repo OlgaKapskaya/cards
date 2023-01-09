@@ -5,7 +5,7 @@ import { setAppError, setAppStatus } from '../../app/appSlice'
 
 import { ChangeUserDataPayload, profileAPI } from './profileAPI'
 
-export interface UserType {
+export type UserType = {
   _id: string
   email: string
   rememberMe: boolean
@@ -38,7 +38,7 @@ export const changeUserDataTC = createAsyncThunk(
       const err = e as Error | AxiosError<{ error: string }>
 
       if (axios.isAxiosError(err)) {
-        const error = err.response?.data.error ? err.response.data.error : err.message
+        const error = err.response?.data ? err.response.data.error : err.message
 
         dispatch(setAppError(error))
       } else {
@@ -58,10 +58,7 @@ export const profileSlice = createSlice({
     setUserData: (state, action: PayloadAction<UserType>) => {
       state.profile = action.payload
     },
-    setUserProfile: (state, action: PayloadAction<UserType>) => {
-      state.profile = action.payload
-    },
   },
 })
-export const { setUserData, setUserProfile } = profileSlice.actions
+export const { setUserData } = profileSlice.actions
 export const profileReducer = profileSlice.reducer
