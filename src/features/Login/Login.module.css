@@ -19,6 +19,14 @@
     line-height: 32px;
 }
 
+.form {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    margin-top: 10px;
+}
+
 .checkbox {
     align-self: flex-start;
 
@@ -28,20 +36,22 @@
 }
 
 .forgot {
+    align-self: flex-end;
+
+    margin-top: 20px;
     margin-right: 10px;
 
     font-size: 14px;
     font-weight: 500;
     line-height: 17px;
-    text-align: right;
+    color: #000;
+    text-decoration: none
 }
 
 .btn {
     width: 100%;
 
     text-transform: none;
-
-    /*box-shadow: 0 4px 18px rgba(54, 110, 255, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);*/
 }
 
 .already {
@@ -52,7 +62,7 @@
     opacity: 0.5;
 }
 
-a {
+.singUp {
     margin-bottom: 40px;
 
     font-weight: 600;

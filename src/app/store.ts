@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
-import { profileReducer, profileSlice } from '../features/Profile/profileSlice'
+import { authSlice } from '../features/Login/authSlice'
+import { profileReducer } from '../features/Profile/profileSlice'
 
 import { appSlice } from './appSlice'
 
@@ -8,6 +9,7 @@ export const store = configureStore({
   reducer: {
     app: appSlice.reducer,
     profile: profileReducer,
+    auth: authSlice.reducer,
   },
 })
 

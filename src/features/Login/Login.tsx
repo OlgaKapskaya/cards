@@ -1,4 +1,4 @@
-import { FC, useState, MouseEvent } from 'react'
+import { FC, useState, MouseEvent, useEffect } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Visibility from '@mui/icons-material/Visibility'
@@ -15,15 +15,15 @@ import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
+import { NavLink, useNavigate } from 'react-router-dom'
 import * as yup from 'yup'
 
-import s from './Login.module.css'
+import { PATH } from '../../common/constants/path'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
-type Inputs = {
-  email: string
-  password: string
-  check: boolean
-}
+import { LoginRequestType } from './authAPI'
+import { login } from './authSlice'
+import s from './Login.module.css'
 
 const theme = createTheme({
   typography: {
@@ -48,11 +48,14 @@ const theme = createTheme({
 const schema = yup
   .object({
     email: yup.string().email().required(),
-    password: yup.string().required(),
+    password: yup.string().min(8).required(),
   })
   .required()
 
 export const Login: FC = () => {
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+  const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
@@ -64,7 +67,7 @@ export const Login: FC = () => {
     // reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<Inputs>({
+  } = useForm<LoginRequestType>({
     mode: 'onTouched',
     resolver: yupResolver(schema),
   })
@@ -72,11 +75,17 @@ export const Login: FC = () => {
     // не зачищает check
     // после зачистки не уходит фокус с password
     // reset()
-    alert(JSON.stringify(data))
+    console.log('onSubmit: ', data)
+    dispatch(login(data))
   }
+
+  useEffect(() => {
+    isLoggedIn && navigate(PATH.PROFILE)
+  }, [isLoggedIn])
 
   return (
     <div>
+      <div>{isLoggedIn ? 'login' : 'logut'}</div>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box
@@ -94,7 +103,7 @@ export const Login: FC = () => {
           <Paper elevation={3}>
             <div className={s.paper_container}>
               <div className={s.title}>Sign in</div>
-              <form onSubmit={handleSubmit(onSubmit)}>
+              <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
                 <TextField
                   className={s.email}
                   sx={{ m: 1, width: '347px' }}
@@ -131,10 +140,12 @@ export const Login: FC = () => {
                   {errors.password && <span className={s.error}>{errors.password?.message}</span>}
                 </FormControl>
                 <div className={s.checkbox}>
-                  <Checkbox id="check" {...register('check')} />
+                  <Checkbox id="rememberMe" {...register('rememberMe')} />
                   <span>Remember me</span>
                 </div>
-                <div className={s.forgot}>Forgot Password?</div>
+                <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
+                  Forgot Password?
+                </NavLink>
                 <Button
                   type="submit"
                   className={s.btn}
@@ -146,7 +157,9 @@ export const Login: FC = () => {
               </form>
 
               <div className={s.already}>Already have an account?</div>
-              <a href="#?">Sing Up</a>
+              <NavLink className={s.singUp} to={PATH.REGISTRATION}>
+                Sing Up
+              </NavLink>
             </div>
           </Paper>
         </Box>
