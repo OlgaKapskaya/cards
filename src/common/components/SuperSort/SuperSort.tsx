@@ -18,6 +18,7 @@ export type SuperSortPropsType = {
 
 export const pureChange = (sort: string, down: string, up: string) => {
   // пишет студент
+  // eslint-disable-next-line no-nested-ternary
   return sort === up ? '' : sort === down ? up : down
 }
 
