@@ -11,6 +11,7 @@ export const store = configureStore({
     app: appReducer,
     profile: profileReducer,
     auth: authSlice.reducer,
+    signUp: signUpSlice.reducer,
   },
 })
 
