@@ -22,8 +22,10 @@ export const signUp = createAsyncThunk(
         const error = err.response?.data ? err.response.data.error : err.message
 
         dispatch(setAppError(error))
+        dispatch(setAppStatus('idle'))
       } else {
         dispatch(setAppError(`Native error ${err.message}`))
+        dispatch(setAppStatus('idle'))
       }
     }
   }

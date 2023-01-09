@@ -2,15 +2,25 @@ import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { IconButton, InputAdornment, InputLabel } from '@mui/material'
+import {
+  createTheme,
+  CssBaseline,
+  IconButton,
+  InputAdornment,
+  InputLabel,
+  ThemeProvider,
+} from '@mui/material'
+import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
-import FormGroup from '@mui/material/FormGroup'
 import Input from '@mui/material/Input'
+import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { NavLink } from 'react-router-dom'
 import * as yup from 'yup'
 
+import { PATH } from '../../common/constants/path'
 import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
 
 import s from './Registration.module.css'
@@ -21,6 +31,26 @@ type IFormInput = {
   password: string
   confirmPassword: string
 }
+
+const theme = createTheme({
+  typography: {
+    fontFamily: 'Montserrat',
+  },
+  components: {
+    MuiCssBaseline: {
+      styleOverrides: `
+        @font-face {
+          font-family: 'Montserrat';
+          font-style: normal;
+          font-display: swap;
+          font-weight: 500;
+          src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
+          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
+        }
+      `,
+    },
+  },
+})
 
 const schema = yup.object({
   email: yup.string().email(),
@@ -53,71 +83,175 @@ export const Registration = () => {
   }
 
   return (
-    <div className={s.container}>
-      <div className={s.formBlock}>
-        <h2 className={s.header}>Sign Up</h2>
-        <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-          <FormControl sx={{ padding: 4 }}>
-            <FormGroup>
-              <TextField
-                required
-                id="standard-required"
-                label="Email"
-                variant="standard"
-                {...register('email')}
-              />
-              {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
-              <FormControl variant="standard">
-                <InputLabel htmlFor="standard-adornment-password-required">Password</InputLabel>
-                <Input
-                  id="standard-adornment-password-required"
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  {...register('password', { required: 'Password is required!' })}
+    <div>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <Box
+          sx={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            '& > :not(style)': {
+              m: 1,
+              width: 413,
+              height: 552,
+              margin: '50px auto',
+            },
+          }}
+        >
+          <Paper elevation={3}>
+            <div className={s.paper_container}>
+              <div className={s.title}>Sign in</div>
+              <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+                <TextField
+                  className={s.email}
+                  sx={{ m: 1, width: '347px' }}
+                  id="email"
+                  label="Email"
+                  variant="standard"
+                  {...register('email', { required: 'Email is required!' })}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                  required
                 />
-              </FormControl>
-              {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
-              <FormControl variant="standard">
-                <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
-                <Input
-                  id="standard-adornment-password"
-                  type={showPassword ? 'text' : 'password'}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                  {...register('confirmPassword', {
-                    required: 'Please confirm password!',
-                  })}
-                />
-              </FormControl>
-              {errors.confirmPassword && (
-                <p style={{ color: 'red' }}>{errors.confirmPassword.message}</p>
-              )}
-              <Button type={'submit'} variant={'contained'} color={'primary'}>
-                Sign Up
-              </Button>
-            </FormGroup>
-          </FormControl>
-        </form>
-      </div>
+                <FormControl
+                  className={s.password}
+                  sx={{ m: 1, width: '347px' }}
+                  variant="standard"
+                >
+                  <InputLabel htmlFor="password">Password</InputLabel>
+                  <Input
+                    id="password"
+                    type={showPassword ? 'text' : 'password'}
+                    {...register('password', { required: 'Password is required!' })}
+                    error={!!errors.password}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                  />
+                  {errors.password && <span className={s.error}>{errors.password?.message}</span>}
+                </FormControl>
+                <FormControl
+                  variant="standard"
+                  className={s.password}
+                  sx={{ m: 1, width: '347px' }}
+                >
+                  <InputLabel htmlFor="confirm-password">Confirm Password</InputLabel>
+                  <Input
+                    id="confirm-password"
+                    type={showPassword ? 'text' : 'password'}
+                    endAdornment={
+                      <InputAdornment position="end">
+                        <IconButton
+                          aria-label="toggle password visibility"
+                          onClick={handleClickShowPassword}
+                          onMouseDown={handleMouseDownPassword}
+                        >
+                          {showPassword ? <VisibilityOff /> : <Visibility />}
+                        </IconButton>
+                      </InputAdornment>
+                    }
+                    {...register('confirmPassword', {
+                      required: 'Please confirm password!',
+                    })}
+                  />
+                </FormControl>
+                {errors.confirmPassword && (
+                  <p style={{ color: 'red' }}>{errors.confirmPassword.message}</p>
+                )}
+
+                <Button
+                  type="submit"
+                  className={s.btn}
+                  sx={{ borderRadius: '30px', mt: '60px' }}
+                  variant="contained"
+                >
+                  Sign Up
+                </Button>
+              </form>
+
+              <div className={s.already}>Already have an account?</div>
+              <NavLink className={s.signIn} to={PATH.LOGIN}>
+                Sign In
+              </NavLink>
+            </div>
+          </Paper>
+        </Box>
+      </ThemeProvider>
     </div>
   )
 }
+
+// <div className={s.container}>
+//   <div className={s.formBlock}>
+//     <h2 className={s.header}>Sign Up</h2>
+//     <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+//       {/*Email field*/}
+//       <TextField
+//           required
+//           id="standard-required"
+//           label="Email"
+//           variant="standard"
+//           {...register('email')}
+//       />
+//       {errors.email && <p style={{ color: 'red' }}>{errors.email.message}</p>}
+//       {/*Password field*/}
+//       <FormControl variant="standard">
+//         <InputLabel htmlFor="standard-adornment-password-required">Password</InputLabel>
+//         <Input
+//             id="standard-adornment-password-required"
+//             type={showPassword ? 'text' : 'password'}
+//             endAdornment={
+//               <InputAdornment position="end">
+//                 <IconButton
+//                     aria-label="toggle password visibility"
+//                     onClick={handleClickShowPassword}
+//                     onMouseDown={handleMouseDownPassword}
+//                 >
+//                   {showPassword ? <VisibilityOff /> : <Visibility />}
+//                 </IconButton>
+//               </InputAdornment>
+//             }
+//             {...register('password', { required: 'Password is required!' })}
+//         />
+//       </FormControl>
+//       {errors.password && <p style={{ color: 'red' }}>{errors.password.message}</p>}
+//       {/*Confirm password field*/}
+//       <FormControl variant="standard">
+//         <InputLabel htmlFor="standard-adornment-password">Password</InputLabel>
+//         <Input
+//             id="standard-adornment-password"
+//             type={showPassword ? 'text' : 'password'}
+//             endAdornment={
+//               <InputAdornment position="end">
+//                 <IconButton
+//                     aria-label="toggle password visibility"
+//                     onClick={handleClickShowPassword}
+//                     onMouseDown={handleMouseDownPassword}
+//                 >
+//                   {showPassword ? <VisibilityOff /> : <Visibility />}
+//                 </IconButton>
+//               </InputAdornment>
+//             }
+//             {...register('confirmPassword', {
+//               required: 'Please confirm password!',
+//             })}
+//         />
+//       </FormControl>
+//       {errors.confirmPassword && (
+//           <p style={{ color: 'red' }}>{errors.confirmPassword.message}</p>
+//       )}
+//       {/*Button*/}
+//       <Button type={'submit'} variant={'contained'} color={'primary'}>
+//         Sign Up
+//       </Button>
+//     </form>
+//   </div>
+// </div>
