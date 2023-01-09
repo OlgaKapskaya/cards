@@ -75,7 +75,6 @@ export const Login: FC = () => {
     // не зачищает check
     // после зачистки не уходит фокус с password
     // reset()
-    console.log('onSubmit: ', data)
     dispatch(login(data))
   }
 
@@ -85,7 +84,6 @@ export const Login: FC = () => {
 
   return (
     <div>
-      <div>{isLoggedIn ? 'login' : 'logut'}</div>
       <ThemeProvider theme={theme}>
         <CssBaseline />
         <Box

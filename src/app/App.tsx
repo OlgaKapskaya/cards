@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { CircularProgress, LinearProgress } from '@mui/material'
+import { LinearProgress } from '@mui/material'
 
 import { Loader } from '../common/components/Loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'

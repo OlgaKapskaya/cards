@@ -7,7 +7,7 @@ import { useAppSelector } from '../../common/hooks/react-redux-hooks'
 import s from './Header.module.css'
 
 export const Header: FC = () => {
-  const isLoggedIn = useAppSelector<boolean>(state => state.app.isLoggedIn)
+  const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)
 
   return (
     <header className={s.header}>

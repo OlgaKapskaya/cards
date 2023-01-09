@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { errorNetworkUtil } from '../common/utils/errorNetworkUtil'
+import { setLoggedIn } from '../features/Login/authSlice'
 import { setUserData } from '../features/Profile/profileSlice'
 
 import { appAPI } from './appAPI'
@@ -11,14 +12,12 @@ export interface AppStateType {
   status: RequestStatusType
   error: string | null
   isInitialized: boolean
-  isLoggedIn: boolean
 }
 
 const initialState = {
   status: 'idle',
   error: null,
   isInitialized: false,
-  isLoggedIn: false,
 } as AppStateType
 
 export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
@@ -26,11 +25,12 @@ export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
   try {
     const response = await appAPI.me()
 
-    dispatch(setAppLogged(true))
-    dispatch(setUserData(response.data.data))
+    dispatch(setLoggedIn(true))
+    dispatch(setUserData(response.data))
+
     dispatch(setAppStatus('succeeded'))
   } catch (e: any) {
-    dispatch(setAppLogged(false))
+    dispatch(setLoggedIn(false))
     errorNetworkUtil(dispatch, e)
   } finally {
     dispatch(setAppInitialized(true))
@@ -50,10 +50,7 @@ export const appSlice = createSlice({
     setAppInitialized(state, action: PayloadAction<boolean>) {
       state.isInitialized = action.payload
     },
-    setAppLogged(state, action: PayloadAction<boolean>) {
-      state.isLoggedIn = action.payload
-    },
   },
 })
-export const { setAppError, setAppStatus, setAppInitialized, setAppLogged } = appSlice.actions
+export const { setAppError, setAppStatus, setAppInitialized } = appSlice.actions
 export const appReducer = appSlice.reducer
