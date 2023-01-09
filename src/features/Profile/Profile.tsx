@@ -13,7 +13,7 @@ import { ProfileBackLink } from './ProfileBackLink/ProfileBackLink'
 import { ProfilePersonalInfo } from './ProfilePersonalInfo/ProfilePersonalInfo'
 
 export const Profile: FC = () => {
-  const isLoggedIn = useAppSelector(state => state.app.isLoggedIn)
+  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
 
   if (!isLoggedIn) {
     return <Navigate to={PATH.LOGIN} />
