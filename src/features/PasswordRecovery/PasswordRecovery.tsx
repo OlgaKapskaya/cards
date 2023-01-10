@@ -2,12 +2,12 @@ import React, { FC } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
@@ -20,9 +20,9 @@ type IFormInput = {
 }
 
 const customMessage = `
-                  <div style='background-color: indianred; padding: 15px'>
+                  <div style="background-color: indianred; padding: 15px">
                       password recovery link: 
-                    <a href='http://localhost:3000/#/set-new-password/$token$'>
+                    <a href="http://localhost:3000/#/set-new-password/$token$">
                       link
                     </a>
                   </div>`
@@ -75,14 +75,9 @@ export const PasswordRecovery: FC = () => {
               <div className={s.describe}>
                 Enter your email address and we will send you further instructions
               </div>
-              <Button
-                type="submit"
-                className={s.btn}
-                sx={{ borderRadius: '30px', mt: '60px' }}
-                variant="contained"
-              >
+              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '60px' }}>
                 Send instructions
-              </Button>
+              </ButtonComponent>
             </form>
 
             <div className={s.already}>Did you remember your password?</div>

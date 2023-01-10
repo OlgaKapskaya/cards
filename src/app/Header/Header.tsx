@@ -1,9 +1,9 @@
-import { FC, useMemo } from 'react'
+import React, { FC, useMemo } from 'react'
 
-import { Button } from '@mui/material'
 import { useNavigate } from 'react-router-dom'
 
 import logo from '../../assets/img/incubator-logo.svg'
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { useAppSelector } from '../../common/hooks/react-redux-hooks'
 
@@ -19,14 +19,9 @@ export const Header: FC = () => {
     return isLoggedIn ? (
       <ProfileMenu />
     ) : (
-      <Button
-        onClick={loginHandler}
-        className={s.button}
-        sx={{ borderRadius: '30px' }}
-        variant="contained"
-      >
+      <ButtonComponent type="submit" className={s.button} onClick={loginHandler}>
         Sign in
-      </Button>
+      </ButtonComponent>
     )
   }, [isLoggedIn])
 

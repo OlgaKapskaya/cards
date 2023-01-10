@@ -1,10 +1,9 @@
-import { FC, useState, MouseEvent, useEffect } from 'react'
+import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
@@ -16,6 +15,7 @@ import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
@@ -106,14 +106,14 @@ export const Login: FC = () => {
               <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
                 Forgot Password?
               </NavLink>
-              <Button
+              <ButtonComponent
                 type="submit"
                 className={s.btn}
-                sx={{ borderRadius: '30px', mt: '60px' }}
-                variant="contained"
+                sx={{ mt: '60px' }}
+                onClick={() => navigate(PATH.LOGIN)}
               >
                 Sign In
-              </Button>
+              </ButtonComponent>
             </form>
 
             <div className={s.already}>{`Don't have an account yet?`}</div>

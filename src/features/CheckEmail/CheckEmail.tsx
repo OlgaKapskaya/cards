@@ -1,11 +1,11 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import { useNavigate } from 'react-router-dom'
 
 import emailImg from '../../assets/img/emailImg.svg'
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 
 import s from './CheckEmail.module.css'
@@ -34,15 +34,14 @@ export const CheckEmail: FC = () => {
             <div className={s.title}>Check Email</div>
             <img src={emailImg} alt="emailImg" />
             <p className={s.textInfo}>{`We’ve sent an Email with instructions to ${email}`}</p>
-            <Button
+            <ButtonComponent
               type="submit"
               className={s.btn}
-              sx={{ borderRadius: '30px', mt: '35px' }}
-              variant="contained"
+              sx={{ mt: '35px' }}
               onClick={() => navigate(PATH.LOGIN)}
             >
               Back to login
-            </Button>
+            </ButtonComponent>
           </div>
         </Paper>
       </Box>

@@ -1,4 +1,4 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 
 import { Navigate } from 'react-router-dom'
 
@@ -32,6 +32,9 @@ export const Profile: FC = () => {
         <span className={s.title}>Personal Information</span>
         <ProfileAvatar withButton size={96} />
         <ProfilePersonalInfo />
+        {/*<ButtonComponent className={s.logoutBtn} onClick={logoutHandler}>*/}
+        {/*  <img src={logoutImg} alt="logout" /> Log out*/}
+        {/*</ButtonComponent>*/}
         <SuperButton className={s.logoutBtn} onClick={logoutHandler}>
           <img src={logoutImg} alt="logout" /> Log out
         </SuperButton>

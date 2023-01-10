@@ -4,7 +4,6 @@ import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { IconButton, InputAdornment, InputLabel } from '@mui/material'
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
 import Paper from '@mui/material/Paper'
@@ -12,6 +11,7 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
@@ -126,15 +126,9 @@ export const Registration = () => {
                   <span className={s.error}>{errors.confirmPassword.message}</span>
                 )}
               </FormControl>
-
-              <Button
-                type="submit"
-                className={s.btn}
-                sx={{ borderRadius: '30px', mt: '40px' }}
-                variant="contained"
-              >
+              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '40px' }}>
                 Sign Up
-              </Button>
+              </ButtonComponent>
             </form>
 
             <div className={s.already}>Already have an account?</div>

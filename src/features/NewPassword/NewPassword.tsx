@@ -2,7 +2,6 @@ import { FC, MouseEvent, useState } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { Button } from '@mui/material'
 import Box from '@mui/material/Box'
 import FormControl from '@mui/material/FormControl'
 import IconButton from '@mui/material/IconButton'
@@ -10,6 +9,8 @@ import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
+
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 
 import { useNewPasswordForm } from './hooks/useNewPasswordForm'
 import s from './NewPassword.module.css'
@@ -68,15 +69,9 @@ export const NewPassword: FC = () => {
               <p className={s.textInfo}>
                 {`Create new password and we will send you further instructions to email`}
               </p>
-              <Button
-                type="submit"
-                className={s.btn}
-                sx={{ borderRadius: '30px', mt: '35px' }}
-                variant="contained"
-                // onClick={() => navigate(PATH.LOGIN)}
-              >
+              <ButtonComponent type="submit" className={s.btn}>
                 Create new password
-              </Button>
+              </ButtonComponent>
             </form>
           </div>
         </Paper>

@@ -1,8 +1,9 @@
-import { FC } from 'react'
+import React, { FC } from 'react'
 
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import EditableSpanComponent from '../../common/components/EditableSpanComponent/EditableSpanComponent'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
 import SuperCheckbox from '../../common/components/SuperCheckbox/SuperCheckbox'
-import SuperEditableSpan from '../../common/components/SuperEditableSpan/SuperEditableSpan'
 import SuperInputText from '../../common/components/SuperInputText/SuperInputText'
 import SuperPagination from '../../common/components/SuperPagination/SuperPagination'
 import SuperRadio from '../../common/components/SuperRadio/SuperRadio'
@@ -22,6 +23,7 @@ export const Test: FC = () => {
     <div>
       <div className={s.container}>
         Buttons
+        <ButtonComponent> TEST</ButtonComponent>
         <SuperButton>default</SuperButton>
         <SuperButton xType="red">red</SuperButton>
         <SuperButton xType="secondary">secondary</SuperButton>
@@ -37,7 +39,7 @@ export const Test: FC = () => {
       </div>
       <div className={s.container}>
         Editable span:
-        <SuperEditableSpan value="test" />
+        <EditableSpanComponent value="test" />
       </div>
       <div className={s.container}>
         Radiobutton:

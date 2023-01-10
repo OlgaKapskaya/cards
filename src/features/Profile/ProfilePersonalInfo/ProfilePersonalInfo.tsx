@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import SuperEditableSpan from '../../../common/components/SuperEditableSpan/SuperEditableSpan'
+import EditableSpanComponent from '../../../common/components/EditableSpanComponent/EditableSpanComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
 import { changeUserDataTC } from '../profileSlice'
 
@@ -28,7 +28,7 @@ export const ProfilePersonalInfo: FC = () => {
 
   return (
     <div className={s.profileInfoContainer}>
-      <SuperEditableSpan
+      <EditableSpanComponent
         onChangeText={onChangeNameHandler}
         onEnter={onChangeUserName}
         value={newName}
