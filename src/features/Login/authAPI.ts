@@ -43,7 +43,7 @@ export const authAPI = {
     return instance.post('auth/register', payload)
   },
   createNewPassword(data: NewPasswordRequestType) {
-    return instance.post('auth/set-new-password', data)
+    return instance.post<{ info: string }>('auth/set-new-password', data)
   },
   forgotPass(payload: forgotPassPayloadType) {
     return instanceHeroku.post<forgotPassResponseType>('auth/forgot', payload)

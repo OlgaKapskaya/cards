@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
-import { Alert, IconButton, InputAdornment, InputLabel, Snackbar } from '@mui/material'
+import { IconButton, InputAdornment, InputLabel } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import FormControl from '@mui/material/FormControl'
@@ -41,12 +41,6 @@ export const Registration = () => {
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
-  }
-  const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    dispatch(signUpStatusCreator(false))
   }
 
   const navigate = useNavigate()
@@ -150,27 +144,6 @@ export const Registration = () => {
           </div>
         </Paper>
       </Box>
-      {signUpStatus && (
-        <Snackbar open={signUpStatus} autoHideDuration={6000} onClose={handleClose}>
-          <Alert
-            onClose={handleClose}
-            severity="success"
-            sx={{
-              width: '100%',
-              backgroundColor: '#2e7d32',
-              color: 'white',
-              '& .MuiAlert-icon': {
-                color: 'white',
-                marginTop: '18px',
-                marginRight: '12px',
-                padding: '3px 0',
-              },
-            }}
-          >
-            {<p>You are successfully registered</p>}
-          </Alert>
-        </Snackbar>
-      )}
     </div>
   )
 }

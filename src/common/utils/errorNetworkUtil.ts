@@ -1,7 +1,7 @@
 import { Dispatch } from '@reduxjs/toolkit'
 import axios, { AxiosError } from 'axios'
 
-import { setAppError, setAppStatus } from '../../app/appSlice'
+import { setAppMessage, setAppStatus } from '../../app/appSlice'
 
 export const errorNetworkUtil = (dispatch: Dispatch, e: any) => {
   const err = e as Error | AxiosError<{ error: string }>
@@ -9,9 +9,9 @@ export const errorNetworkUtil = (dispatch: Dispatch, e: any) => {
   if (axios.isAxiosError(err)) {
     const error = err.response?.data ? err.response.data.error : err.message
 
-    dispatch(setAppError(error))
+    dispatch(setAppMessage(error))
   } else {
-    dispatch(setAppError(`native error ${err.message}`))
+    dispatch(setAppMessage(`native error ${err.message}`))
   }
 
   dispatch(setAppStatus('failed'))
