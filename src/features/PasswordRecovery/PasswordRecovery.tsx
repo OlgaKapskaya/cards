@@ -7,21 +7,17 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
-import * as yup from 'yup'
 
 import { PATH } from '../../common/constants/path'
+import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
+import { forgotPass } from '../Login/authSlice'
 
-import { forgotPass } from './PassRecoveryThunk'
 import s from './PasswordRecovery.module.css'
 
 type IFormInput = {
   email: string
 }
-
-const schema = yup.object({
-  email: yup.string().email(),
-})
 
 const customMessage = `
                   <div style='background-color: indianred; padding: 15px'>
@@ -36,7 +32,7 @@ export const PasswordRecovery: FC = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>({ resolver: yupResolver(schema), mode: 'onTouched' })
+  } = useForm<IFormInput>({ resolver: yupResolver(forgotValidationSchema), mode: 'onTouched' })
   const dispatch = useAppDispatch()
   const onSubmit: SubmitHandler<IFormInput> = data => {
     const model = {
@@ -57,7 +53,7 @@ export const PasswordRecovery: FC = () => {
           '& > :not(style)': {
             m: 1,
             width: 413,
-            height: 552,
+            height: 456,
             margin: '50px auto',
           },
         }}

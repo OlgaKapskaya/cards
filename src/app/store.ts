@@ -3,7 +3,6 @@ import { ThunkDispatch } from 'redux-thunk'
 
 import { authSlice } from '../features/Login/authSlice'
 import { profileReducer } from '../features/Profile/profileSlice'
-import { registrationSlice } from '../features/Registration/registrationSlice'
 
 import { appReducer } from './appSlice'
 
@@ -12,7 +11,6 @@ export const store = configureStore({
     app: appReducer,
     profile: profileReducer,
     auth: authSlice.reducer,
-    signUp: registrationSlice.reducer,
   },
 })
 

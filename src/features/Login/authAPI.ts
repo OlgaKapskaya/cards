@@ -1,4 +1,4 @@
-import { instance } from '../../common/constants/instance'
+import { instance, instanceHeroku } from '../../common/constants/instance'
 import { UserType } from '../Profile/profileSlice'
 
 export type LoginRequestType = {
@@ -6,9 +6,30 @@ export type LoginRequestType = {
   password: string
   rememberMe: false
 }
+export type sigUpResponseType = {
+  addedUser: {}
+  error?: string
+}
+
+export type signUpPayloadType = {
+  email: string
+  password: string
+  pass2?: string
+}
+
 export type NewPasswordRequestType = {
   password: string
   resetPasswordToken: string
+}
+export type forgotPassResponseType = {
+  info: string
+  error?: string
+}
+
+export type forgotPassPayloadType = {
+  email: string
+  from: string
+  message: string
 }
 
 export const authAPI = {
@@ -18,7 +39,13 @@ export const authAPI = {
   logout() {
     return instance.delete('auth/me', {})
   },
+  signUp(payload: signUpPayloadType) {
+    return instance.post('auth/register', payload)
+  },
   createNewPassword(data: NewPasswordRequestType) {
     return instance.post('auth/set-new-password', data)
+  },
+  forgotPass(payload: forgotPassPayloadType) {
+    return instanceHeroku.post<forgotPassResponseType>('auth/forgot', payload)
   },
 }

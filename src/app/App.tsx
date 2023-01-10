@@ -5,6 +5,7 @@ import { LinearProgress } from '@mui/material'
 import { Loader } from '../common/components/Loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 
+import s from './App.module.css'
 import { me, RequestStatusType } from './appSlice'
 import { ErrorSnackbar } from './ErrorSnackbar/ErrorSnackbar'
 import { Header } from './Header/Header'
@@ -24,7 +25,7 @@ const App = () => {
   }
 
   return (
-    <div className="App">
+    <div className={s.app}>
       <Header />
       {status === 'loading' && <LinearProgress />}
       <Pages />

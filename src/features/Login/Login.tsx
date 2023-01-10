@@ -15,21 +15,14 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
-import * as yup from 'yup'
 
 import { PATH } from '../../common/constants/path'
+import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import { LoginRequestType } from './authAPI'
 import { login } from './authSlice'
 import s from './Login.module.css'
-
-const schema = yup
-  .object({
-    email: yup.string().email().required(),
-    password: yup.string().min(8).required(),
-  })
-  .required()
 
 export const Login: FC = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
@@ -43,17 +36,13 @@ export const Login: FC = () => {
 
   const {
     register,
-    // reset,
     handleSubmit,
     formState: { errors },
   } = useForm<LoginRequestType>({
     mode: 'onTouched',
-    resolver: yupResolver(schema),
+    resolver: yupResolver(loginValidationSchema),
   })
   const onSubmit = (data: any) => {
-    // не зачищает check
-    // после зачистки не уходит фокус с password
-    // reset()
     dispatch(login(data))
   }
 

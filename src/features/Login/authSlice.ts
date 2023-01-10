@@ -1,17 +1,24 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppStatus } from '../../app/appSlice'
+import { setAppError, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 import { setUserData, UserType } from '../Profile/profileSlice'
 
-import { authAPI, LoginRequestType, NewPasswordRequestType } from './authAPI'
+import {
+  authAPI,
+  forgotPassPayloadType,
+  LoginRequestType,
+  NewPasswordRequestType,
+  signUpPayloadType,
+} from './authAPI'
 
-interface LoginStateType {
+interface AuthStateType {
   isLoggedIn: boolean
+  isRegistered: boolean
 }
 
 export const login = createAsyncThunk(
-  'login/login',
+  'auth/login',
   async (data: LoginRequestType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
@@ -26,7 +33,7 @@ export const login = createAsyncThunk(
   }
 )
 
-export const logout = createAsyncThunk('login/logout', async (_, { dispatch }) => {
+export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) => {
   dispatch(setAppStatus('loading'))
   try {
     await authAPI.logout()
@@ -39,8 +46,24 @@ export const logout = createAsyncThunk('login/logout', async (_, { dispatch }) =
   }
 })
 
+export const signUp = createAsyncThunk(
+  'reg/signUp',
+  async (payload: signUpPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+
+    if (payload.password !== payload.pass2) dispatch(setAppError('Passwords dont match'))
+    try {
+      await authAPI.signUp(payload)
+      dispatch(signUpStatusCreator(true))
+      dispatch(setAppStatus('idle'))
+    } catch (e) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
 export const createNewPassword = createAsyncThunk(
-  'login/createNewPassword',
+  'auth/createNewPassword',
   async (data: NewPasswordRequestType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
@@ -55,14 +78,30 @@ export const createNewPassword = createAsyncThunk(
   }
 )
 
+export const forgotPass = createAsyncThunk(
+  'auth/forgotPass',
+  async (payload: forgotPassPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      await authAPI.forgotPass(payload)
+      dispatch(setAppStatus('idle'))
+    } catch (e) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
 export const authSlice = createSlice({
-  name: 'login',
-  initialState: { isLoggedIn: false } as LoginStateType,
+  name: 'auth',
+  initialState: { isLoggedIn: false, isRegistered: false } as AuthStateType,
   reducers: {
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload
     },
+    signUpStatusCreator(state, action: PayloadAction<boolean>) {
+      state.isRegistered = action.payload
+    },
   },
 })
 
-export const { setLoggedIn } = authSlice.actions
+export const { setLoggedIn, signUpStatusCreator } = authSlice.actions

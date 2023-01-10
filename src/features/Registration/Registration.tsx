@@ -11,14 +11,13 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
-import * as yup from 'yup'
 
 import { PATH } from '../../common/constants/path'
+import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { signUp, signUpStatusCreator } from '../Login/authSlice'
 
 import s from './Registration.module.css'
-import { signUpStatusCreator } from './registrationSlice'
-import { signUp } from './registrationThunk'
 
 type IFormInput = {
   email: string
@@ -26,30 +25,18 @@ type IFormInput = {
   confirmPassword: string
 }
 
-const schema = yup.object({
-  email: yup.string().email(),
-  password: yup
-    .string()
-    .required('Password is required')
-    .min(4, 'Password length should be at least 4 characters')
-    .max(12, 'Password cannot exceed more than 12 characters'),
-  confirmPassword: yup
-    .string()
-    .required('Confirm Password is required')
-    .min(4, 'Password length should be at least 4 characters')
-    .max(12, 'Password cannot exceed more than 12 characters')
-    .oneOf([yup.ref('password')], 'Passwords do not match'),
-})
-
 export const Registration = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<IFormInput>({ resolver: yupResolver(schema), mode: 'onTouched' })
+  } = useForm<IFormInput>({
+    resolver: yupResolver(registrationValidationSchema),
+    mode: 'onTouched',
+  })
   const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
   const dispatch = useAppDispatch()
-  const signUpStatus = useAppSelector(state => state.signUp.isRegistered)
+  const signUpStatus = useAppSelector(state => state.auth.isRegistered)
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -125,6 +112,7 @@ export const Registration = () => {
                 <Input
                   id="confirm-password"
                   type={showPassword ? 'text' : 'password'}
+                  error={!!errors.confirmPassword}
                   endAdornment={
                     <InputAdornment position="end">
                       <IconButton
@@ -140,15 +128,15 @@ export const Registration = () => {
                     required: 'Please confirm password!',
                   })}
                 />
+                {errors.confirmPassword && (
+                  <span className={s.error}>{errors.confirmPassword.message}</span>
+                )}
               </FormControl>
-              {errors.confirmPassword && (
-                <span className={s.error}>{errors.confirmPassword.message}</span>
-              )}
 
               <Button
                 type="submit"
                 className={s.btn}
-                sx={{ borderRadius: '30px', mt: '60px' }}
+                sx={{ borderRadius: '30px', mt: '40px' }}
                 variant="contained"
               >
                 Sign Up
