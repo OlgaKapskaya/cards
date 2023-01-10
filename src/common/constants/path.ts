@@ -3,7 +3,7 @@ export const PATH = {
   REGISTRATION: '/registration',
   PROFILE: '/profile',
   TEST: '/test',
-  PASSWORD_RECOVERY: '/password_recovery',
-  NEW_PASSWORD: '/new_password',
+  PASSWORD_RECOVERY: '/password-recovery',
+  NEW_PASSWORD: '/set-new-password/:token',
   ERROR404: '/*',
 }

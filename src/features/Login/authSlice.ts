@@ -4,7 +4,7 @@ import { setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 import { setUserData, UserType } from '../Profile/profileSlice'
 
-import { authAPI, LoginRequestType } from './authAPI'
+import { authAPI, LoginRequestType, NewPasswordRequestType } from './authAPI'
 
 interface LoginStateType {
   isLoggedIn: boolean
@@ -38,6 +38,22 @@ export const logout = createAsyncThunk('login/logout', async (_, { dispatch }) =
     errorNetworkUtil(dispatch, e)
   }
 })
+
+export const createNewPassword = createAsyncThunk(
+  'login/createNewPassword',
+  async (data: NewPasswordRequestType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      const response = await authAPI.createNewPassword(data)
+
+      console.log(response)
+      dispatch(setLoggedIn(true))
+      dispatch(setAppStatus('succeeded'))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
 
 export const authSlice = createSlice({
   name: 'login',

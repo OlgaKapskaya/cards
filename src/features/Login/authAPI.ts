@@ -6,6 +6,10 @@ export type LoginRequestType = {
   password: string
   rememberMe: false
 }
+export type NewPasswordRequestType = {
+  password: string
+  resetPasswordToken: string
+}
 
 export const authAPI = {
   login(data: LoginRequestType) {
@@ -13,5 +17,8 @@ export const authAPI = {
   },
   logout() {
     return instance.delete('auth/me', {})
+  },
+  createNewPassword(data: NewPasswordRequestType) {
+    return instance.post('auth/set-new-password', data)
   },
 }
