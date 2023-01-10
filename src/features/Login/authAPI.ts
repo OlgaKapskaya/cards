@@ -40,7 +40,7 @@ export const authAPI = {
     return instance.delete('auth/me', {})
   },
   signUp(payload: signUpPayloadType) {
-    return instance.post('auth/register', payload)
+    return instance.post<sigUpResponseType>('auth/register', payload)
   },
   createNewPassword(data: NewPasswordRequestType) {
     return instance.post('auth/set-new-password', data)

@@ -1,48 +1,18 @@
 import React, { FC } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../common/constants/path'
-import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
-import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
-import { forgotPass } from '../Login/authSlice'
 
+import { usePasswordRecovery } from './hooks/usePasswordRecovery'
 import s from './PasswordRecovery.module.css'
 
-type IFormInput = {
-  email: string
-}
-
-const customMessage = `
-                  <div style='background-color: indianred; padding: 15px'>
-                      password recovery link: 
-                    <a href='http://localhost:3000/#/set-new-password/$token$'>
-                      link
-                    </a>
-                  </div>`
-
 export const PasswordRecovery: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInput>({ resolver: yupResolver(forgotValidationSchema), mode: 'onTouched' })
-  const dispatch = useAppDispatch()
-  const onSubmit: SubmitHandler<IFormInput> = data => {
-    const model = {
-      email: data.email,
-      from: 'test-front-admin <kadegrob.kirill@gmail.com>',
-      message: customMessage,
-    }
-
-    dispatch(forgotPass(model))
-  }
+  const { register, handleSubmit, errors, onSubmit } = usePasswordRecovery()
 
   return (
     <div>

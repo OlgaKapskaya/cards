@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Alert, IconButton, InputAdornment, InputLabel, Snackbar } from '@mui/material'
 import Box from '@mui/material/Box'
@@ -9,47 +8,26 @@ import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../common/constants/path'
-import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { signUp, signUpStatusCreator } from '../Login/authSlice'
+import { signUpStatusCreator } from '../Login/authSlice'
 
+import { useRegistration } from './hooks/useRegistration'
 import s from './Registration.module.css'
 
-type IFormInput = {
-  email: string
-  password: string
-  confirmPassword: string
-}
-
 export const Registration = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInput>({
-    resolver: yupResolver(registrationValidationSchema),
-    mode: 'onTouched',
-  })
-  const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
+
+  const { register, handleSubmit, errors, onSubmit, handleClose } = useRegistration()
   const signUpStatus = useAppSelector(state => state.auth.isRegistered)
   const [showPassword, setShowPassword] = useState(false)
   const handleClickShowPassword = () => setShowPassword(show => !show)
   const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.preventDefault()
   }
-  const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return
-    }
-    dispatch(signUpStatusCreator(false))
-  }
-
-  const navigate = useNavigate()
 
   if (signUpStatus) {
     setTimeout(() => {
