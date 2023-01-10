@@ -3,7 +3,6 @@ import { FC, useState, MouseEvent, useEffect } from 'react'
 import { yupResolver } from '@hookform/resolvers/yup'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
-import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
@@ -24,26 +23,6 @@ import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-h
 import { LoginRequestType } from './authAPI'
 import { login } from './authSlice'
 import s from './Login.module.css'
-
-const theme = createTheme({
-  typography: {
-    fontFamily: 'Montserrat',
-  },
-  components: {
-    MuiCssBaseline: {
-      styleOverrides: `
-        @font-face {
-          font-family: 'Montserrat';
-          font-style: normal;
-          font-display: swap;
-          font-weight: 500;
-          src: url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&display=swap');
-          unicodeRange: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF;
-        }
-      `,
-    },
-  },
-})
 
 const schema = yup
   .object({
@@ -84,84 +63,77 @@ export const Login: FC = () => {
 
   return (
     <div>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        <Box
-          sx={{
-            display: 'flex',
-            flexWrap: 'wrap',
-            '& > :not(style)': {
-              m: 1,
-              width: 413,
-              height: 552,
-              margin: '50px auto',
-            },
-          }}
-        >
-          <Paper elevation={3}>
-            <div className={s.paper_container}>
-              <div className={s.title}>Sign in</div>
-              <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
-                <TextField
-                  className={s.email}
-                  sx={{ m: 1, width: '347px' }}
-                  id="email"
-                  label="Email"
-                  variant="standard"
-                  {...register('email', { required: true, maxLength: 10 })}
-                  error={!!errors.email}
-                  helperText={errors.email?.message}
+      <Box
+        sx={{
+          display: 'flex',
+          flexWrap: 'wrap',
+          '& > :not(style)': {
+            m: 1,
+            width: 413,
+            height: 552,
+            margin: '50px auto',
+          },
+        }}
+      >
+        <Paper elevation={3}>
+          <div className={s.paper_container}>
+            <div className={s.title}>Sign in</div>
+            <form onSubmit={handleSubmit(onSubmit)} className={s.form}>
+              <TextField
+                className={s.email}
+                sx={{ m: 1, width: '347px' }}
+                id="email"
+                label="Email"
+                variant="standard"
+                {...register('email', { required: true, maxLength: 10 })}
+                error={!!errors.email}
+                helperText={errors.email?.message}
+              />
+              <FormControl className={s.password} sx={{ m: 1, width: '347px' }} variant="standard">
+                <InputLabel htmlFor="password">Password</InputLabel>
+                <Input
+                  id="password"
+                  type={showPassword ? 'text' : 'password'}
+                  {...register('password', { required: true, maxLength: 80 })}
+                  error={!!errors.password}
+                  endAdornment={
+                    <InputAdornment position="end">
+                      <IconButton
+                        aria-label="toggle password visibility"
+                        onClick={handleClickShowPassword}
+                        onMouseDown={handleMouseDownPassword}
+                      >
+                        {showPassword ? <VisibilityOff /> : <Visibility />}
+                      </IconButton>
+                    </InputAdornment>
+                  }
                 />
-                <FormControl
-                  className={s.password}
-                  sx={{ m: 1, width: '347px' }}
-                  variant="standard"
-                >
-                  <InputLabel htmlFor="password">Password</InputLabel>
-                  <Input
-                    id="password"
-                    type={showPassword ? 'text' : 'password'}
-                    {...register('password', { required: true, maxLength: 80 })}
-                    error={!!errors.password}
-                    endAdornment={
-                      <InputAdornment position="end">
-                        <IconButton
-                          aria-label="toggle password visibility"
-                          onClick={handleClickShowPassword}
-                          onMouseDown={handleMouseDownPassword}
-                        >
-                          {showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                      </InputAdornment>
-                    }
-                  />
-                  {errors.password && <span className={s.error}>{errors.password?.message}</span>}
-                </FormControl>
-                <div className={s.checkbox}>
-                  <Checkbox id="rememberMe" {...register('rememberMe')} />
-                  <span>Remember me</span>
-                </div>
-                <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
-                  Forgot Password?
-                </NavLink>
-                <Button
-                  type="submit"
-                  className={s.btn}
-                  sx={{ borderRadius: '30px', mt: '60px' }}
-                  variant="contained"
-                >
-                  Sign In
-                </Button>
-              </form>
-
-              <div className={s.already}>{`Don't have an account yet?`}</div>
-              <NavLink className={s.singUp} to={PATH.REGISTRATION}>
-                Create one
+                {errors.password && <span className={s.error}>{errors.password?.message}</span>}
+              </FormControl>
+              <div className={s.checkbox}>
+                <Checkbox id="rememberMe" {...register('rememberMe')} />
+                <span>Remember me</span>
+              </div>
+              <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
+                Forgot Password?
               </NavLink>
-            </div>
-          </Paper>
-        </Box>
-      </ThemeProvider>
+              <Button
+                type="submit"
+                className={s.btn}
+                sx={{ borderRadius: '30px', mt: '60px' }}
+                variant="contained"
+              >
+                Sign In
+              </Button>
+            </form>
+
+            <div className={s.already}>{`Don't have an account yet?`}</div>
+            <NavLink className={s.singUp} to={PATH.REGISTRATION}>
+              Create one
+            </NavLink>
+          </div>
+        </Paper>
+      </Box>
     </div>
   )
 }
