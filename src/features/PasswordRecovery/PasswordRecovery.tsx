@@ -13,6 +13,7 @@ import * as yup from 'yup'
 import { PATH } from '../../common/constants/path'
 import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
 
+import { forgotPass } from './PassRecoveryThunk'
 import s from './PasswordRecovery.module.css'
 
 type IFormInput = {
@@ -43,6 +44,14 @@ const schema = yup.object({
   email: yup.string().email(),
 })
 
+const customMessage = `
+                  <div style='background-color: indianred; padding: 15px'>
+                      password recovery link: 
+                    <a href='http://localhost:3000/#/set-new-password/$token$'>
+                      link
+                    </a>
+                  </div>`
+
 export const PasswordRecovery: FC = () => {
   const {
     register,
@@ -50,7 +59,15 @@ export const PasswordRecovery: FC = () => {
     formState: { errors },
   } = useForm<IFormInput>({ resolver: yupResolver(schema), mode: 'onTouched' })
   const dispatch = useAppDispatch()
-  const onSubmit: SubmitHandler<IFormInput> = data => console.log(data)
+  const onSubmit: SubmitHandler<IFormInput> = data => {
+    const model = {
+      email: data.email,
+      from: 'test-front-admin <kadegrob.kirill@gmail.com>',
+      message: customMessage,
+    }
+
+    dispatch(forgotPass(model))
+  }
 
   return (
     <div>
