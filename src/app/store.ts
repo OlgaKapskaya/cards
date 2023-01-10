@@ -3,6 +3,7 @@ import { ThunkDispatch } from 'redux-thunk'
 
 import { authSlice } from '../features/Login/authSlice'
 import { profileReducer } from '../features/Profile/profileSlice'
+import { signUpSlice } from '../features/Registration/signUpSlice'
 
 import { appReducer } from './appSlice'
 

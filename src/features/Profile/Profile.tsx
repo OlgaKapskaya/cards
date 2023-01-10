@@ -30,7 +30,7 @@ export const Profile: FC = () => {
       <ProfileBackLink />
       <div className={s.profileContainer}>
         <span className={s.title}>Personal Information</span>
-        <ProfileAvatar />
+        <ProfileAvatar withButton size={96} />
         <ProfilePersonalInfo />
         <SuperButton className={s.logoutBtn} onClick={logoutHandler}>
           <img src={logoutImg} alt="logout" /> Log out
