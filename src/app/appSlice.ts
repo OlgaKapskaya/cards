@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { errorNetworkUtil } from '../common/utils/errorNetworkUtil'
 import { setLoggedIn } from '../features/Login/authSlice'
 import { setUserData } from '../features/Profile/profileSlice'
 
@@ -31,7 +30,7 @@ export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
     dispatch(setAppStatus('succeeded'))
   } catch (e: any) {
     dispatch(setLoggedIn(false))
-    errorNetworkUtil(dispatch, e)
+    dispatch(setAppStatus('failed'))
   } finally {
     dispatch(setAppInitialized(true))
   }
