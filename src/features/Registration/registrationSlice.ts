@@ -9,7 +9,7 @@ const initialState: registrationState = {
   isRegistered: false,
 }
 
-export const signUpSlice = createSlice({
+export const registrationSlice = createSlice({
   name: 'signUp',
   initialState,
   reducers: {
@@ -19,4 +19,4 @@ export const signUpSlice = createSlice({
   },
 })
 
-export const { signUpStatusCreator } = signUpSlice.actions
+export const { signUpStatusCreator } = registrationSlice.actions

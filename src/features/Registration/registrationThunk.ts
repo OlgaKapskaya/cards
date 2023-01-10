@@ -3,8 +3,8 @@ import { createAsyncThunk } from '@reduxjs/toolkit'
 import { setAppError, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
-import { registrationAPI, signUpPayloadType } from './registration-api'
-import { signUpStatusCreator } from './signUpSlice'
+import { registrationAPI, signUpPayloadType } from './registrationAPI'
+import { signUpStatusCreator } from './registrationSlice'
 
 export const signUp = createAsyncThunk(
   'reg/signUp',

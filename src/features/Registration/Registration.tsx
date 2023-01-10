@@ -26,8 +26,8 @@ import { PATH } from '../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import s from './Registration.module.css'
+import { signUpStatusCreator } from './registrationSlice'
 import { signUp } from './registrationThunk'
-import { signUpStatusCreator } from './signUpSlice'
 
 type IFormInput = {
   email: string
@@ -181,7 +181,7 @@ export const Registration = () => {
                   />
                 </FormControl>
                 {errors.confirmPassword && (
-                  <p style={{ color: 'red' }}>{errors.confirmPassword.message}</p>
+                  <span className={s.error}>{errors.confirmPassword.message}</span>
                 )}
 
                 <Button
