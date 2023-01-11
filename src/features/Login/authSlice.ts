@@ -15,6 +15,7 @@ import {
 interface AuthStateType {
   isLoggedIn: boolean
   isRegistered: boolean
+  isRecoveredPassword: boolean
 }
 
 export const login = createAsyncThunk(
@@ -24,6 +25,7 @@ export const login = createAsyncThunk(
     try {
       const response = await authAPI.login(data)
 
+      dispatch(setAppMessage('Welcome'))
       dispatch(setLoggedIn(true))
       dispatch(setUserData(response.data))
       dispatch(setAppStatus('succeeded'))
@@ -38,6 +40,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) =>
   try {
     await authAPI.logout()
 
+    dispatch(setAppMessage('Come back again'))
     dispatch(setLoggedIn(false))
     dispatch(setUserData({} as UserType))
     dispatch(setAppStatus('succeeded'))
@@ -68,10 +71,10 @@ export const createNewPassword = createAsyncThunk(
   async (data: NewPasswordRequestType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
-      const response = await authAPI.createNewPassword(data)
+      await authAPI.createNewPassword(data)
 
-      dispatch(setAppMessage(response.data.info))
-      dispatch(setLoggedIn(true))
+      dispatch(setAppMessage('New password created'))
+      dispatch(recoveredPasswordStatus(true))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
       errorNetworkUtil(dispatch, e)
@@ -85,7 +88,9 @@ export const forgotPass = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await authAPI.forgotPass(payload)
-      dispatch(setAppStatus('idle'))
+
+      dispatch(setAppMessage('Recovery link sent to email'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -94,7 +99,11 @@ export const forgotPass = createAsyncThunk(
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: { isLoggedIn: false, isRegistered: false } as AuthStateType,
+  initialState: {
+    isLoggedIn: false,
+    isRegistered: false,
+    isRecoveredPassword: false,
+  } as AuthStateType,
   reducers: {
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload
@@ -102,7 +111,10 @@ export const authSlice = createSlice({
     signUpStatusCreator(state, action: PayloadAction<boolean>) {
       state.isRegistered = action.payload
     },
+    recoveredPasswordStatus(state, action: PayloadAction<boolean>) {
+      state.isRecoveredPassword = action.payload
+    },
   },
 })
 
-export const { setLoggedIn, signUpStatusCreator } = authSlice.actions
+export const { setLoggedIn, signUpStatusCreator, recoveredPasswordStatus } = authSlice.actions

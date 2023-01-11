@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppStatus } from '../../app/appSlice'
+import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
 import { ChangeUserDataPayload, profileAPI } from './profileAPI'
@@ -32,7 +32,7 @@ export const changeUserDataTC = createAsyncThunk(
     try {
       const response = await profileAPI.changeUserData(data)
 
-      console.log(response)
+      dispatch(setAppMessage('New name saved'))
       dispatch(setUserData(response.data.updatedUser))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {

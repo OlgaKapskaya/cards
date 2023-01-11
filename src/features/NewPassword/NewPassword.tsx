@@ -11,7 +11,7 @@ import { newPasswordValidationScheme } from '../../common/constants/validators/v
 import { useAuthForm } from '../../common/hooks/useAuthForm'
 import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
 import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
-import { createNewPassword } from '../Login/authSlice'
+import { createNewPassword, recoveredPasswordStatus } from '../Login/authSlice'
 
 import s from './NewPassword.module.css'
 
@@ -20,9 +20,8 @@ export interface INewPasswordForm {
 }
 
 export const NewPassword: FC = () => {
-  const { dispatch, register, errors, handleSubmit } = useAuthForm<INewPasswordForm>(
-    newPasswordValidationScheme
-  )
+  const { isRecoveredPassword, navigate, dispatch, register, errors, handleSubmit } =
+    useAuthForm<INewPasswordForm>(newPasswordValidationScheme)
 
   const params = useParams<{ token: string }>()
 
@@ -34,6 +33,13 @@ export const NewPassword: FC = () => {
           resetPasswordToken: params.token,
         })
       )
+  }
+
+  if (isRecoveredPassword) {
+    // setTimeout(() => {
+    dispatch(recoveredPasswordStatus(false))
+    navigate('/login')
+    // }, 1500)
   }
 
   return (
