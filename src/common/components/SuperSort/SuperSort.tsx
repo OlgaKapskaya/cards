@@ -18,8 +18,17 @@ export type SuperSortPropsType = {
 
 export const pureChange = (sort: string, down: string, up: string) => {
   // пишет студент
-  // eslint-disable-next-line no-nested-ternary
-  return sort === up ? '' : sort === down ? up : down
+  let option
+
+  if (sort === up) {
+    option = ''
+  } else if (sort === down) {
+    option = up
+  } else {
+    option = down
+  }
+
+  return option
 }
 
 const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = 'hw15' }) => {
@@ -30,11 +39,26 @@ const SuperSort: React.FC<SuperSortPropsType> = ({ sort, value, onChange, id = '
     onChange(pureChange(sort, down, up))
   }
 
-  const icon = sort === down ? downIcon : sort === up ? upIcon : noneIcon
+  let iconOption
+
+  if (sort === down) {
+    iconOption = downIcon
+  } else if (sort === up) {
+    iconOption = upIcon
+  } else {
+    iconOption = noneIcon
+  }
+
+  const icon = iconOption
 
   return (
     <span id={id + '-sort-' + value} onClick={onChangeCallback}>
-      <img id={id + '-icon-' + sort} style={{ width: '10px', marginLeft: '7px' }} src={icon} />
+      <img
+        id={id + '-icon-' + sort}
+        style={{ width: '10px', marginLeft: '7px' }}
+        src={icon}
+        alt={'icon'}
+      />
     </span>
   )
 }
