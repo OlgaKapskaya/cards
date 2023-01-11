@@ -1,16 +1,15 @@
 import React, { FC } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
-import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
+import { useAuthForm } from '../../common/hooks/useAuthForm'
 import { forgotPass } from '../Login/authSlice'
 
 import s from './PasswordRecovery.module.css'
@@ -28,12 +27,9 @@ const customMessage = `
                   </div>`
 
 export const PasswordRecovery: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<IFormInput>({ resolver: yupResolver(forgotValidationSchema), mode: 'onTouched' })
-  const dispatch = useAppDispatch()
+  const { dispatch, register, handleSubmit, errors } =
+    useAuthForm<IFormInput>(forgotValidationSchema)
+
   const onSubmit: SubmitHandler<IFormInput> = data => {
     const model = {
       email: data.email,
