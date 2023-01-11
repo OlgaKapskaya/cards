@@ -11,7 +11,6 @@ import { PasswordInput } from '../../common/components/PasswordInput/PasswordInp
 import { PATH } from '../../common/constants/path'
 import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
-import { useShowPassword } from '../../common/hooks/useShowPassword'
 import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
 import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 import { signUp, signUpStatusCreator } from '../Login/authSlice'
@@ -27,10 +26,8 @@ type IFormInput = {
 export const Registration = () => {
   const { isRegistered, dispatch, navigate, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(registrationValidationSchema)
-  const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
 
   const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
-
 
   if (isRegistered) {
     setTimeout(() => {
@@ -56,20 +53,10 @@ export const Registration = () => {
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
+              <PasswordInput id="password" error={errors.password} register={register} />
               <PasswordInput
-                id="password"
-                showPassword={showPassword}
-                handleMouseDownPassword={handleMouseDownPassword}
-                error={errors.password}
-                handleClickShowPassword={handleClickShowPassword}
-                register={register}
-              />
-              <PasswordInput
-                id="confirm-password"
-                showPassword={showPassword}
-                handleMouseDownPassword={handleMouseDownPassword}
+                id="confirmPassword"
                 error={errors.confirmPassword}
-                handleClickShowPassword={handleClickShowPassword}
                 register={register}
               />
               <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('40px')}>

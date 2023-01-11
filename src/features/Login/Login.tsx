@@ -1,4 +1,5 @@
 import { FC, useEffect } from 'react'
+
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
@@ -10,18 +11,16 @@ import { PasswordInput } from '../../common/components/PasswordInput/PasswordInp
 import { PATH } from '../../common/constants/path'
 import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
-import { useShowPassword } from '../../common/hooks/useShowPassword'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 
 import { LoginRequestType } from './authAPI'
 import { login } from './authSlice'
 import s from './Login.module.css'
-import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
-import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
 
 export const Login: FC = () => {
   const { isLoggedIn, dispatch, navigate, register, handleSubmit, errors } =
     useAuthForm<LoginRequestType>(loginValidationSchema)
-  const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
 
   const onSubmit = (data: any) => {
     dispatch(login(data))
@@ -48,14 +47,7 @@ export const Login: FC = () => {
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
-              <PasswordInput
-                id="password"
-                showPassword={showPassword}
-                handleMouseDownPassword={handleMouseDownPassword}
-                error={errors.password}
-                handleClickShowPassword={handleClickShowPassword}
-                register={register}
-              />
+              <PasswordInput id="password" error={errors.password} register={register} />
 
               <div className={s.checkbox}>
                 <Checkbox id="rememberMe" {...register('rememberMe')} />
