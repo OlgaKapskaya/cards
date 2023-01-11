@@ -7,6 +7,7 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
+import { emailRecoveryMessage } from '../../common/constants/emailMessage'
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
@@ -18,14 +19,6 @@ type IFormInput = {
   email: string
 }
 
-const customMessage = `
-                  <div style='background-color: indianred; padding: 15px'>
-                      password recovery link: 
-                    <a href='http://localhost:3000/#/set-new-password/$token$'>
-                      link
-                    </a>
-                  </div>`
-
 export const PasswordRecovery: FC = () => {
   const { dispatch, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(forgotValidationSchema)
@@ -34,7 +27,7 @@ export const PasswordRecovery: FC = () => {
     const model = {
       email: data.email,
       from: 'test-front-admin <kadegrob.kirill@gmail.com>',
-      message: customMessage,
+      message: emailRecoveryMessage,
     }
 
     dispatch(forgotPass(model))
