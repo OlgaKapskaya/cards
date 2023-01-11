@@ -5,17 +5,17 @@ import Paper from '@mui/material/Paper'
 import { Navigate } from 'react-router-dom'
 
 import logoutImg from '../../assets/img/logout.svg'
-import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
 import { sxButtonColorCreator } from '../../common/styles/sxButtonCreators'
-import { logout } from '../Login/authSlice'
+import { logout } from '../auth/authSlice'
 
+import { ProfileAvatar } from './profile-avatar/ProfileAvatar'
+import { ProfileBackLink } from './profile-back-link/ProfileBackLink'
+import { ProfilePersonalInfo } from './profile-personal-info/ProfilePersonalInfo'
 import s from './Profile.module.css'
-import { ProfileAvatar } from './ProfileAvatar/ProfileAvatar'
-import { ProfileBackLink } from './ProfileBackLink/ProfileBackLink'
-import { ProfilePersonalInfo } from './ProfilePersonalInfo/ProfilePersonalInfo'
 
 export const Profile: FC = () => {
   const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)

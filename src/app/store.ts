@@ -1,8 +1,8 @@
 import { AnyAction, configureStore } from '@reduxjs/toolkit'
 import { ThunkDispatch } from 'redux-thunk'
 
-import { authSlice } from '../features/Login/authSlice'
-import { profileReducer } from '../features/Profile/profileSlice'
+import { authSlice } from '../features/auth/authSlice'
+import { profileReducer } from '../features/profile/profileSlice'
 
 import { appReducer } from './appSlice'
 

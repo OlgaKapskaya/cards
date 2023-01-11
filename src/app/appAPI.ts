@@ -1,5 +1,5 @@
 import { instance } from '../common/constants/instance'
-import { UserType } from '../features/Profile/profileSlice'
+import { UserType } from '../features/profile/profileSlice'
 
 export const appAPI = {
   me() {

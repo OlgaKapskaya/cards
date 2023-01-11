@@ -2,14 +2,14 @@ import React, { useEffect } from 'react'
 
 import { LinearProgress } from '@mui/material'
 
-import { Loader } from '../common/components/Loader/Loader'
+import { Loader } from '../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
 
 import s from './App.module.css'
 import { me, RequestStatusType } from './appSlice'
-import { Header } from './Header/Header'
-import { Pages } from './Pages/Pages'
-import { SnackBar } from './SnackBar/SnackBar'
+import { Header } from './header/Header'
+import { Pages } from './pages/Pages'
+import { SnackBar } from './snackbar/SnackBar'
 
 const App = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)

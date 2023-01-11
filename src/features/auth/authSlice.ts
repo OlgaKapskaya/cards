@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
-import { setUserData, UserType } from '../Profile/profileSlice'
+import { setUserData, UserType } from '../profile/profileSlice'
 
 import {
   authAPI,

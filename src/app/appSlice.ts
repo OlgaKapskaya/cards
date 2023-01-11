@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setLoggedIn } from '../features/Login/authSlice'
-import { setUserData } from '../features/Profile/profileSlice'
+import { setLoggedIn } from '../features/auth/authSlice'
+import { setUserData } from '../features/profile/profileSlice'
 
 import { appAPI } from './appAPI'
 

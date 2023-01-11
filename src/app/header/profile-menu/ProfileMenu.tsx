@@ -1,9 +1,9 @@
 import { FC } from 'react'
 
-import { MenuComponent } from '../../../common/components/MenuComponent/MenuComponent'
-import { useMenuComponent } from '../../../common/components/MenuComponent/useMenuComponent'
+import { MenuComponent } from '../../../common/components/menu/MenuComponent'
+import { useMenuComponent } from '../../../common/components/menu/useMenuComponent'
 import { useAppSelector } from '../../../common/hooks/react-redux-hooks'
-import { ProfileAvatar } from '../../../features/Profile/ProfileAvatar/ProfileAvatar'
+import { ProfileAvatar } from '../../../features/profile/profile-avatar/ProfileAvatar'
 
 import { useProfileMenuItems } from './hooks/useProfileMenuItems'
 import s from './ProfileMenu.module.css'

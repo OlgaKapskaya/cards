@@ -4,11 +4,11 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import { useNavigate, useParams } from 'react-router-dom'
 
-import emailImg from '../../assets/img/emailImg.svg'
-import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
-import { PATH } from '../../common/constants/path'
-import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
+import emailImg from '../../../../assets/img/emailImg.svg'
+import { ButtonComponent } from '../../../../common/components/button/ButtonComponent'
+import { PATH } from '../../../../common/constants/path'
+import { sxBoxCreator } from '../../../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../../../common/styles/sxButtonCreators'
 
 import s from './CheckEmail.module.css'
 

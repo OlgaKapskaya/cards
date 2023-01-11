@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 
-import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
-import EditableSpanComponent from '../../common/components/EditableSpanComponent/EditableSpanComponent'
+import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import EditableSpanComponent from '../../common/components/editable-span/EditableSpanComponent'
 import SuperButton from '../../common/components/SuperButton/SuperButton'
 import SuperCheckbox from '../../common/components/SuperCheckbox/SuperCheckbox'
 import SuperInputText from '../../common/components/SuperInputText/SuperInputText'

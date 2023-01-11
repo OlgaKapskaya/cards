@@ -3,12 +3,12 @@ import React, { FC, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import logo from '../../assets/img/incubator-logo.svg'
-import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { useAppSelector } from '../../common/hooks/react-redux-hooks'
 
 import s from './Header.module.css'
-import { ProfileMenu } from './ProfileMenu/ProfileMenu'
+import { ProfileMenu } from './profile-menu/ProfileMenu'
 
 export const Header: FC = () => {
   const isLoggedIn = useAppSelector<boolean>(state => state.auth.isLoggedIn)

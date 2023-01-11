@@ -1,6 +1,6 @@
 import { FC, useEffect, useState } from 'react'
 
-import EditableSpanComponent from '../../../common/components/EditableSpanComponent/EditableSpanComponent'
+import EditableSpanComponent from '../../../common/components/editable-span/EditableSpanComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/react-redux-hooks'
 import { changeUserDataTC } from '../profileSlice'
 
