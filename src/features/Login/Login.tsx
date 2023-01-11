@@ -60,7 +60,7 @@ export const Login: FC = () => {
                 id="email"
                 label="Email"
                 variant="standard"
-                {...register('email', { required: true, maxLength: 10 })}
+                {...register('email')}
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
@@ -69,7 +69,7 @@ export const Login: FC = () => {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  {...register('password', { required: true, maxLength: 80 })}
+                  {...register('password')}
                   error={!!errors.password}
                   endAdornment={
                     <InputAdornment position="end">
