@@ -3,7 +3,7 @@ import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState
 import editIcon from '../../../assets/img/edit-2.svg'
 
 import { CustomInputWithButton } from './CustomInputWithButton/CustomInputWithButton'
-import s from './SuperEditableSpan.module.css'
+import s from './EditableSpanComponent.module.css'
 
 // тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
@@ -24,7 +24,7 @@ type SuperEditableSpanType = Omit<DefaultInputPropsType, 'type'> & {
   spanProps?: DefaultSpanPropsType & { defaultText?: string } // пропсы для спана
 }
 
-const SuperEditableSpan: FC<SuperEditableSpanType> = ({
+const EditableSpanComponent: FC<SuperEditableSpanType> = ({
   autoFocus,
   onBlur,
   onChangeText,
@@ -76,4 +76,4 @@ const SuperEditableSpan: FC<SuperEditableSpanType> = ({
   )
 }
 
-export default SuperEditableSpan
+export default EditableSpanComponent

@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppError, setAppStatus } from '../../app/appSlice'
+import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 import { setUserData, UserType } from '../Profile/profileSlice'
 
@@ -51,11 +51,12 @@ export const signUp = createAsyncThunk(
   async (payload: signUpPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
 
-    if (payload.password !== payload.pass2) dispatch(setAppError('Passwords dont match'))
+    if (payload.password !== payload.pass2) dispatch(setAppMessage('Passwords dont match'))
     try {
       await authAPI.signUp(payload)
+      dispatch(setAppMessage('You are successfully registered'))
       dispatch(signUpStatusCreator(true))
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -69,7 +70,7 @@ export const createNewPassword = createAsyncThunk(
     try {
       const response = await authAPI.createNewPassword(data)
 
-      console.log(response)
+      dispatch(setAppMessage(response.data.info))
       dispatch(setLoggedIn(true))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {

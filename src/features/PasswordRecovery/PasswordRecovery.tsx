@@ -1,16 +1,19 @@
 import React, { FC } from 'react'
 
 import Box from '@mui/material/Box'
-import Button from '@mui/material/Button'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
 import { emailRecoveryMessage } from '../../common/constants/emailMessage'
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
+
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 import { forgotPass } from '../Login/authSlice'
 
 import s from './PasswordRecovery.module.css'
@@ -35,18 +38,7 @@ export const PasswordRecovery: FC = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 456,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(456)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Forgot your password?</div>
@@ -64,14 +56,9 @@ export const PasswordRecovery: FC = () => {
               <div className={s.describe}>
                 Enter your email address and we will send you further instructions
               </div>
-              <Button
-                type="submit"
-                className={s.btn}
-                sx={{ borderRadius: '30px', mt: '60px' }}
-                variant="contained"
-              >
+              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('60px')}>
                 Send instructions
-              </Button>
+              </ButtonComponent>
             </form>
 
             <div className={s.already}>Did you remember your password?</div>

@@ -9,13 +9,13 @@ export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
 export interface AppStateType {
   status: RequestStatusType
-  error: string | null
+  message: string | null
   isInitialized: boolean
 }
 
 const initialState = {
   status: 'idle',
-  error: null,
+  message: null,
   isInitialized: false,
 } as AppStateType
 
@@ -40,8 +40,8 @@ export const appSlice = createSlice({
   name: 'app',
   initialState: initialState,
   reducers: {
-    setAppError(state, action: PayloadAction<string | null>) {
-      state.error = action.payload
+    setAppMessage(state, action: PayloadAction<string | null>) {
+      state.message = action.payload
     },
     setAppStatus(state, action: PayloadAction<RequestStatusType>) {
       state.status = action.payload
@@ -51,5 +51,5 @@ export const appSlice = createSlice({
     },
   },
 })
-export const { setAppError, setAppStatus, setAppInitialized } = appSlice.actions
+export const { setAppMessage, setAppStatus, setAppInitialized } = appSlice.actions
 export const appReducer = appSlice.reducer

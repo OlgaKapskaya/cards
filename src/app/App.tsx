@@ -7,14 +7,15 @@ import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hook
 
 import s from './App.module.css'
 import { me, RequestStatusType } from './appSlice'
-import { ErrorSnackbar } from './ErrorSnackbar/ErrorSnackbar'
 import { Header } from './Header/Header'
 import { Pages } from './Pages/Pages'
+import { SnackBar } from './SnackBar/SnackBar'
 
 const App = () => {
   const status = useAppSelector<RequestStatusType>(state => state.app.status)
   const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
   const dispatch = useAppDispatch()
+  const isOpenSnackBar = status === 'failed' || status === 'succeeded'
 
   useEffect(() => {
     dispatch(me())
@@ -29,7 +30,7 @@ const App = () => {
       <Header />
       {status === 'loading' && <LinearProgress />}
       <Pages />
-      {status === 'failed' && <ErrorSnackbar />}
+      {isOpenSnackBar && <SnackBar />}
     </div>
   )
 }

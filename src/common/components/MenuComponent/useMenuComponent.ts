@@ -1,11 +1,9 @@
 import React, { useCallback, useState } from 'react'
 
-import { useProfileMenuItem } from './useProfileMenuItem'
-
-export const useProfileMenuComponent = () => {
+export const useMenuComponent = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const open = Boolean(anchorEl)
-  const menuItems = useProfileMenuItem()
+
   const handleMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -13,5 +11,5 @@ export const useProfileMenuComponent = () => {
     setAnchorEl(null)
   }, [])
 
-  return { anchorEl, open, handleMenuOpen, handleMenuClose, menuItems }
+  return { anchorEl, open, handleMenuOpen, handleMenuClose }
 }

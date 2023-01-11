@@ -1,15 +1,17 @@
 import { FC } from 'react'
 
+import { MenuComponent } from '../../../common/components/MenuComponent/MenuComponent'
+import { useMenuComponent } from '../../../common/components/MenuComponent/useMenuComponent'
 import { useAppSelector } from '../../../common/hooks/react-redux-hooks'
 import { ProfileAvatar } from '../../../features/Profile/ProfileAvatar/ProfileAvatar'
 
-import { useProfileMenuComponent } from './hooks/useProfileMenuComponent'
-import { MenuComponent } from './MenuComponent/MenuComponent'
+import { useProfileMenuItems } from './hooks/useProfileMenuItems'
 import s from './ProfileMenu.module.css'
 
 export const ProfileMenu: FC = () => {
   const userName = useAppSelector(state => state.profile.profile.name)
-  const { anchorEl, open, handleMenuOpen, handleMenuClose, menuItems } = useProfileMenuComponent()
+  const { anchorEl, open, handleMenuOpen, handleMenuClose } = useMenuComponent()
+  const profileMenuItems = useProfileMenuItems()
 
   return (
     <>
@@ -21,7 +23,7 @@ export const ProfileMenu: FC = () => {
         anchorEl={anchorEl}
         open={open}
         handleClose={handleMenuClose}
-        items={menuItems}
+        items={profileMenuItems}
       />
     </>
   )
