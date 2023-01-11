@@ -5,8 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from './react-redux-hooks'
 
 export const useAuthForm = <T extends FieldValues>(schema: any) => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const signUpStatus = useAppSelector(state => state.auth.isRegistered)
+  const { isLoggedIn, isRegistered } = useAppSelector(state => state.auth)
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -19,5 +18,5 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
     resolver: yupResolver(schema),
   })
 
-  return { isLoggedIn, signUpStatus, dispatch, navigate, register, handleSubmit, errors }
+  return { isLoggedIn, isRegistered, dispatch, navigate, register, handleSubmit, errors }
 }

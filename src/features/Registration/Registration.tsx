@@ -26,7 +26,7 @@ type IFormInput = {
 }
 
 export const Registration = () => {
-  const { signUpStatus, dispatch, navigate, register, handleSubmit, errors } =
+  const { isRegistered, dispatch, navigate, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(registrationValidationSchema)
   const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
 
@@ -38,7 +38,7 @@ export const Registration = () => {
     dispatch(signUpStatusCreator(false))
   }
 
-  if (signUpStatus) {
+  if (isRegistered) {
     setTimeout(() => {
       navigate('/login')
       dispatch(signUpStatusCreator(false))
@@ -137,8 +137,8 @@ export const Registration = () => {
           </div>
         </Paper>
       </Box>
-      {signUpStatus && (
-        <Snackbar open={signUpStatus} autoHideDuration={6000} onClose={handleClose}>
+      {isRegistered && (
+        <Snackbar open={isRegistered} autoHideDuration={6000} onClose={handleClose}>
           <Alert
             onClose={handleClose}
             severity="success"
