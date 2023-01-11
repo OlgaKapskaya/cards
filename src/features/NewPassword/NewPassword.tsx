@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useState } from 'react'
+import { FC } from 'react'
 
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -10,8 +10,14 @@ import Input from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
+import { SubmitHandler } from 'react-hook-form'
+import { useParams } from 'react-router-dom'
 
-import { useNewPasswordForm } from './hooks/useNewPasswordForm'
+import { newPasswordValidationScheme } from '../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../common/hooks/useAuthForm'
+import { useShowPassword } from '../../common/hooks/useShowPassword'
+import { createNewPassword } from '../Login/authSlice'
+
 import s from './NewPassword.module.css'
 
 export interface INewPasswordForm {
@@ -19,12 +25,21 @@ export interface INewPasswordForm {
 }
 
 export const NewPassword: FC = () => {
-  const [showPassword, setShowPassword] = useState(false)
-  const handleClickShowPassword = () => setShowPassword(show => !show)
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+  const { dispatch, register, errors, handleSubmit } = useAuthForm<INewPasswordForm>(
+    newPasswordValidationScheme
+  )
+  const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
+  const params = useParams<{ token: string }>()
+
+  const onSubmit: SubmitHandler<INewPasswordForm> = data => {
+    if (params.token)
+      dispatch(
+        createNewPassword({
+          password: data.password,
+          resetPasswordToken: params.token,
+        })
+      )
   }
-  const { register, handleSubmit, errors, onSubmit } = useNewPasswordForm()
 
   return (
     <div>
