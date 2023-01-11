@@ -1,3 +1,5 @@
+import React from 'react'
+
 import { Alert, Snackbar } from '@mui/material'
 
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
@@ -16,17 +18,13 @@ export const SnackBar = () => {
     dispatch(setAppMessage(null))
   }
 
+  const alertSeverity = status === 'failed' ? 'error' : 'success'
+
   return (
     <Snackbar open={message !== null} autoHideDuration={6000} onClose={handleClose}>
-      {status === 'failed' ? (
-        <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }} variant="filled">
-          {message}
-        </Alert>
-      ) : (
-        <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }} variant="filled">
-          {message}
-        </Alert>
-      )}
+      <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }} variant="filled">
+        {message}
+      </Alert>
     </Snackbar>
   )
 }

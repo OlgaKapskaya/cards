@@ -3,7 +3,7 @@ import React, { FC } from 'react'
 import { Navigate } from 'react-router-dom'
 
 import logoutImg from '../../assets/img/logout.svg'
-import SuperButton from '../../common/components/SuperButton/SuperButton'
+import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
 import { logout } from '../Login/authSlice'
@@ -32,12 +32,25 @@ export const Profile: FC = () => {
         <span className={s.title}>Personal Information</span>
         <ProfileAvatar withButton size={96} />
         <ProfilePersonalInfo />
-        {/*<ButtonComponent className={s.logoutBtn} onClick={logoutHandler}>*/}
-        {/*  <img src={logoutImg} alt="logout" /> Log out*/}
-        {/*</ButtonComponent>*/}
-        <SuperButton className={s.logoutBtn} onClick={logoutHandler}>
-          <img src={logoutImg} alt="logout" /> Log out
-        </SuperButton>
+
+        <ButtonComponent
+          sx={{
+            mb: '30px',
+            mt: '20px',
+            width: '127px',
+            background: '#fcfcfc',
+            color: 'black',
+            textTransform: 'none',
+            ':hover': {
+              background: '#fcfcfc',
+              color: 'black',
+            },
+          }}
+          className={s.logoutBtn}
+          onClick={logoutHandler}
+        >
+          <img src={logoutImg} alt="logout" className={s.logoutImg} /> Log out
+        </ButtonComponent>
       </div>
     </div>
   )

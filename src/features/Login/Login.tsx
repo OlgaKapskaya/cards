@@ -106,12 +106,7 @@ export const Login: FC = () => {
               <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
                 Forgot Password?
               </NavLink>
-              <ButtonComponent
-                type="submit"
-                className={s.btn}
-                sx={{ mt: '60px' }}
-                onClick={() => navigate(PATH.LOGIN)}
-              >
+              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '60px' }}>
                 Sign In
               </ButtonComponent>
             </form>
