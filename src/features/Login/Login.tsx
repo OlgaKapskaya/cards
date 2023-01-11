@@ -1,21 +1,15 @@
 import { FC, MouseEvent, useEffect, useState } from 'react'
 
 import { yupResolver } from '@hookform/resolvers/yup'
-import Visibility from '@mui/icons-material/Visibility'
-import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
-import FormControl from '@mui/material/FormControl'
-import IconButton from '@mui/material/IconButton'
-import Input from '@mui/material/Input'
-import InputAdornment from '@mui/material/InputAdornment'
-import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { useForm } from 'react-hook-form'
 import { NavLink, useNavigate } from 'react-router-dom'
 
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import { PasswordInput } from '../../common/components/PasswordInput/PasswordInput'
 import { PATH } from '../../common/constants/path'
 import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
@@ -69,27 +63,15 @@ export const Login: FC = () => {
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
-              <FormControl className={s.password} sx={{ m: 1, width: '347px' }} variant="standard">
-                <InputLabel htmlFor="password">Password</InputLabel>
-                <Input
-                  id="password"
-                  type={showPassword ? 'text' : 'password'}
-                  {...register('password', { required: true, maxLength: 80 })}
-                  error={!!errors.password}
-                  endAdornment={
-                    <InputAdornment position="end">
-                      <IconButton
-                        aria-label="toggle password visibility"
-                        onClick={handleClickShowPassword}
-                        onMouseDown={handleMouseDownPassword}
-                      >
-                        {showPassword ? <VisibilityOff /> : <Visibility />}
-                      </IconButton>
-                    </InputAdornment>
-                  }
-                />
-                {errors.password && <span className={s.error}>{errors.password?.message}</span>}
-              </FormControl>
+              <PasswordInput
+                id="password"
+                showPassword={showPassword}
+                handleMouseDownPassword={handleMouseDownPassword}
+                error={errors.password}
+                handleClickShowPassword={handleClickShowPassword}
+                register={register}
+              />
+
               <div className={s.checkbox}>
                 <Checkbox id="rememberMe" {...register('rememberMe')} />
                 <span>Remember me</span>
