@@ -4,6 +4,7 @@ import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../../common/components/Error404/Error404'
 import { PATH } from '../../common/constants/path'
+import { CheckEmail } from '../../features/CheckEmail/CheckEmail'
 import { Login } from '../../features/Login/Login'
 import { NewPassword } from '../../features/NewPassword/NewPassword'
 import { PasswordRecovery } from '../../features/PasswordRecovery/PasswordRecovery'
@@ -20,6 +21,7 @@ export const Pages: FC = () => {
       <Route path={PATH.PROFILE} element={<Profile />} />
       <Route path={PATH.TEST} element={<Test />} />
       <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
+      <Route path={PATH.CHECK_EMAIL + '/:email'} element={<CheckEmail />} />
       <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
       <Route path={PATH.ERROR404} element={<Error404 />} />
     </Routes>

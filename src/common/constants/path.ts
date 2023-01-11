@@ -4,6 +4,7 @@ export const PATH = {
   PROFILE: '/profile',
   TEST: '/test',
   PASSWORD_RECOVERY: '/password-recovery',
+  CHECK_EMAIL: '/check-email',
   NEW_PASSWORD: '/set-new-password/:token',
   ERROR404: '/*',
 }

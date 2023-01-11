@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -6,15 +6,14 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { emailRecoveryMessage } from '../../common/constants/emailMessage'
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import { emailRecoveryMessage } from '../../common/constants/emailMessage'
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
-
 import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
 import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
-import { forgotPass } from '../Login/authSlice'
+import { forgotPass, isSentRecoveryEmailStatus } from '../Login/authSlice'
 
 import s from './PasswordRecovery.module.css'
 
@@ -23,8 +22,9 @@ type IFormInput = {
 }
 
 export const PasswordRecovery: FC = () => {
-  const { dispatch, register, handleSubmit, errors } =
+  const { isSentRecoveryEmail, dispatch, navigate, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(forgotValidationSchema)
+  const [email, setEmail] = useState('')
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     const model = {
@@ -33,7 +33,13 @@ export const PasswordRecovery: FC = () => {
       message: emailRecoveryMessage,
     }
 
+    setEmail(data.email)
     dispatch(forgotPass(model))
+  }
+
+  if (isSentRecoveryEmail) {
+    dispatch(isSentRecoveryEmailStatus(false))
+    navigate(`/check-email/${email}`)
   }
 
   return (

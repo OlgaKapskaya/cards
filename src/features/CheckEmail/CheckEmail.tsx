@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import emailImg from '../../assets/img/emailImg.svg'
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
@@ -15,7 +15,8 @@ import s from './CheckEmail.module.css'
 export const CheckEmail: FC = () => {
   const navigate = useNavigate()
   // заменить на реальный
-  const email = 'example@mail.com'
+  const params = useParams<{ email: string }>()
+  // const email = 'example@mail.com'
 
   return (
     <div>
@@ -24,7 +25,9 @@ export const CheckEmail: FC = () => {
           <div className={s.paper_container}>
             <div className={s.title}>Check Email</div>
             <img src={emailImg} alt="emailImg" />
-            <p className={s.textInfo}>{`We’ve sent an Email with instructions to ${email}`}</p>
+            <p
+              className={s.textInfo}
+            >{`We’ve sent an Email with instructions to ${params.email}`}</p>
             <ButtonComponent
               type="submit"
               sx={sxButtonMarginTopWidthCreator('35px')}

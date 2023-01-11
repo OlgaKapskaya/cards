@@ -15,6 +15,7 @@ import {
 interface AuthStateType {
   isLoggedIn: boolean
   isRegistered: boolean
+  isSentRecoveryEmail: boolean
   isRecoveredPassword: boolean
 }
 
@@ -89,6 +90,7 @@ export const forgotPass = createAsyncThunk(
     try {
       await authAPI.forgotPass(payload)
 
+      dispatch(isSentRecoveryEmailStatus(true))
       dispatch(setAppMessage('Recovery link sent to email'))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -102,6 +104,7 @@ export const authSlice = createSlice({
   initialState: {
     isLoggedIn: false,
     isRegistered: false,
+    isSentRecoveryEmail: false,
     isRecoveredPassword: false,
   } as AuthStateType,
   reducers: {
@@ -111,10 +114,18 @@ export const authSlice = createSlice({
     signUpStatusCreator(state, action: PayloadAction<boolean>) {
       state.isRegistered = action.payload
     },
+    isSentRecoveryEmailStatus(state, action: PayloadAction<boolean>) {
+      state.isSentRecoveryEmail = action.payload
+    },
     recoveredPasswordStatus(state, action: PayloadAction<boolean>) {
       state.isRecoveredPassword = action.payload
     },
   },
 })
 
-export const { setLoggedIn, signUpStatusCreator, recoveredPasswordStatus } = authSlice.actions
+export const {
+  setLoggedIn,
+  signUpStatusCreator,
+  isSentRecoveryEmailStatus,
+  recoveredPasswordStatus,
+} = authSlice.actions

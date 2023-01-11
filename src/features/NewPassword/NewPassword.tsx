@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom'
 
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PasswordInput } from '../../common/components/PasswordInput/PasswordInput'
+import { PATH } from '../../common/constants/path'
 import { newPasswordValidationScheme } from '../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../common/hooks/useAuthForm'
 import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
@@ -38,7 +39,7 @@ export const NewPassword: FC = () => {
   if (isRecoveredPassword) {
     // setTimeout(() => {
     dispatch(recoveredPasswordStatus(false))
-    navigate('/login')
+    navigate(PATH.LOGIN)
     // }, 1500)
   }
 
