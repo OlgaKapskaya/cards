@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import { Alert, IconButton, InputAdornment, InputLabel, Snackbar } from '@mui/material'
@@ -8,28 +8,37 @@ import FormControl from '@mui/material/FormControl'
 import Input from '@mui/material/Input'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { SubmitHandler } from 'react-hook-form'
+import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../common/constants/path'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { signUpStatusCreator } from '../Login/authSlice'
+import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../common/hooks/useAuthForm'
+import { useShowPassword } from '../../common/hooks/useShowPassword'
+import { signUp, signUpStatusCreator } from '../Login/authSlice'
 
-import { useRegistration } from './hooks/useRegistration'
 import s from './Registration.module.css'
 
-export const Registration = () => {
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+type IFormInput = {
+  email: string
+  password: string
+  confirmPassword: string
+}
 
-  const { register, handleSubmit, errors, onSubmit, handleClose } = useRegistration()
-  const signUpStatus = useAppSelector(state => state.auth.isRegistered)
-  const [showPassword, setShowPassword] = useState(false)
-  const handleClickShowPassword = () => setShowPassword(show => !show)
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
+export const Registration = () => {
+  const { isRegistered, dispatch, navigate, register, handleSubmit, errors } =
+    useAuthForm<IFormInput>(registrationValidationSchema)
+  const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
+
+  const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
+  const handleClose = (event?: React.SyntheticEvent<any> | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return
+    }
+    dispatch(signUpStatusCreator(false))
   }
 
-  if (signUpStatus) {
+  if (isRegistered) {
     setTimeout(() => {
       navigate('/login')
       dispatch(signUpStatusCreator(false))
@@ -128,8 +137,8 @@ export const Registration = () => {
           </div>
         </Paper>
       </Box>
-      {signUpStatus && (
-        <Snackbar open={signUpStatus} autoHideDuration={6000} onClose={handleClose}>
+      {isRegistered && (
+        <Snackbar open={isRegistered} autoHideDuration={6000} onClose={handleClose}>
           <Alert
             onClose={handleClose}
             severity="success"

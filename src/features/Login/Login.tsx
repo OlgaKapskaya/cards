@@ -1,6 +1,5 @@
-import { FC, useState, MouseEvent, useEffect } from 'react'
+import { FC, useEffect } from 'react'
 
-import { yupResolver } from '@hookform/resolvers/yup'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import Box from '@mui/material/Box'
@@ -13,35 +12,22 @@ import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { useForm } from 'react-hook-form'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 import { PATH } from '../../common/constants/path'
 import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { useAuthForm } from '../../common/hooks/useAuthForm'
+import { useShowPassword } from '../../common/hooks/useShowPassword'
 
 import { LoginRequestType } from './authAPI'
 import { login } from './authSlice'
 import s from './Login.module.css'
 
 export const Login: FC = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
-  const [showPassword, setShowPassword] = useState(false)
-  const handleClickShowPassword = () => setShowPassword(show => !show)
-  const handleMouseDownPassword = (event: MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault()
-  }
+  const { isLoggedIn, dispatch, navigate, register, handleSubmit, errors } =
+    useAuthForm<LoginRequestType>(loginValidationSchema)
+  const { showPassword, handleClickShowPassword, handleMouseDownPassword } = useShowPassword()
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm<LoginRequestType>({
-    mode: 'onTouched',
-    resolver: yupResolver(loginValidationSchema),
-  })
   const onSubmit = (data: any) => {
     dispatch(login(data))
   }
@@ -74,7 +60,7 @@ export const Login: FC = () => {
                 id="email"
                 label="Email"
                 variant="standard"
-                {...register('email', { required: true, maxLength: 10 })}
+                {...register('email')}
                 error={!!errors.email}
                 helperText={errors.email?.message}
               />
@@ -83,7 +69,7 @@ export const Login: FC = () => {
                 <Input
                   id="password"
                   type={showPassword ? 'text' : 'password'}
-                  {...register('password', { required: true, maxLength: 80 })}
+                  {...register('password')}
                   error={!!errors.password}
                   endAdornment={
                     <InputAdornment position="end">
