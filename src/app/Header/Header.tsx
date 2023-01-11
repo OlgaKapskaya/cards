@@ -19,7 +19,7 @@ export const Header: FC = () => {
     return isLoggedIn ? (
       <ProfileMenu />
     ) : (
-      <ButtonComponent type="submit" className={s.button} onClick={loginHandler}>
+      <ButtonComponent type="submit" sx={{ width: '113px' }} onClick={loginHandler}>
         Sign in
       </ButtonComponent>
     )

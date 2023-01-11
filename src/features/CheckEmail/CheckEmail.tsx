@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom'
 import emailImg from '../../assets/img/emailImg.svg'
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
 import { PATH } from '../../common/constants/path'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 
 import s from './CheckEmail.module.css'
 
@@ -17,18 +19,7 @@ export const CheckEmail: FC = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 408,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(408)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Check Email</div>
@@ -36,8 +27,7 @@ export const CheckEmail: FC = () => {
             <p className={s.textInfo}>{`We’ve sent an Email with instructions to ${email}`}</p>
             <ButtonComponent
               type="submit"
-              className={s.btn}
-              sx={{ mt: '35px' }}
+              sx={sxButtonMarginTopWidthCreator('35px')}
               onClick={() => navigate(PATH.LOGIN)}
             >
               Back to login

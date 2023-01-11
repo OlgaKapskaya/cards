@@ -19,6 +19,8 @@ import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonC
 import { PATH } from '../../common/constants/path'
 import { loginValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 
 import { LoginRequestType } from './authAPI'
 import { login } from './authSlice'
@@ -52,18 +54,7 @@ export const Login: FC = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 552,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(552)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Sign in</div>
@@ -106,7 +97,7 @@ export const Login: FC = () => {
               <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
                 Forgot Password?
               </NavLink>
-              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '60px' }}>
+              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('60px')}>
                 Sign In
               </ButtonComponent>
             </form>

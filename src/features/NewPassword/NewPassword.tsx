@@ -11,6 +11,8 @@ import InputLabel from '@mui/material/InputLabel'
 import Paper from '@mui/material/Paper'
 
 import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonComponent'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 
 import { useNewPasswordForm } from './hooks/useNewPasswordForm'
 import s from './NewPassword.module.css'
@@ -29,18 +31,7 @@ export const NewPassword: FC = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 408,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(408)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Create new password</div>
@@ -69,7 +60,7 @@ export const NewPassword: FC = () => {
               <p className={s.textInfo}>
                 {`Create new password and we will send you further instructions to email`}
               </p>
-              <ButtonComponent type="submit" className={s.btn}>
+              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator()}>
                 Create new password
               </ButtonComponent>
             </form>

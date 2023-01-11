@@ -4,15 +4,14 @@ import Button, { ButtonProps } from '@mui/material/Button'
 
 export const ButtonComponent: FC<ButtonProps> = memo(
   ({ variant, sx, type, className, ...restProps }) => {
-    const finalSX = {
-      borderRadius: '30px',
-      ...sx,
-    }
-
     return (
       <Button
         type={type ? type : 'button'}
-        sx={finalSX}
+        sx={{
+          borderRadius: '30px',
+          textTransform: 'none',
+          ...sx,
+        }}
         variant={variant ? variant : 'contained'}
         {...restProps}
       />

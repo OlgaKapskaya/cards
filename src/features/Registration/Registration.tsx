@@ -15,6 +15,8 @@ import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonC
 import { PATH } from '../../common/constants/path'
 import { registrationValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 import { signUp, signUpStatusCreator } from '../Login/authSlice'
 
 import s from './Registration.module.css'
@@ -54,18 +56,7 @@ export const Registration = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 552,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(552)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Sign Up</div>
@@ -126,7 +117,7 @@ export const Registration = () => {
                   <span className={s.error}>{errors.confirmPassword.message}</span>
                 )}
               </FormControl>
-              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '40px' }}>
+              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('40px')}>
                 Sign Up
               </ButtonComponent>
             </form>

@@ -11,6 +11,8 @@ import { ButtonComponent } from '../../common/components/ButtonComponent/ButtonC
 import { PATH } from '../../common/constants/path'
 import { forgotValidationSchema } from '../../common/constants/validators/validationSchemes'
 import { useAppDispatch } from '../../common/hooks/react-redux-hooks'
+import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../common/styles/sxButtonCreators'
 import { forgotPass } from '../Login/authSlice'
 
 import s from './PasswordRecovery.module.css'
@@ -46,18 +48,7 @@ export const PasswordRecovery: FC = () => {
 
   return (
     <div>
-      <Box
-        sx={{
-          display: 'flex',
-          flexWrap: 'wrap',
-          '& > :not(style)': {
-            m: 1,
-            width: 413,
-            height: 456,
-            margin: '50px auto',
-          },
-        }}
-      >
+      <Box sx={sxBoxCreator(456)}>
         <Paper elevation={3}>
           <div className={s.paper_container}>
             <div className={s.title}>Forgot your password?</div>
@@ -75,7 +66,7 @@ export const PasswordRecovery: FC = () => {
               <div className={s.describe}>
                 Enter your email address and we will send you further instructions
               </div>
-              <ButtonComponent type="submit" className={s.btn} sx={{ mt: '60px' }}>
+              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('60px')}>
                 Send instructions
               </ButtonComponent>
             </form>
