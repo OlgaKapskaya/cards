@@ -31,6 +31,7 @@ export const ProfilePersonalInfo: FC = () => {
       <EditableSpanComponent
         onChangeText={onChangeNameHandler}
         onEnter={onChangeUserName}
+        onBlur={onChangeUserName}
         value={newName}
         spanProps={{ defaultText: 'user name' }}
         inputLabel="Nickname"
