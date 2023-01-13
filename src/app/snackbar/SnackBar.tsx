@@ -2,12 +2,13 @@ import React from 'react'
 
 import { Alert, Snackbar } from '@mui/material'
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { RequestStatusType, setAppMessage } from '../appSlice'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
+import { appMessageSelector, appStatusSelector } from '../../common/selectors/appSelectors'
+import { setAppMessage } from '../appSlice'
 
 export const SnackBar = () => {
-  const message = useAppSelector<string | null>(state => state.app.message)
-  const status = useAppSelector<RequestStatusType>(state => state.app.status)
+  const message = useAppSelector(appMessageSelector)
+  const status = useAppSelector(appStatusSelector)
 
   const dispatch = useAppDispatch()
 

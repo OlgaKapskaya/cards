@@ -12,11 +12,11 @@ import {
   signUpPayloadType,
 } from './authAPI'
 
-interface AuthStateType {
-  isLoggedIn: boolean
-  isRegistered: boolean
-  isSentRecoveryEmail: boolean
-  isRecoveredPassword: boolean
+const initialState = {
+  isLoggedIn: false,
+  isRegistered: false,
+  isSentRecoveryEmail: false,
+  isRecoveredPassword: false,
 }
 
 export const login = createAsyncThunk(
@@ -55,7 +55,6 @@ export const signUp = createAsyncThunk(
   async (payload: signUpPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
 
-    if (payload.password !== payload.pass2) dispatch(setAppMessage('Passwords dont match'))
     try {
       await authAPI.signUp(payload)
       dispatch(setAppMessage('You are successfully registered'))
@@ -101,12 +100,7 @@ export const forgotPass = createAsyncThunk(
 
 export const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    isLoggedIn: false,
-    isRegistered: false,
-    isSentRecoveryEmail: false,
-    isRecoveredPassword: false,
-  } as AuthStateType,
+  initialState: initialState,
   reducers: {
     setLoggedIn: (state, action: PayloadAction<boolean>) => {
       state.isLoggedIn = action.payload
@@ -129,3 +123,4 @@ export const {
   isSentRecoveryEmailStatus,
   recoveredPasswordStatus,
 } = authSlice.actions
+export const authReducer = authSlice.reducer

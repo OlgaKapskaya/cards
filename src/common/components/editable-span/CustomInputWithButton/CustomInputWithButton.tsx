@@ -1,16 +1,19 @@
-import { ChangeEvent, KeyboardEvent, FC, ReactNode, MouseEvent } from 'react'
+import { ChangeEvent, FC, KeyboardEvent, MouseEvent } from 'react'
 
-import { Button, Input, InputAdornment, InputLabel, InputProps } from '@mui/material'
+import { Input, InputProps } from '@mui/material'
+import Button from '@mui/material/Button'
+import InputAdornment from '@mui/material/InputAdornment'
+import InputLabel from '@mui/material/InputLabel'
 
 import s from './CustomInputWithButton.module.css'
 
 export type CustomInputWithButtonPropsType = InputProps & {
   onChangeText?: (value: string) => void
   onEnter?: () => void
-  error?: ReactNode
   spanClassName?: string
   buttonName?: string
   inputLabel?: string
+  errorText?: string
 }
 
 export const CustomInputWithButton: FC<CustomInputWithButtonPropsType> = ({
@@ -19,7 +22,7 @@ export const CustomInputWithButton: FC<CustomInputWithButtonPropsType> = ({
   onKeyPress,
   onBlur,
   onEnter,
-  error,
+  errorText,
   className,
   spanClassName,
   id,

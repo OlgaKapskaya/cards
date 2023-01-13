@@ -7,4 +7,4 @@ export const PATH = {
   CHECK_EMAIL: '/check-email',
   NEW_PASSWORD: '/set-new-password/:token',
   ERROR404: '/*',
-}
+} as const

@@ -1,19 +1,20 @@
 import React, { useEffect } from 'react'
 
-import { LinearProgress } from '@mui/material'
+import LinearProgress from '@mui/material/LinearProgress'
 
 import { Loader } from '../common/components/loader/Loader'
-import { useAppDispatch, useAppSelector } from '../common/hooks/react-redux-hooks'
+import { useAppDispatch, useAppSelector } from '../common/hooks/reactReduxHooks'
+import { appIsInitializedSelector, appStatusSelector } from '../common/selectors/appSelectors'
 
 import s from './App.module.css'
-import { me, RequestStatusType } from './appSlice'
+import { me } from './appSlice'
 import { Header } from './header/Header'
 import { Pages } from './pages/Pages'
 import { SnackBar } from './snackbar/SnackBar'
 
 const App = () => {
-  const status = useAppSelector<RequestStatusType>(state => state.app.status)
-  const isInitialized = useAppSelector<boolean>(state => state.app.isInitialized)
+  const status = useAppSelector(appStatusSelector)
+  const isInitialized = useAppSelector(appIsInitializedSelector)
   const dispatch = useAppDispatch()
   const isOpenSnackBar = status === 'failed' || status === 'succeeded'
 

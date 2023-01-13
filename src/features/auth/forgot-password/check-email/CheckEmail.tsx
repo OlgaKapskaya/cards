@@ -7,16 +7,15 @@ import { useNavigate, useParams } from 'react-router-dom'
 import emailImg from '../../../../assets/img/emailImg.svg'
 import { ButtonComponent } from '../../../../common/components/button/ButtonComponent'
 import { PATH } from '../../../../common/constants/path'
-import { sxBoxCreator } from '../../../../common/styles/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../../common/styles/sxButtonCreators'
+import { sxBoxCreator } from '../../../../common/utils/styles-utils/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 
 import s from './CheckEmail.module.css'
 
 export const CheckEmail: FC = () => {
   const navigate = useNavigate()
   // заменить на реальный
-  const params = useParams<{ email: string }>()
-  // const email = 'example@mail.com'
+  const { email } = useParams<{ email: string }>()
 
   return (
     <div>
@@ -25,9 +24,7 @@ export const CheckEmail: FC = () => {
           <div className={s.paper_container}>
             <div className={s.title}>Check Email</div>
             <img src={emailImg} alt="emailImg" />
-            <p
-              className={s.textInfo}
-            >{`We’ve sent an Email with instructions to ${params.email}`}</p>
+            <p className={s.textInfo}>{`We’ve sent an Email with instructions to ${email}`}</p>
             <ButtonComponent
               type="submit"
               sx={sxButtonMarginTopWidthCreator('35px')}

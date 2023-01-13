@@ -10,8 +10,8 @@ import { PasswordInput } from '../../../../common/components/password-input/Pass
 import { PATH } from '../../../../common/constants/path'
 import { newPasswordValidationScheme } from '../../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../../common/styles/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../../common/styles/sxButtonCreators'
+import { sxBoxCreator } from '../../../../common/utils/styles-utils/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 import { createNewPassword, recoveredPasswordStatus } from '../../authSlice'
 
 import s from './NewPassword.module.css'
@@ -24,14 +24,14 @@ export const NewPassword: FC = () => {
   const { isRecoveredPassword, navigate, dispatch, register, errors, handleSubmit } =
     useAuthForm<INewPasswordForm>(newPasswordValidationScheme)
 
-  const params = useParams<{ token: string }>()
+  const { token } = useParams<{ token: string }>()
 
   const onSubmit: SubmitHandler<INewPasswordForm> = data => {
-    if (params.token)
+    if (token)
       dispatch(
         createNewPassword({
           password: data.password,
-          resetPasswordToken: params.token,
+          resetPasswordToken: token,
         })
       )
   }

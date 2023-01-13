@@ -5,16 +5,13 @@ import editIcon from '../../../assets/img/edit-2.svg'
 import { CustomInputWithButton } from './CustomInputWithButton/CustomInputWithButton'
 import s from './EditableSpanComponent.module.css'
 
-// тип пропсов обычного инпута
 type DefaultInputPropsType = DetailedHTMLProps<
   InputHTMLAttributes<HTMLInputElement>,
   HTMLInputElement
 >
-// тип пропсов обычного спана
+
 type DefaultSpanPropsType = DetailedHTMLProps<HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>
 
-// здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута, кроме type
-// (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
 type SuperEditableSpanType = Omit<DefaultInputPropsType, 'type'> & {
   onChangeText?: (value: string) => void
   onEnter?: () => void
@@ -30,6 +27,7 @@ const EditableSpanComponent: FC<SuperEditableSpanType> = ({
   onChangeText,
   onEnter,
   spanProps,
+  error,
   inputLabel,
   buttonName,
   ...restProps // все остальные пропсы попадут в объект restProps

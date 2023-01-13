@@ -1,6 +1,4 @@
-import { FC } from 'react'
-
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../../common/components/error404/Error404'
 import { PATH } from '../../common/constants/path'
@@ -12,18 +10,23 @@ import { Registration } from '../../features/auth/registration/Registration'
 import { Profile } from '../../features/profile/Profile'
 import { Test } from '../../features/test/Test'
 
-export const Pages: FC = () => {
+import { PrivateRoutes } from './PrivateRoutes'
+
+export const Pages = () => {
   return (
     <Routes>
-      <Route path="/" element={<Navigate to={PATH.PROFILE} />} />
+      <Route index path="/" element={<Profile />} />
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTRATION} element={<Registration />} />
-      <Route path={PATH.PROFILE} element={<Profile />} />
       <Route path={PATH.TEST} element={<Test />} />
       <Route path={PATH.PASSWORD_RECOVERY} element={<PasswordRecovery />} />
       <Route path={PATH.CHECK_EMAIL + '/:email'} element={<CheckEmail />} />
       <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
       <Route path={PATH.ERROR404} element={<Error404 />} />
+
+      <Route element={<PrivateRoutes />}>
+        <Route path={PATH.PROFILE} element={<Profile />} />
+      </Route>
     </Routes>
   )
 }

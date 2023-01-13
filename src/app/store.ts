@@ -1,7 +1,7 @@
 import { AnyAction, configureStore } from '@reduxjs/toolkit'
 import { ThunkDispatch } from 'redux-thunk'
 
-import { authSlice } from '../features/auth/authSlice'
+import { authReducer } from '../features/auth/authSlice'
 import { profileReducer } from '../features/profile/profileSlice'
 
 import { appReducer } from './appSlice'
@@ -10,7 +10,7 @@ export const store = configureStore({
   reducer: {
     app: appReducer,
     profile: profileReducer,
-    auth: authSlice.reducer,
+    auth: authReducer,
   },
 })
 

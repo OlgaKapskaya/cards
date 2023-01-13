@@ -2,12 +2,21 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from './react-redux-hooks'
+import {
+  isLoggedInSelector,
+  isRecoveredPasswordSelector,
+  isRegisteredSelector,
+  isSentRecoveryEmailSelector,
+} from '../selectors/authSelectors'
+
+import { useAppDispatch, useAppSelector } from './reactReduxHooks'
 
 export const useAuthForm = <T extends FieldValues>(schema: any) => {
-  const { isLoggedIn, isRegistered, isSentRecoveryEmail, isRecoveredPassword } = useAppSelector(
-    state => state.auth
-  )
+  const isLoggedIn = useAppSelector(isLoggedInSelector)
+  const isRegistered = useAppSelector(isRegisteredSelector)
+  const isSentRecoveryEmail = useAppSelector(isSentRecoveryEmailSelector)
+  const isRecoveredPassword = useAppSelector(isRecoveredPasswordSelector)
+
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 

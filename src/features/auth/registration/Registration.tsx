@@ -11,8 +11,8 @@ import { PasswordInput } from '../../../common/components/password-input/Passwor
 import { PATH } from '../../../common/constants/path'
 import { registrationValidationSchema } from '../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../common/styles/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../common/styles/sxButtonCreators'
+import { sxBoxCreator } from '../../../common/utils/styles-utils/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
 import { signUp, signUpStatusCreator } from '../authSlice'
 
 import s from './Registration.module.css'
@@ -27,7 +27,8 @@ export const Registration = () => {
   const { isRegistered, dispatch, navigate, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(registrationValidationSchema)
 
-  const onSubmit: SubmitHandler<IFormInput> = data => dispatch(signUp(data))
+  const onSubmit: SubmitHandler<IFormInput> = data =>
+    dispatch(signUp({ email: data.email, password: data.password }))
 
   if (isRegistered) {
     setTimeout(() => {

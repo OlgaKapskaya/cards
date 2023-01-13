@@ -1,15 +1,13 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
-import { Navigate } from 'react-router-dom'
 
 import logoutImg from '../../assets/img/logout.svg'
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
-import { PATH } from '../../common/constants/path'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/react-redux-hooks'
-import { sxBoxCreator } from '../../common/styles/sxBoxCreator'
-import { sxButtonColorCreator } from '../../common/styles/sxButtonCreators'
+import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
+import { sxBoxCreator } from '../../common/utils/styles-utils/sxBoxCreator'
+import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 import { logout } from '../auth/authSlice'
 
 import { ProfileAvatar } from './profile-avatar/ProfileAvatar'
@@ -17,16 +15,11 @@ import { ProfileBackLink } from './profile-back-link/ProfileBackLink'
 import { ProfilePersonalInfo } from './profile-personal-info/ProfilePersonalInfo'
 import s from './Profile.module.css'
 
-export const Profile: FC = () => {
-  const isLoggedIn = useAppSelector(state => state.auth.isLoggedIn)
+export const Profile = () => {
   const dispatch = useAppDispatch()
 
   const logoutHandler = () => {
     dispatch(logout())
-  }
-
-  if (!isLoggedIn) {
-    return <Navigate to={PATH.LOGIN} />
   }
 
   return (

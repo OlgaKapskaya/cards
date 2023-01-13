@@ -11,8 +11,8 @@ import { PasswordInput } from '../../../common/components/password-input/Passwor
 import { PATH } from '../../../common/constants/path'
 import { loginValidationSchema } from '../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../common/styles/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../common/styles/sxButtonCreators'
+import { sxBoxCreator } from '../../../common/utils/styles-utils/sxBoxCreator'
+import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
 import { LoginRequestType } from '../authAPI'
 import { login } from '../authSlice'
 

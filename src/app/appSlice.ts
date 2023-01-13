@@ -7,17 +7,11 @@ import { appAPI } from './appAPI'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 
-export interface AppStateType {
-  status: RequestStatusType
-  message: string | null
-  isInitialized: boolean
-}
-
 const initialState = {
   status: 'idle',
-  message: null,
+  message: null as string | null,
   isInitialized: false,
-} as AppStateType
+}
 
 export const me = createAsyncThunk('app/me', async (_, { dispatch }) => {
   dispatch(setAppStatus('loading'))
