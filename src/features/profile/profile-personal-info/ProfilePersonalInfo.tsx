@@ -23,7 +23,9 @@ export const ProfilePersonalInfo: FC = () => {
     setNewName(text)
   }
   const onChangeUserName = () => {
-    dispatch(changeUserDataTC({ name: newName }))
+    if (userName !== newName) {
+      dispatch(changeUserDataTC({ name: newName }))
+    }
   }
 
   return (
