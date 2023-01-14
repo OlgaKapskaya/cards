@@ -15,7 +15,6 @@ import { PrivateRoutes } from './PrivateRoutes'
 export const Pages = () => {
   return (
     <Routes>
-      <Route index path="/" element={<Profile />} />
       <Route path={PATH.LOGIN} element={<Login />} />
       <Route path={PATH.REGISTRATION} element={<Registration />} />
       <Route path={PATH.TEST} element={<Test />} />
@@ -25,6 +24,7 @@ export const Pages = () => {
       <Route path={PATH.ERROR404} element={<Error404 />} />
 
       <Route element={<PrivateRoutes />}>
+        <Route index path="/" element={<Profile />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
       </Route>
     </Routes>

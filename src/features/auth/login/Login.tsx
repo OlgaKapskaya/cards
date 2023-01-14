@@ -1,10 +1,10 @@
-import { FC, useEffect } from 'react'
+import { FC } from 'react'
 
 import Box from '@mui/material/Box'
 import Checkbox from '@mui/material/Checkbox'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
 import { PasswordInput } from '../../../common/components/password-input/PasswordInput'
@@ -19,16 +19,18 @@ import { login } from '../authSlice'
 import s from './Login.module.css'
 
 export const Login: FC = () => {
-  const { isLoggedIn, dispatch, navigate, register, handleSubmit, errors } =
+  const { isLoggedIn, dispatch, register, handleSubmit, errors } =
     useAuthForm<LoginRequestType>(loginValidationSchema)
 
   const onSubmit = (data: any) => {
     dispatch(login(data))
   }
 
-  useEffect(() => {
-    isLoggedIn && navigate(PATH.PROFILE)
-  }, [isLoggedIn])
+  if (isLoggedIn) return <Navigate to={PATH.LOGIN} />
+  //
+  // useEffect(() => {
+  //   isLoggedIn && navigate(PATH.PROFILE)
+  // }, [isLoggedIn])
 
   return (
     <div>

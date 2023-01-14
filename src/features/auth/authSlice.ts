@@ -6,10 +6,10 @@ import { setUserData, UserType } from '../profile/profileSlice'
 
 import {
   authAPI,
-  forgotPassPayloadType,
+  ForgotPassPayloadType,
   LoginRequestType,
   NewPasswordRequestType,
-  signUpPayloadType,
+  SignUpPayloadType,
 } from './authAPI'
 
 const initialState = {
@@ -52,7 +52,7 @@ export const logout = createAsyncThunk('auth/logout', async (_, { dispatch }) =>
 
 export const signUp = createAsyncThunk(
   'reg/signUp',
-  async (payload: signUpPayloadType, { dispatch }) => {
+  async (payload: SignUpPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
 
     try {
@@ -84,7 +84,7 @@ export const createNewPassword = createAsyncThunk(
 
 export const forgotPass = createAsyncThunk(
   'auth/forgotPass',
-  async (payload: forgotPassPayloadType, { dispatch }) => {
+  async (payload: ForgotPassPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
       await authAPI.forgotPass(payload)
