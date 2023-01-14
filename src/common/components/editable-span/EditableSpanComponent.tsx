@@ -2,7 +2,7 @@ import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState
 
 import editIcon from '../../../assets/img/edit-2.svg'
 
-import { CustomInputWithButton } from './CustomInputWithButton/CustomInputWithButton'
+import { CustomInputWithButton } from './custom-input-with-button/CustomInputWithButton'
 import s from './EditableSpanComponent.module.css'
 
 type DefaultInputPropsType = DetailedHTMLProps<
