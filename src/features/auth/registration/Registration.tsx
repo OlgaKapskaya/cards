@@ -24,17 +24,14 @@ type IFormInput = {
 }
 
 export const Registration = () => {
-  const { isRegistered, dispatch, navigate, register, handleSubmit, errors } =
+  const { isRegistered, dispatch, register, navigate, handleSubmit, errors } =
     useAuthForm<IFormInput>(registrationValidationSchema)
-
   const onSubmit: SubmitHandler<IFormInput> = data =>
     dispatch(signUp({ email: data.email, password: data.password }))
 
   if (isRegistered) {
-    setTimeout(() => {
-      navigate('/login')
-      dispatch(signUpStatusCreator(false))
-    }, 1500)
+    dispatch(signUpStatusCreator(false))
+    navigate(PATH.LOGIN)
   }
 
   return (

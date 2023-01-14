@@ -3,7 +3,7 @@ import { FC } from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import { SubmitHandler } from 'react-hook-form'
-import { useParams } from 'react-router-dom'
+import { Navigate, useParams } from 'react-router-dom'
 
 import { ButtonComponent } from '../../../../common/components/button/ButtonComponent'
 import { PasswordInput } from '../../../../common/components/password-input/PasswordInput'
@@ -21,7 +21,7 @@ export interface INewPasswordForm {
 }
 
 export const NewPassword: FC = () => {
-  const { isRecoveredPassword, navigate, dispatch, register, errors, handleSubmit } =
+  const { isRecoveredPassword, dispatch, register, errors, handleSubmit } =
     useAuthForm<INewPasswordForm>(newPasswordValidationScheme)
 
   const { token } = useParams<{ token: string }>()
@@ -37,10 +37,9 @@ export const NewPassword: FC = () => {
   }
 
   if (isRecoveredPassword) {
-    // setTimeout(() => {
     dispatch(recoveredPasswordStatus(false))
-    navigate(PATH.LOGIN)
-    // }, 1500)
+
+    return <Navigate to={PATH.LOGIN} />
   }
 
   return (

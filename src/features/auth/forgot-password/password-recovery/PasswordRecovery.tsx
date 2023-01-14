@@ -4,7 +4,7 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
-import { NavLink } from 'react-router-dom'
+import { Navigate, NavLink } from 'react-router-dom'
 
 import { ButtonComponent } from '../../../../common/components/button/ButtonComponent'
 import { emailRecoveryMessage } from '../../../../common/constants/emailMessage'
@@ -22,7 +22,7 @@ type IFormInput = {
 }
 
 export const PasswordRecovery: FC = () => {
-  const { isSentRecoveryEmail, dispatch, navigate, register, handleSubmit, errors } =
+  const { isSentRecoveryEmail, dispatch, register, handleSubmit, errors } =
     useAuthForm<IFormInput>(forgotValidationSchema)
   const [email, setEmail] = useState('')
 
@@ -39,7 +39,8 @@ export const PasswordRecovery: FC = () => {
 
   if (isSentRecoveryEmail) {
     dispatch(isSentRecoveryEmailStatus(false))
-    navigate(`/check-email/${email}`)
+
+    return <Navigate to={`${PATH.CHECK_EMAIL}/${email}`} />
   }
 
   return (

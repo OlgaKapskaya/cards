@@ -22,15 +22,11 @@ export const Login: FC = () => {
   const { isLoggedIn, dispatch, register, handleSubmit, errors } =
     useAuthForm<LoginRequestType>(loginValidationSchema)
 
-  const onSubmit = (data: any) => {
+  const onSubmit = (data: LoginRequestType) => {
     dispatch(login(data))
   }
 
-  if (isLoggedIn) return <Navigate to={PATH.LOGIN} />
-  //
-  // useEffect(() => {
-  //   isLoggedIn && navigate(PATH.PROFILE)
-  // }, [isLoggedIn])
+  if (isLoggedIn) return <Navigate to={PATH.PROFILE} />
 
   return (
     <div>
