@@ -6,12 +6,12 @@ export type LoginRequestType = {
   password: string
   rememberMe: false
 }
-export type sigUpResponseType = {
+export type SigUpResponseType = {
   addedUser: {}
   error?: string
 }
 
-export type signUpPayloadType = {
+export type SignUpPayloadType = {
   email: string
   password: string
 }
@@ -20,12 +20,12 @@ export type NewPasswordRequestType = {
   password: string
   resetPasswordToken: string
 }
-export type forgotPassResponseType = {
+export type ForgotPassResponseType = {
   info: string
   error?: string
 }
 
-export type forgotPassPayloadType = {
+export type ForgotPassPayloadType = {
   email: string
   from: string
   message: string
@@ -38,13 +38,13 @@ export const authAPI = {
   logout() {
     return instance.delete('auth/me')
   },
-  signUp(payload: signUpPayloadType) {
-    return instance.post<sigUpResponseType>('auth/register', payload)
+  signUp(payload: SignUpPayloadType) {
+    return instance.post<SigUpResponseType>('auth/register', payload)
   },
   createNewPassword(payload: NewPasswordRequestType) {
     return instanceHeroku.post<{ info: string }>('auth/set-new-password', payload)
   },
-  forgotPass(payload: forgotPassPayloadType) {
-    return instanceHeroku.post<forgotPassResponseType>('auth/forgot', payload)
+  forgotPass(payload: ForgotPassPayloadType) {
+    return instanceHeroku.post<ForgotPassResponseType>('auth/forgot', payload)
   },
 }
