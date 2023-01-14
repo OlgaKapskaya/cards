@@ -14,7 +14,7 @@ import s from './CheckEmail.module.css'
 
 export const CheckEmail: FC = () => {
   const navigate = useNavigate()
-  // заменить на реальный
+
   const { email } = useParams<{ email: string }>()
 
   return (

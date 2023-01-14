@@ -30,8 +30,10 @@ export const Registration = () => {
     dispatch(signUp({ email: data.email, password: data.password }))
 
   if (isRegistered) {
-    dispatch(signUpStatusCreator(false))
-    navigate(PATH.LOGIN)
+    setTimeout(() => {
+      navigate(PATH.LOGIN)
+      dispatch(signUpStatusCreator(false))
+    }, 500)
   }
 
   return (
