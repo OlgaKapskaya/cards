@@ -1,0 +1,8 @@
+.cardsPage {
+    margin: 75px 136px;
+}
+
+.titleMenu {
+    display: flex;
+    justify-content: space-between;
+}

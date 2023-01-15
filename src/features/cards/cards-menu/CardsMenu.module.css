@@ -1,0 +1,15 @@
+.menuContainer {
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  /*justify-content: flex-end;*/
+}
+
+.titleSpan {
+  margin-right: 5px;
+
+  font-size: 22px;
+  font-weight: 600;
+  line-height: 27px;
+}
