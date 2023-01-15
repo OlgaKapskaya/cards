@@ -1,6 +1,6 @@
 import { FC } from 'react'
 
-import { KeyboardBackspace } from '@mui/icons-material'
+import KeyboardBackspace from '@mui/icons-material/KeyboardBackspace'
 import { NavLink } from 'react-router-dom'
 
 import s from './ProfileBackLink.module.css'

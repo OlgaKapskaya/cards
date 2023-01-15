@@ -1,7 +1,7 @@
 import * as React from 'react'
 import { FC } from 'react'
 
-import { Menu } from '@mui/material'
+import Menu from '@mui/material/Menu'
 
 import { MenuItemComponent, MenuItemType } from './MenuItemComponent/MenuItemComponent'
 
