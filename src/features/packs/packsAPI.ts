@@ -15,7 +15,7 @@ export const packsAPI = {
   },
 }
 
-type GetPacksPayloadType = {
+export type GetPacksPayloadType = {
   packName?: string
   min?: number
   max?: number
@@ -26,8 +26,8 @@ type GetPacksPayloadType = {
   block?: boolean
 }
 
-type GetPacksResponseType = {
-  cardPacks: CardsPackType[]
+export type GetPacksResponseType = {
+  cardPacks: PackType[]
   cardPacksTotalCount: number // количество колод
   maxCardsCount: number
   minCardsCount: number
@@ -35,7 +35,7 @@ type GetPacksResponseType = {
   pageCount: number // количество элементов на странице
 }
 
-type CardsPackType = {
+export type PackType = {
   _id: string
   user_id: string
   name: string
@@ -44,7 +44,7 @@ type CardsPackType = {
   updated: string
 }
 
-type CreatePackPayloadType = {
+export type CreatePackPayloadType = {
   cardsPack: {
     name?: string
     deckCover?: string
@@ -53,7 +53,7 @@ type CreatePackPayloadType = {
 }
 
 export type CreatePackResponseType = {
-  newCardsPack: {
+  newCardsPack?: {
     cardsCount: number
     created: string
     grade: number
@@ -72,11 +72,11 @@ export type CreatePackResponseType = {
   }
 }
 
-type DeletePackPayloadType = {
+export type DeletePackPayloadType = {
   id: string
 }
 
-type DeletePackResponseType = {
+export type DeletePackResponseType = {
   deletedCardsPack: {
     cardsCount: number
     created: string
