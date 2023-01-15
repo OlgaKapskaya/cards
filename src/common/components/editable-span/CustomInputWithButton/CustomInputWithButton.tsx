@@ -1,7 +1,7 @@
 import { ChangeEvent, FC, KeyboardEvent, MouseEvent } from 'react'
 
-import { Input, InputProps } from '@mui/material'
 import Button from '@mui/material/Button'
+import Input, { InputProps } from '@mui/material/Input'
 import InputAdornment from '@mui/material/InputAdornment'
 import InputLabel from '@mui/material/InputLabel'
 
@@ -67,6 +67,7 @@ export const CustomInputWithButton: FC<CustomInputWithButtonPropsType> = ({
               sx={buttonStyle}
               onClick={onEnter}
               onMouseDown={onMouseDownHandler}
+              disabled={restProps.value === ''}
             >
               {buttonName}
             </Button>
