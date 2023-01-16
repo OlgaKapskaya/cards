@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
@@ -24,16 +24,8 @@ import {
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
-import {
-  createPack,
-  deletePack,
-  getPacks,
-  setCurrentPage,
-  setPageCount,
-  updatePack,
-} from './packsListSlice'
-
 import { createPack, deletePack, setCurrentPage, setPageCount, updatePack } from './packsListSlice'
+
 export const PacksList = () => {
   const page = useAppSelector(currentPageSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
