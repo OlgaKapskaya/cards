@@ -28,7 +28,12 @@ export const Header: FC = () => {
 
   return (
     <header className={s.header}>
-      <img src={logo} alt="logo" className={s.logo} />
+      <img
+        src={logo}
+        alt="logo"
+        className={s.logo}
+        onClick={isLoggedIn ? () => navigate(PATH.PACKS) : () => navigate(PATH.LOGIN)}
+      />
       <ButtonComponent onClick={() => navigate(PATH.PACKS)}>packs</ButtonComponent>
       {headerBody}
     </header>
