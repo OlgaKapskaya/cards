@@ -13,12 +13,14 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import TableRow from '@mui/material/TableRow'
-import { useNavigate } from 'react-router-dom'
 
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { isLoggedInSelector } from '../../common/selectors/authSelectors'
-import { packsSelector } from '../../common/selectors/packsListSelectors'
+import {
+  cardPacksTotalCountSelector,
+  currentPageSelector,
+  packsSelector,
+} from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
@@ -26,47 +28,40 @@ import {
   createPack,
   deletePack,
   getPacks,
-  setPage,
-  setRowsPerPage,
+  setCurrentPage,
+  setPageCount,
   updatePack,
 } from './packsListSlice'
+
 export const PacksList = () => {
-  const page = useAppSelector(state => state.packsList.searchParams.page)
-  const cardPacksTotalCount = useAppSelector(state => state.packsList.cardPacksTotalCount)
-  const isLoggedIn = useAppSelector(isLoggedInSelector)
-  const navigate = useNavigate()
+  const page = useAppSelector(currentPageSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packs = useAppSelector(packsSelector)
   const dispatch = useAppDispatch()
-
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
-    }, 700)
-  }, [])
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
 
     setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
+      dispatch(getPacks())
     }, 700)
   }
 
   const deletePackHandler = (id: string) => {
     dispatch(deletePack({ id }))
     setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
+      dispatch(getPacks())
     }, 700)
   }
 
   const onChangePageHandler = (event: React.ChangeEvent<unknown>, value: number) => {
-    dispatch(setPage(value))
+    dispatch(setCurrentPage(value))
   }
 
   const updatePackHandler = (_id: string) => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
     setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
+      dispatch(getPacks())
     }, 700)
   }
 
@@ -74,10 +69,8 @@ export const PacksList = () => {
     event: React.MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => {
-    dispatch(setRowsPerPage(page))
+    dispatch(setPageCount(page))
   }
-
-  if (!isLoggedIn) navigate('/login')
 
   return (
     <div className={s.container}>

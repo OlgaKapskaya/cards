@@ -7,8 +7,8 @@ import { SearchInput } from '../../../common/components/search-input/SearchInput
 import { SwitchButton } from '../../../common/components/switch-button/SwitchButton'
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import {
+  cardPacksTotalCountSelector,
   currentPageSelector,
   maxCardsCountSelector,
   maxCardsSelector,
@@ -31,10 +31,13 @@ import s from './FilterPanel.module.css'
 export const FilterPanel: FC = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
+  const page = useAppSelector(currentPageSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const maxCount = useAppSelector(maxCardsSelector)
   const minCount = useAppSelector(minCardsSelector)
   const packName = useAppSelector(packNameSelector)
   const typePacks = useAppSelector(typePacksSelector)
+
   const dispatch = useAppDispatch()
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
@@ -55,7 +58,7 @@ export const FilterPanel: FC = () => {
       console.log('2 -  FilterPanel')
       dispatch(getPacks())
     }, 700)
-  }, [maxCount, minCount, packName])
+  }, [packName, minCount, page, cardPacksTotalCount])
 
   return (
     <div className={s.filterPanelContainer}>

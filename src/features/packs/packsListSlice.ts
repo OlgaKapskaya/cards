@@ -125,7 +125,7 @@ export const updatePack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.updatePack(payload)
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
