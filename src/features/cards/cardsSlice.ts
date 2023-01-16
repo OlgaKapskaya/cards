@@ -9,6 +9,7 @@ import {
   CreateCardPayloadType,
   DeleteCardType,
   GetCardsPayloadType,
+  UpdateCardPayloadType,
 } from './cardsAPI'
 
 export const getCards = createAsyncThunk(
@@ -55,6 +56,22 @@ export const deleteCard = createAsyncThunk(
 
       dispatch(getCards({ cardsPack_id: response.data.deletedCard.cardsPack_id }))
       dispatch(setAppMessage('Card removed'))
+      dispatch(setAppStatus('succeeded'))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
+export const updateCard = createAsyncThunk(
+  'cards/updateCard',
+  async (data: UpdateCardPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      const response = await cardsAPI.updateCard(data)
+
+      dispatch(getCards({ cardsPack_id: response.data.updatedCard.cardsPack_id }))
+      dispatch(setAppMessage('Card update'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
       errorNetworkUtil(dispatch, e)

@@ -37,6 +37,10 @@ const headCells: readonly HeadCell[] = [
     id: 'grade',
     label: 'Grade',
   },
+  {
+    id: 'empty',
+    label: '',
+  },
 ]
 
 export function EnhancedTableHead(props: EnhancedTableProps) {

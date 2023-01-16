@@ -22,6 +22,7 @@ export const Cards = () => {
         cardsPack_id: '63c416a4025403b6ce37c1d1',
         question: 'create new question',
         answer: 'new answer',
+        grade: Math.floor(Math.random() * 5),
       },
     }
 

@@ -3,14 +3,17 @@ import { useEffect } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
+import Rating from '@mui/material/Rating'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
 
+import deleteIcon from '../../../assets/img/delete.svg'
+import editIcon from '../../../assets/img/edit.svg'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { deleteCard, getCards } from '../cardsSlice'
+import { deleteCard, getCards, updateCard } from '../cardsSlice'
 
 import { EnhancedTableHead } from './table-head/TableHead'
 
@@ -19,6 +22,7 @@ export interface Data {
   answer: string
   updated: string
   grade: string
+  empty: string
 }
 
 export type Order = 'asc' | 'desc'
@@ -39,6 +43,18 @@ export function EnhancedTable() {
   const handleDeleteCard = (id: string) => {
     dispatch(deleteCard({ id }))
   }
+  const handleUpdateCard = (id: string) => {
+    // убрать заглушку
+    const payload = {
+      card: {
+        _id: id,
+        answer: 'update answer',
+        question: 'update question',
+      },
+    }
+
+    dispatch(updateCard(payload))
+  }
 
   useEffect(() => {
     // убрать заглушку
@@ -54,13 +70,28 @@ export function EnhancedTable() {
             <TableBody>
               {cards.map(row => {
                 return (
-                  <TableRow hover key={row.question}>
+                  <TableRow hover key={row._id}>
                     <TableCell>{row.question}</TableCell>
                     <TableCell>{row.answer}</TableCell>
                     <TableCell>{row.updated}</TableCell>
-                    <TableCell>{row.grade}</TableCell>
                     <TableCell>
-                      <span onClick={() => handleDeleteCard(row._id)}>{'delete/edit'}</span>
+                      <Rating name="simple-controlled" value={row.grade} />
+                    </TableCell>
+                    <TableCell>
+                      <span>
+                        <img
+                          style={{ width: '24px', marginRight: '15px' }}
+                          src={deleteIcon}
+                          alt="deleteIcon"
+                          onClick={() => handleDeleteCard(row._id)}
+                        />
+                        <img
+                          style={{ width: '24px' }}
+                          src={editIcon}
+                          alt="editIcon"
+                          onClick={() => handleUpdateCard(row._id)}
+                        />
+                      </span>
                     </TableCell>
                   </TableRow>
                 )

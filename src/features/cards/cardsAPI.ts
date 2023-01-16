@@ -51,7 +51,6 @@ export type CardType = {
   updated: string
   __v: number
 }
-
 export type CreateCardPayloadType = {
   card: {
     cardsPack_id: string
@@ -65,13 +64,11 @@ export type CreateCardPayloadType = {
     answerVideo?: string
   }
 }
-
 export type CreateCardResponseType = {
   newCard: CardType
   token: string
   tokenDeathTime: number
 }
-
 export type DeleteCardType = {
   id: string
 }
