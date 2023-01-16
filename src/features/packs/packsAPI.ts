@@ -96,7 +96,7 @@ export type DeletePackResponseType = {
   }
 }
 
-type UpdatePackPayloadType = {
+export type UpdatePackPayloadType = {
   cardsPack: {
     _id: string
     cardsCount?: number

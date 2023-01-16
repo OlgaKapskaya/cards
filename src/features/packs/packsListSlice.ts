@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppStatus } from '../../app/appSlice'
+import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
 import {
@@ -9,6 +10,7 @@ import {
   GetPacksPayloadType,
   packsAPI,
   PackType,
+  UpdatePackPayloadType,
 } from './packsAPI'
 
 export type CardType = {
@@ -33,7 +35,7 @@ export type CardType = {
 
 const initialState = {
   packs: [],
-  cardPacksTotalCount: 0,
+  cardPacksTotalCount: 10,
   page: 1,
   maxCardsCount: 1000,
   minCardsCount: 0,
@@ -42,7 +44,7 @@ const initialState = {
 
 type initialStateType = {
   packs: Array<PackType>
-  cardPacksTotalCount?: number // количество колод
+  cardPacksTotalCount?: number | undefined // количество колод
   maxCardsCount?: number
   minCardsCount?: number
   page: number // выбранная страница
@@ -51,11 +53,17 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk(
   'packs/getPacks',
-  async (payload: GetPacksPayloadType, { dispatch }) => {
+  async (payload: GetPacksPayloadType, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+    const { page, pageCount, cardPacksTotalCount } = state.packsList
+
+    const finalPayload = { page, pageCount, cardPacksTotalCount, ...payload }
+
     dispatch(setAppStatus('loading'))
     try {
-      const res = await packsAPI.getPacks(payload)
+      const res = await packsAPI.getPacks(finalPayload)
 
+      dispatch(setPacksTotalCount(res.data.cardPacksTotalCount))
       dispatch(setPacks(res.data.cardPacks))
       dispatch(setAppStatus('idle'))
     } catch (e) {
@@ -67,7 +75,6 @@ export const getPacks = createAsyncThunk(
 export const createPack = createAsyncThunk(
   'packs/createPack',
   async (payload: CreatePackPayloadType, { dispatch }) => {
-    debugger
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.createPack(payload)
@@ -90,6 +97,20 @@ export const deletePack = createAsyncThunk(
     }
   }
 )
+
+export const updatePack = createAsyncThunk(
+  'packs/updatePack',
+  async (payload: UpdatePackPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      await packsAPI.updatePack(payload)
+      dispatch(setAppStatus('idle'))
+    } catch (e) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
 export const packsListSlice = createSlice({
   name: 'packsList',
   initialState: initialState,
@@ -97,7 +118,16 @@ export const packsListSlice = createSlice({
     setPacks(state, action: PayloadAction<Array<PackType>>) {
       state.packs = action.payload
     },
+    setPage(state, action: PayloadAction<number>) {
+      state.page = action.payload
+    },
+    setPacksTotalCount(state, action: PayloadAction<number>) {
+      state.cardPacksTotalCount = action.payload
+    },
+    setRowsPerPage(state, action: PayloadAction<number>) {
+      state.pageCount = action.payload
+    },
   },
 })
-export const { setPacks } = packsListSlice.actions
+export const { setPacks, setPage, setPacksTotalCount, setRowsPerPage } = packsListSlice.actions
 export const packsListReducer = packsListSlice.reducer
