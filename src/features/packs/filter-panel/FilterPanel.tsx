@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect, useLayoutEffect } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
@@ -7,9 +7,7 @@ import { SearchInput } from '../../../common/components/search-input/SearchInput
 import { SwitchButton } from '../../../common/components/switch-button/SwitchButton'
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import {
-  currentPageSelector,
   maxCardsCountSelector,
   maxCardsSelector,
   minCardsCountSelector,
@@ -55,7 +53,7 @@ export const FilterPanel: FC = () => {
       console.log('2 -  FilterPanel')
       dispatch(getPacks())
     }, 700)
-  }, [maxCount, minCount, packName])
+  }, [packName])
 
   return (
     <div className={s.filterPanelContainer}>

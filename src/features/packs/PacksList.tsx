@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
@@ -22,14 +22,7 @@ import { packsSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
-import {
-  createPack,
-  deletePack,
-  getPacks,
-  setPage,
-  setRowsPerPage,
-  updatePack,
-} from './packsListSlice'
+import { createPack, deletePack, setCurrentPage, setPageCount, updatePack } from './packsListSlice'
 export const PacksList = () => {
   const page = useAppSelector(state => state.packsList.searchParams.page)
   const cardPacksTotalCount = useAppSelector(state => state.packsList.cardPacksTotalCount)
@@ -38,43 +31,27 @@ export const PacksList = () => {
   const packs = useAppSelector(packsSelector)
   const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
-    }, 700)
-  }, [])
-
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
-
-    setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
-    }, 700)
   }
 
   const deletePackHandler = (id: string) => {
     dispatch(deletePack({ id }))
-    setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
-    }, 700)
   }
 
   const onChangePageHandler = (event: React.ChangeEvent<unknown>, value: number) => {
-    dispatch(setPage(value))
+    dispatch(setCurrentPage(value))
   }
 
   const updatePackHandler = (_id: string) => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
-    setTimeout(() => {
-      dispatch(getPacks({ pageCount: 10 }))
-    }, 700)
   }
 
   const onChangeRowsPerPageHandler = (
     event: React.MouseEvent<HTMLButtonElement> | null,
     page: number
   ) => {
-    dispatch(setRowsPerPage(page))
+    dispatch(setPageCount(page))
   }
 
   if (!isLoggedIn) navigate('/login')
