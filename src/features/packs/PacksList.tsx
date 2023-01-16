@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
@@ -13,21 +13,30 @@ import TableHead from '@mui/material/TableHead'
 import TablePagination from '@mui/material/TablePagination'
 import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import TableRow from '@mui/material/TableRow'
-import { useNavigate } from 'react-router-dom'
 
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { isLoggedInSelector } from '../../common/selectors/authSelectors'
-import { packsSelector } from '../../common/selectors/packsListSelectors'
+import {
+  cardPacksTotalCountSelector,
+  currentPageSelector,
+  packsSelector,
+} from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
+import {
+  createPack,
+  deletePack,
+  getPacks,
+  setCurrentPage,
+  setPageCount,
+  updatePack,
+} from './packsListSlice'
+
 import { createPack, deletePack, setCurrentPage, setPageCount, updatePack } from './packsListSlice'
 export const PacksList = () => {
-  const page = useAppSelector(state => state.packsList.searchParams.page)
-  const cardPacksTotalCount = useAppSelector(state => state.packsList.cardPacksTotalCount)
-  const isLoggedIn = useAppSelector(isLoggedInSelector)
-  const navigate = useNavigate()
+  const page = useAppSelector(currentPageSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packs = useAppSelector(packsSelector)
   const dispatch = useAppDispatch()
 
@@ -53,8 +62,6 @@ export const PacksList = () => {
   ) => {
     dispatch(setPageCount(page))
   }
-
-  if (!isLoggedIn) navigate('/login')
 
   return (
     <div className={s.container}>

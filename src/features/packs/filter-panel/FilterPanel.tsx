@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react'
+import React, { FC, useCallback, useEffect, useLayoutEffect } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
@@ -8,6 +8,8 @@ import { SwitchButton } from '../../../common/components/switch-button/SwitchBut
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  cardPacksTotalCountSelector,
+  currentPageSelector,
   maxCardsCountSelector,
   maxCardsSelector,
   minCardsCountSelector,
@@ -29,10 +31,13 @@ import s from './FilterPanel.module.css'
 export const FilterPanel: FC = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
+  const page = useAppSelector(currentPageSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const maxCount = useAppSelector(maxCardsSelector)
   const minCount = useAppSelector(minCardsSelector)
   const packName = useAppSelector(packNameSelector)
   const typePacks = useAppSelector(typePacksSelector)
+
   const dispatch = useAppDispatch()
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
@@ -53,7 +58,7 @@ export const FilterPanel: FC = () => {
       console.log('2 -  FilterPanel')
       dispatch(getPacks())
     }, 700)
-  }, [packName])
+  }, [packName, minCount, page, cardPacksTotalCount])
 
   return (
     <div className={s.filterPanelContainer}>
