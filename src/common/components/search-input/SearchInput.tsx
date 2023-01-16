@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useEffect, useState } from 'react'
+import { ChangeEvent, FC, memo, useEffect, useState } from 'react'
 
 import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
@@ -12,37 +12,39 @@ type SearchInputPropsType = InputBaseProps & {
   label?: string
   onChangeText?: (value: string) => void
 }
-export const SearchInput: FC<SearchInputPropsType> = ({ label, onChangeText, ...restProps }) => {
-  const [value, setValue] = useState<string>('')
-  const debouncedValue = useDebounce<string>(value, 500)
+export const SearchInput: FC<SearchInputPropsType> = memo(
+  ({ label, onChangeText, ...restProps }) => {
+    const [value, setValue] = useState<string>('')
+    const debouncedValue = useDebounce<string>(value, 500)
 
-  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value)
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+      setValue(e.currentTarget.value)
+    }
+
+    useEffect(() => {
+      onChangeText?.(value)
+    }, [debouncedValue])
+
+    return (
+      <div>
+        <span className={s.title}> {label}</span>
+        <Paper
+          component="form"
+          elevation={0}
+          className={s.container}
+          sx={{ background: 'transparent' }}
+        >
+          <img src={find} className={s.findIcon} alt="find" />
+          <InputBase
+            className={s.input}
+            value={value}
+            onChange={onChangeHandler}
+            placeholder="Provide your text"
+            inputProps={{ 'aria-label': 'provide your text' }}
+            {...restProps}
+          />
+        </Paper>
+      </div>
+    )
   }
-
-  useEffect(() => {
-    onChangeText?.(value)
-  }, [debouncedValue])
-
-  return (
-    <div>
-      <span className={s.title}> {label}</span>
-      <Paper
-        component="form"
-        elevation={0}
-        className={s.container}
-        sx={{ background: 'transparent' }}
-      >
-        <img src={find} className={s.findIcon} alt="find" />
-        <InputBase
-          className={s.input}
-          value={value}
-          onChange={onChangeHandler}
-          placeholder="Provide your text"
-          inputProps={{ 'aria-label': 'provide your text' }}
-          {...restProps}
-        />
-      </Paper>
-    </div>
-  )
-}
+)

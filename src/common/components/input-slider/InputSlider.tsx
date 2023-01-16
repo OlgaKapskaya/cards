@@ -1,4 +1,4 @@
-import { FC, SyntheticEvent, useState } from 'react'
+import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react'
 
 import TextField from '@mui/material/TextField'
 
@@ -10,23 +10,21 @@ type InputSliderPropsType = {
   label?: string
   minValue: number
   maxValue: number
-  width?: number
-  onChangeMinValue?: (min: number) => void
-  onChangeMaxValue?: (nax: number) => void
+  sliderWidth?: number
+  onChangeValues: (value: number[]) => void
 }
 
 export const InputSlider: FC<InputSliderPropsType> = ({
   label,
   minValue,
   maxValue,
-  width,
-  onChangeMaxValue,
-  onChangeMinValue,
+  sliderWidth,
+  onChangeValues,
 }) => {
-  const [min, setMin] = useState(minValue)
-  const [max, setMax] = useState(maxValue)
+  const [min, setMin] = useState<number>(minValue)
+  const [max, setMax] = useState<number>(maxValue)
 
-  const onChangeHandler = (
+  const onChangeSliderHandler = (
     event: Event | SyntheticEvent<Element, Event>,
     value: number | number[]
   ) => {
@@ -36,6 +34,23 @@ export const InputSlider: FC<InputSliderPropsType> = ({
       setMax(value[1])
     }
   }
+
+  const onChangeMinHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setMin(+e.currentTarget.value)
+  }
+
+  const onChangeMaxHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+    setMax(+e.currentTarget.value)
+  }
+
+  useEffect(() => {
+    if (min > max) {
+      setMin(max)
+      setMax(min)
+    }
+
+    onChangeValues([min, max])
+  }, [min, max])
 
   const inputProps = {
     inputMode: 'numeric',
@@ -50,13 +65,15 @@ export const InputSlider: FC<InputSliderPropsType> = ({
           inputProps={inputProps}
           size="small"
           value={min}
+          onChange={onChangeMinHandler}
           className={`${s.input} ${s.value1}`}
         />
-        <SliderComponent value={[min, max]} onChange={onChangeHandler} width={width} />
+        <SliderComponent value={[min, max]} onChange={onChangeSliderHandler} width={sliderWidth} />
         <TextField
           inputProps={inputProps}
           size="small"
           value={max}
+          onChange={onChangeMaxHandler}
           className={`${s.input} ${s.value2}`}
         />
       </div>
