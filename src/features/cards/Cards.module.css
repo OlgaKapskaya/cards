@@ -6,3 +6,7 @@
     display: flex;
     justify-content: space-between;
 }
+
+.searchBlock {
+    margin-top: 30px;
+}

@@ -53,15 +53,17 @@ export type CardType = {
 }
 
 export type CreateCardPayloadType = {
-  cardsPack_id: string
-  answer?: string
-  question?: string
-  grade?: number
-  shots?: number
-  answerImg?: string
-  questionImg?: string
-  questionVideo?: string
-  answerVideo?: string
+  card: {
+    cardsPack_id: string
+    answer?: string
+    question?: string
+    grade?: number
+    shots?: number
+    answerImg?: string
+    questionImg?: string
+    questionVideo?: string
+    answerVideo?: string
+  }
 }
 
 export type CreateCardResponseType = {

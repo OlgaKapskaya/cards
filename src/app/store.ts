@@ -2,6 +2,7 @@ import { AnyAction, configureStore } from '@reduxjs/toolkit'
 import { ThunkDispatch } from 'redux-thunk'
 
 import { authReducer } from '../features/auth/authSlice'
+import { cardsReducer } from '../features/cards/cardsSlice'
 import { packsListReducer } from '../features/packs/packsListSlice'
 import { profileReducer } from '../features/profile/profileSlice'
 
@@ -13,6 +14,7 @@ export const store = configureStore({
     profile: profileReducer,
     auth: authReducer,
     packsList: packsListReducer,
+    cardsList: cardsReducer,
   },
 })
 
