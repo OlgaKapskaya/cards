@@ -9,16 +9,14 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
-import { Loader } from '../../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { packsSelector, packsStatusSelector } from '../../common/selectors/packsListSelectors'
+import { packsSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
-import { createPack, deletePack, getPacks, setPacksTC } from './packsListSlice'
+import { createPack, deletePack, getPacks } from './packsListSlice'
 
 export const PacksList = () => {
-  const packsStatus = useAppSelector(packsStatusSelector)
   const packs = useAppSelector(packsSelector)
   const dispatch = useAppDispatch()
 
@@ -32,14 +30,10 @@ export const PacksList = () => {
     dispatch(getPacks())
   }
 
-  useEffect(() => {
-    console.log('1 - PacksList')
-    dispatch(setPacksTC())
-  }, [])
-
-  if (packsStatus === 'loading') {
-    return <Loader />
-  }
+  // useEffect(() => {
+  //   console.log('1 - PacksList')
+  //   dispatch(getPacks())
+  // }, [])
 
   return (
     <div className={s.container}>

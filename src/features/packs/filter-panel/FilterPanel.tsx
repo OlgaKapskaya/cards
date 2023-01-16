@@ -1,4 +1,4 @@
-import React, { FC, useCallback, useEffect } from 'react'
+import React, { FC, useCallback, useEffect, useLayoutEffect } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
@@ -15,7 +15,6 @@ import {
   minCardsCountSelector,
   minCardsSelector,
   packNameSelector,
-  packsStatusSelector,
   typePacksSelector,
 } from '../../../common/selectors/packsListSelectors'
 import {
@@ -30,8 +29,6 @@ import {
 import s from './FilterPanel.module.css'
 
 export const FilterPanel: FC = () => {
-  const packsStatus = useAppSelector(packsStatusSelector)
-
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
   const maxCount = useAppSelector(maxCardsSelector)

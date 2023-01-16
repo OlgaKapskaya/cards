@@ -11,4 +11,3 @@ export const typePacksSelector = (state: AppRootStateType) => state.packsList.ty
 export const packNameSelector = (state: AppRootStateType) => state.packsList.searchParams.packName
 export const maxCardsSelector = (state: AppRootStateType) => state.packsList.searchParams.max
 export const minCardsSelector = (state: AppRootStateType) => state.packsList.searchParams.min
-export const packsStatusSelector = (state: AppRootStateType) => state.packsList.packsStatus

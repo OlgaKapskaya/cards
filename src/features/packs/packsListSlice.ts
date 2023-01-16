@@ -44,9 +44,8 @@ export type CardType = {
 
 const initialState = {
   packs: [],
-  packsStatus: 'idle',
   cardPacksTotalCount: 0,
-  maxCardsCount: 0,
+  maxCardsCount: 100,
   minCardsCount: 0,
   typePacks: 'All',
   searchParams: {
@@ -66,7 +65,6 @@ type initialStateType = {
   minCardsCount?: number
   typePacks: TypePacks
   searchParams: SearchParamsType
-  packsStatus: RequestStatusType
 }
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
@@ -85,26 +83,12 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     const res = await packsAPI.getPacks(params)
 
     dispatch(setPacks(res.data.cardPacks))
-    dispatch(setAppStatus('succeeded'))
-  } catch (e) {
-    errorNetworkUtil(dispatch, e)
-  }
-})
-
-export const setPacksTC = createAsyncThunk('packs/setPacks', async (_, { dispatch, getState }) => {
-  dispatch(setAppStatus('loading'))
-  try {
-    const res = await packsAPI.getPacks({})
-
-    dispatch(setPacks(res.data.cardPacks))
     dispatch(setMinPacksCount(res.data.minCardsCount))
     dispatch(setMaxPacksCount(res.data.maxCardsCount))
     dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
-
     dispatch(setAppStatus('succeeded'))
   } catch (e) {
     errorNetworkUtil(dispatch, e)
-    setPacksStatus('failed')
   }
 })
 
@@ -115,7 +99,7 @@ export const createPack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.createPack(payload)
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -128,7 +112,7 @@ export const deletePack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.deletePack(payload)
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -138,9 +122,6 @@ export const packsListSlice = createSlice({
   name: 'packsList',
   initialState: initialState,
   reducers: {
-    setPacksStatus(state, action: PayloadAction<RequestStatusType>) {
-      state.packsStatus = action.payload
-    },
     setPacks(state, action: PayloadAction<Array<PackType>>) {
       state.packs = action.payload
     },
@@ -179,7 +160,6 @@ export const {
   setMinPacksCount,
   setMaxPacksCount,
   setCardPacksTotalCount,
-  setPacksStatus,
   setCurrentPage,
   setPageCount,
   setMinCount,
