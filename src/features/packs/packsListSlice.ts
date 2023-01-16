@@ -128,7 +128,6 @@ export const updatePack = createAsyncThunk(
       await packsAPI.updatePack(payload)
       dispatch(setAppStatus('succeeded'))
       dispatch(getPacks())
-
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
