@@ -5,11 +5,11 @@ import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHoo
 import { searchParamsSelector, typePacksSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
-import { Packs } from './packs/Packs'
-import s from './PacksList.module.css'
-import { createPack, getPacks } from './packsListSlice'
+import { PacksTable } from './packs-table/PacksTable'
+import s from './Packs.module.css'
+import { createPack, getPacks } from './packsSlice'
 
-export const PacksList = () => {
+export const Packs = () => {
   const typePacks = useAppSelector(typePacksSelector)
 
   const dispatch = useAppDispatch()
@@ -31,7 +31,7 @@ export const PacksList = () => {
       </div>
 
       <FilterPanel />
-      <Packs />
+      <PacksTable />
     </div>
   )
 }

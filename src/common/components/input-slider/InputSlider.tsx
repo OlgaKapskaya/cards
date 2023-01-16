@@ -1,8 +1,7 @@
-import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react'
+import { ChangeEvent, FC, SyntheticEvent, useCallback, useEffect, useState } from 'react'
 
 import TextField from '@mui/material/TextField'
 
-import { useDebounce } from '../../hooks/useDebounce'
 import SliderComponent from '../slider/SliderComponent'
 
 import s from './InputSlider.module.css'
@@ -24,23 +23,33 @@ export const InputSlider: FC<InputSliderPropsType> = ({
 }) => {
   const [value, setValue] = useState<number[]>([minValue, maxValue])
 
-  const onChangeSliderHandler = (
-    event: Event | SyntheticEvent<Element, Event>,
-    value: number | number[]
-  ) => {
-    if (!Array.isArray(value)) return
-    if (Array.isArray(value)) {
-      setValue([value[0], value[1]])
-    }
-  }
+  const onChangeSliderHandler = useCallback(
+    (event: Event | SyntheticEvent<Element, Event>, value: number | number[]) => {
+      if (!Array.isArray(value)) return
+      if (Array.isArray(value)) {
+        setValue([value[0], value[1]])
+      }
+    },
+    []
+  )
 
-  const onChangeMinHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setValue([+e.currentTarget.value, maxValue])
-  }
+  const onChangeCommittedHandler = useCallback(() => {
+    onChangeValues(value)
+  }, [value])
 
-  const onChangeMaxHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setValue([minValue, +e.currentTarget.value])
-  }
+  const onChangeMinHandler = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setValue([+e.currentTarget.value, maxValue])
+    },
+    [maxValue]
+  )
+
+  const onChangeMaxHandler = useCallback(
+    (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
+      setValue([minValue, +e.currentTarget.value])
+    },
+    [minValue]
+  )
 
   useEffect(() => {
     if (value[0] > value[1]) {
@@ -63,6 +72,7 @@ export const InputSlider: FC<InputSliderPropsType> = ({
       <span className={s.title}> {label}</span>
       <div className={s.container}>
         <TextField
+          sx={{ mr: '8px' }}
           inputProps={inputProps}
           size="small"
           value={value[0]}
@@ -72,12 +82,13 @@ export const InputSlider: FC<InputSliderPropsType> = ({
         <SliderComponent
           value={value}
           onChange={onChangeSliderHandler}
-          onChangeCommitted={() => onChangeValues(value)}
+          onChangeCommitted={onChangeCommittedHandler}
           width={sliderWidth}
           min={minValue}
           max={maxValue}
         />
         <TextField
+          sx={{ ml: '8px' }}
           inputProps={inputProps}
           size="small"
           value={value[1]}

@@ -48,8 +48,8 @@ const initialState = {
   typePacks: 'all',
   isLoading: false,
   searchParams: {
-    page: 1, // выбранная страница
-    pageCount: 4, // количество элементов на странице
+    page: 1,
+    pageCount: 4,
     packName: '',
     range: [] as number[],
   },
@@ -57,7 +57,7 @@ const initialState = {
 
 type initialStateType = {
   packs: Array<PackType>
-  cardPacksTotalCount?: number | undefined // количество колод
+  cardPacksTotalCount?: number | undefined
   maxCardsCount?: number
   minCardsCount?: number
   typePacks: TypePacks
@@ -67,9 +67,9 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, range } = state.packsList.searchParams
+  const { page, pageCount, packName, range } = state.packs.searchParams
   const user_id = state.profile.profile._id
-  const type = state.packsList.typePacks
+  const type = state.packs.typePacks
 
   const params: GetPacksPayloadType = {
     packName,
@@ -139,8 +139,22 @@ export const updatePack = createAsyncThunk(
   }
 )
 
-export const packsListSlice = createSlice({
-  name: 'packsList',
+export const resetFilters = createAsyncThunk(
+  'packs/resetFilters',
+  async (_, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+    const min = state.packs.minCardsCount
+    const max = state.packs.maxCardsCount
+
+    if (min && max) {
+      dispatch(setRange([min, max]))
+    }
+    dispatch(setPackName(''))
+  }
+)
+
+export const packsSlice = createSlice({
+  name: 'packs',
   initialState: initialState,
   reducers: {
     setIsLoading(state, action: PayloadAction<boolean>) {
@@ -186,5 +200,5 @@ export const {
   setRange,
   setPackName,
   setIsLoading,
-} = packsListSlice.actions
-export const packsListReducer = packsListSlice.reducer
+} = packsSlice.actions
+export const packsReducer = packsSlice.reducer

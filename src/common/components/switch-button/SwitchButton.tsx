@@ -2,7 +2,7 @@ import { FC, useMemo, useState, MouseEvent, useEffect } from 'react'
 
 import ToggleButton from '@mui/material/ToggleButton'
 
-import { TypePacks } from '../../../features/packs/packsListSlice'
+import { TypePacks } from '../../../features/packs/packsSlice'
 
 import { StyledToggleButtonGroup } from './styled-toggle-button-group/StyledToggleButtonGroup'
 import s from './SwitchButton.module.css'

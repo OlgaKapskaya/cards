@@ -10,16 +10,22 @@ import s from './SearchInput.module.css'
 
 type SearchInputPropsType = InputBaseProps & {
   label?: string
+  searchValue: string
   onChangeText?: (value: string) => void
 }
 export const SearchInput: FC<SearchInputPropsType> = memo(
-  ({ label, onChangeText, ...restProps }) => {
-    const [value, setValue] = useState<string>('')
+  ({ label, onChangeText, searchValue, ...restProps }) => {
+    const [value, setValue] = useState<string>(searchValue)
     const debouncedValue = useDebounce<string>(value, 500)
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
       setValue(e.currentTarget.value)
     }
+
+    useEffect(() => {
+      if (value === searchValue) return
+      setValue(searchValue)
+    }, [searchValue])
 
     useEffect(() => {
       onChangeText?.(value)

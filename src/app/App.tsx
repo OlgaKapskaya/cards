@@ -5,7 +5,6 @@ import LinearProgress from '@mui/material/LinearProgress'
 import { Loader } from '../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/reactReduxHooks'
 import { appIsInitializedSelector, appStatusSelector } from '../common/selectors/appSelectors'
-import { getPacks } from '../features/packs/packsListSlice'
 
 import s from './App.module.css'
 import { me } from './appSlice'

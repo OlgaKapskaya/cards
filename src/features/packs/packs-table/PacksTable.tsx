@@ -10,25 +10,24 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableFooter from '@mui/material/TableFooter'
 import TableHead from '@mui/material/TableHead'
-import TablePagination from '@mui/material/TablePagination'
-import TablePaginationActions from '@mui/material/TablePagination/TablePaginationActions'
 import TableRow from '@mui/material/TableRow'
 
 import { Loader } from '../../../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
   currentPageSelector,
+  isLoadingSelector,
   packsSelector,
   pageCountSelector,
 } from '../../../common/selectors/packsListSelectors'
-import s from '../PacksList.module.css'
-import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsListSlice'
+import s from '../Packs.module.css'
+import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
 
-export const Packs = () => {
+export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
   const page = useAppSelector(currentPageSelector)
   const pageCount = useAppSelector(pageCountSelector)
-  const isLoading = useAppSelector(state => state.packsList.isLoading)
+  const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
   const deletePackHandler = (id: string) => {
@@ -83,24 +82,24 @@ export const Packs = () => {
         <TableFooter className={s.tableFooter}>
           <TableRow>
             <Pagination count={pageCount} page={page} onChange={onChangePageHandler} />
-            <TablePagination
-              rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
-              colSpan={3}
-              count={pageCount ? pageCount : 10}
-              rowsPerPage={10}
-              page={1}
-              SelectProps={{
-                inputProps: {
-                  'aria-label': 'Show',
-                },
-                native: true,
-              }}
-              onPageChange={() => {
-                console.log('onpagechange')
-              }}
-              onRowsPerPageChange={() => onChangeRowsPerPageHandler}
-              ActionsComponent={TablePaginationActions}
-            />
+            {/*<TablePagination*/}
+            {/*  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}*/}
+            {/*  colSpan={3}*/}
+            {/*  count={pageCount ? pageCount : 10}*/}
+            {/*  rowsPerPage={10}*/}
+            {/*  page={1}*/}
+            {/*  SelectProps={{*/}
+            {/*    inputProps: {*/}
+            {/*      'aria-label': 'Show',*/}
+            {/*    },*/}
+            {/*    native: true,*/}
+            {/*  }}*/}
+            {/*  onPageChange={() => {*/}
+            {/*    console.log('onpagechange')*/}
+            {/*  }}*/}
+            {/*  onRowsPerPageChange={() => onChangeRowsPerPageHandler}*/}
+            {/*  ActionsComponent={TablePaginationActions}*/}
+            {/*/>*/}
           </TableRow>
         </TableFooter>
       </Table>
