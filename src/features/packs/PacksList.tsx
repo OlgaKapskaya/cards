@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
@@ -25,14 +25,7 @@ import {
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
-import {
-  createPack,
-  deletePack,
-  getPacks,
-  setCurrentPage,
-  setPageCount,
-  updatePack,
-} from './packsListSlice'
+import { createPack, deletePack, setCurrentPage, setPageCount, updatePack } from './packsListSlice'
 
 export const PacksList = () => {
   const searchParams = useAppSelector(state => state.packsList.searchParams)
@@ -52,17 +45,10 @@ export const PacksList = () => {
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
-
-    setTimeout(() => {
-      dispatch(getPacks())
-    }, 700)
   }
 
   const deletePackHandler = (id: string) => {
     dispatch(deletePack({ id }))
-    setTimeout(() => {
-      dispatch(getPacks())
-    }, 700)
   }
 
   const onChangePageHandler = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -71,9 +57,6 @@ export const PacksList = () => {
 
   const updatePackHandler = (_id: string) => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
-    setTimeout(() => {
-      dispatch(getPacks())
-    }, 700)
   }
 
   const onChangeRowsPerPageHandler = (

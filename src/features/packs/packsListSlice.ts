@@ -8,7 +8,6 @@ import {
   CreatePackPayloadType,
   DeletePackPayloadType,
   GetPacksPayloadType,
-  GetPacksResponseType,
   packsAPI,
   PackType,
   UpdatePackPayloadType,
@@ -99,6 +98,7 @@ export const createPack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.createPack(payload)
+      dispatch(getPacks())
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
@@ -112,6 +112,7 @@ export const deletePack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.deletePack(payload)
+      dispatch(getPacks())
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
@@ -126,6 +127,7 @@ export const updatePack = createAsyncThunk(
     try {
       await packsAPI.updatePack(payload)
       dispatch(setAppStatus('succeeded'))
+      dispatch(getPacks())
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
