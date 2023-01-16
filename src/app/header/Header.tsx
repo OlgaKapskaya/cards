@@ -13,6 +13,7 @@ import { ProfileMenu } from './profile-menu/ProfileMenu'
 
 export const Header: FC = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
+
   const navigate = useNavigate()
   const loginHandler = () => navigate(PATH.LOGIN)
 

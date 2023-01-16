@@ -20,6 +20,7 @@ import {
   cardPacksTotalCountSelector,
   currentPageSelector,
   packsSelector,
+  typePacksSelector,
 } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
@@ -34,10 +35,20 @@ import {
 } from './packsListSlice'
 
 export const PacksList = () => {
-  const page = useAppSelector(currentPageSelector)
-  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
+  const searchParams = useAppSelector(state => state.packsList.searchParams)
+
+  // const page = useAppSelector(currentPageSelector)
+  // const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const packs = useAppSelector(packsSelector)
+  const typePacks = useAppSelector(typePacksSelector)
   const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    setTimeout(() => {
+      console.log('2 -  PacksList')
+      dispatch(getPacks())
+    }, 700)
+  }, [searchParams, typePacks])
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
@@ -109,11 +120,15 @@ export const PacksList = () => {
           </TableBody>
           <TableFooter className={s.tableFooter}>
             <TableRow>
-              <Pagination count={cardPacksTotalCount} page={page} onChange={onChangePageHandler} />
+              <Pagination
+                count={searchParams.pageCount}
+                page={searchParams.page}
+                onChange={onChangePageHandler}
+              />
               <TablePagination
                 rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}
                 colSpan={3}
-                count={cardPacksTotalCount ? cardPacksTotalCount : 10}
+                count={searchParams.pageCount ? searchParams.pageCount : 10}
                 rowsPerPage={10}
                 page={1}
                 SelectProps={{

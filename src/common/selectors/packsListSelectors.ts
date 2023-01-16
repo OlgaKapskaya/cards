@@ -9,5 +9,4 @@ export const minCardsCountSelector = (state: AppRootStateType) => state.packsLis
 export const pageCountSelector = (state: AppRootStateType) => state.packsList.searchParams.pageCount
 export const typePacksSelector = (state: AppRootStateType) => state.packsList.typePacks
 export const packNameSelector = (state: AppRootStateType) => state.packsList.searchParams.packName
-export const maxCardsSelector = (state: AppRootStateType) => state.packsList.searchParams.max
-export const minCardsSelector = (state: AppRootStateType) => state.packsList.searchParams.min
+export const rangeSelector = (state: AppRootStateType) => state.packsList.searchParams.range

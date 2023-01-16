@@ -1,48 +1,33 @@
-import React, { FC, useCallback, useEffect, useLayoutEffect } from 'react'
+import React, { FC, useCallback } from 'react'
+
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
 import { InputSlider } from '../../../common/components/input-slider/InputSlider'
 import { SearchInput } from '../../../common/components/search-input/SearchInput'
 import { SwitchButton } from '../../../common/components/switch-button/SwitchButton'
+import { PATH } from '../../../common/constants/path'
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
-  cardPacksTotalCountSelector,
-  currentPageSelector,
   maxCardsCountSelector,
-  maxCardsSelector,
   minCardsCountSelector,
-  minCardsSelector,
-  packNameSelector,
   typePacksSelector,
 } from '../../../common/selectors/packsListSelectors'
-import {
-  getPacks,
-  setMaxCount,
-  setMinCount,
-  setPackName,
-  setTypePacks,
-  TypePacks,
-} from '../packsListSlice'
+import { setPackName, setRange, setTypePacks, TypePacks } from '../packsListSlice'
 
 import s from './FilterPanel.module.css'
 
 export const FilterPanel: FC = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
-  const page = useAppSelector(currentPageSelector)
-  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
-  const maxCount = useAppSelector(maxCardsSelector)
-  const minCount = useAppSelector(minCardsSelector)
-  const packName = useAppSelector(packNameSelector)
   const typePacks = useAppSelector(typePacksSelector)
 
   const dispatch = useAppDispatch()
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
-    dispatch(setMinCount(values[0]))
-    dispatch(setMaxCount(values[1]))
+    dispatch(setRange(values))
   }, [])
 
   const onChangeTypePacks = (type: TypePacks) => {
@@ -53,13 +38,6 @@ export const FilterPanel: FC = () => {
     dispatch(setPackName(searchValue))
   }
 
-  useEffect(() => {
-    setTimeout(() => {
-      console.log('2 -  FilterPanel')
-      dispatch(getPacks())
-    }, 700)
-  }, [packName, minCount, page, cardPacksTotalCount])
-
   return (
     <div className={s.filterPanelContainer}>
       <div className={s.search}>
@@ -68,7 +46,7 @@ export const FilterPanel: FC = () => {
 
       <SwitchButton
         label="Show packs cards"
-        buttons={['My', 'All']}
+        buttons={['my', 'all']}
         currentButton={typePacks}
         setType={onChangeTypePacks}
       />

@@ -14,14 +14,12 @@ import {
   UpdatePackPayloadType,
 } from './packsAPI'
 
-export type TypePacks = 'My' | 'All'
+export type TypePacks = 'my' | 'all'
 type SearchParamsType = {
   page: number // выбранная страница
   pageCount: number // количество элементов на странице
   packName: string
-  user_id: string
-  min: number
-  max: number
+  range: number[]
 }
 export type CardType = {
   cardsCount: number
@@ -48,14 +46,12 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
-  typePacks: 'All',
+  typePacks: 'all',
   searchParams: {
     page: 1, // выбранная страница
     pageCount: 4, // количество элементов на странице
     packName: '',
-    user_id: '',
-    min: 0,
-    max: 0,
+    range: [] as number[],
   },
 } as initialStateType
 
@@ -70,13 +66,17 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, min, max } = state.packsList.searchParams
+  const { page, pageCount, packName, range } = state.packsList.searchParams
+  const user_id = state.profile.profile._id
+  const type = state.packsList.typePacks
+
   const params: GetPacksPayloadType = {
     packName,
-    min,
-    max,
+    min: range[0],
+    max: range[1],
     page,
     pageCount,
+    user_id: type === 'my' ? user_id : '',
   }
 
   dispatch(setAppStatus('loading'))
@@ -157,11 +157,8 @@ export const packsListSlice = createSlice({
     setPackName(state, action: PayloadAction<string>) {
       state.searchParams.packName = action.payload
     },
-    setMaxCount(state, action: PayloadAction<number>) {
-      state.searchParams.max = action.payload
-    },
-    setMinCount(state, action: PayloadAction<number>) {
-      state.searchParams.min = action.payload
+    setRange(state, action: PayloadAction<number[]>) {
+      state.searchParams.range = action.payload
     },
     setTypePacks(state, action: PayloadAction<TypePacks>) {
       state.typePacks = action.payload
@@ -176,8 +173,7 @@ export const {
   setCardPacksTotalCount,
   setCurrentPage,
   setPageCount,
-  setMinCount,
-  setMaxCount,
+  setRange,
   setPackName,
 } = packsListSlice.actions
 export const packsListReducer = packsListSlice.reducer
