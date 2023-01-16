@@ -29,6 +29,7 @@ export const Header: FC = () => {
   return (
     <header className={s.header}>
       <img src={logo} alt="logo" className={s.logo} />
+      <ButtonComponent onClick={() => navigate(PATH.PACKS)}>packs</ButtonComponent>
       {headerBody}
     </header>
   )
