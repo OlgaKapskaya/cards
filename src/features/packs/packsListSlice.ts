@@ -46,6 +46,7 @@ const initialState = {
   maxCardsCount: 100,
   minCardsCount: 0,
   typePacks: 'all',
+  isLoading: false,
   searchParams: {
     page: 1, // выбранная страница
     pageCount: 4, // количество элементов на странице
@@ -60,6 +61,7 @@ type initialStateType = {
   maxCardsCount?: number
   minCardsCount?: number
   typePacks: TypePacks
+  isLoading: boolean
   searchParams: SearchParamsType
 }
 
@@ -79,6 +81,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
   }
 
   dispatch(setAppStatus('loading'))
+  dispatch(setIsLoading(true))
   try {
     const res = await packsAPI.getPacks(params)
 
@@ -89,6 +92,8 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     dispatch(setAppStatus('succeeded'))
   } catch (e) {
     errorNetworkUtil(dispatch, e)
+  } finally {
+    dispatch(setIsLoading(false))
   }
 })
 
@@ -138,6 +143,9 @@ export const packsListSlice = createSlice({
   name: 'packsList',
   initialState: initialState,
   reducers: {
+    setIsLoading(state, action: PayloadAction<boolean>) {
+      state.isLoading = action.payload
+    },
     setPacks(state, action: PayloadAction<Array<PackType>>) {
       state.packs = action.payload
     },
@@ -177,5 +185,6 @@ export const {
   setPageCount,
   setRange,
   setPackName,
+  setIsLoading,
 } = packsListSlice.actions
 export const packsListReducer = packsListSlice.reducer

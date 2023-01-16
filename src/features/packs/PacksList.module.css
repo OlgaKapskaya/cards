@@ -1,31 +1,27 @@
-
-
 .container {
-    overflow: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  overflow: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    min-width: 60%;
-    min-height: 100vh;
-    margin-right: 10%;
-    margin-bottom: 40px;
-    margin-left: 10%;
+  width: 80%;
+  height: 100vh;
+  margin: 40px auto;
 }
 
 .header {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-    width: 100%;
+  width: 100%;
 }
 
 .tableFooter {
-    display: flex;
-    flex-direction: row;
-    justify-content: start;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
 
-    width: 100%;
+  width: 100%;
 }

@@ -24,8 +24,6 @@ export const InputSlider: FC<InputSliderPropsType> = ({
 }) => {
   const [value, setValue] = useState<number[]>([minValue, maxValue])
 
-  const debouncedValue = useDebounce<number[]>(value, 500)
-
   const onChangeSliderHandler = (
     event: Event | SyntheticEvent<Element, Event>,
     value: number | number[]
@@ -55,10 +53,6 @@ export const InputSlider: FC<InputSliderPropsType> = ({
     setValue([minValue, maxValue])
   }, [minValue, maxValue])
 
-  useEffect(() => {
-    onChangeValues(value)
-  }, [debouncedValue])
-
   const inputProps = {
     inputMode: 'numeric',
     pattern: '[0-9]*',
@@ -78,6 +72,7 @@ export const InputSlider: FC<InputSliderPropsType> = ({
         <SliderComponent
           value={value}
           onChange={onChangeSliderHandler}
+          onChangeCommitted={() => onChangeValues(value)}
           width={sliderWidth}
           min={minValue}
           max={maxValue}
