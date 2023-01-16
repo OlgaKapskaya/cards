@@ -103,7 +103,7 @@ export const PacksList = () => {
                 </TableCell>
                 <TableCell align="right">{p.name}</TableCell>
                 <TableCell align="right">{p.updated}</TableCell>
-                <TableCell align="right">{p.user_id}</TableCell>
+                <TableCell align="right">{p.user_name}</TableCell>
                 <TableCell align="right">
                   {<DeleteOutlineIcon onClick={() => deletePackHandler(p._id)} />}
                   {<DriveFileRenameOutlineOutlinedIcon onClick={() => updatePackHandler(p._id)} />}

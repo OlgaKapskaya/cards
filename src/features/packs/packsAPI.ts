@@ -36,6 +36,7 @@ export type GetPacksResponseType = {
 }
 
 export type PackType = {
+  user_name: string
   _id: string
   user_id: string
   name: string
