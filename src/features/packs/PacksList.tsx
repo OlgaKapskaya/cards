@@ -18,7 +18,9 @@ import { useNavigate } from 'react-router-dom'
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import { isLoggedInSelector } from '../../common/selectors/authSelectors'
+import { packsSelector } from '../../common/selectors/packsListSelectors'
 
+import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
 import {
   createPack,
@@ -29,11 +31,11 @@ import {
   updatePack,
 } from './packsListSlice'
 export const PacksList = () => {
-  const packs = useAppSelector(state => state.packsList.packs)
-  const page = useAppSelector(state => state.packsList.page)
+  const page = useAppSelector(state => state.packsList.searchParams.page)
   const cardPacksTotalCount = useAppSelector(state => state.packsList.cardPacksTotalCount)
   const isLoggedIn = useAppSelector(isLoggedInSelector)
   const navigate = useNavigate()
+  const packs = useAppSelector(packsSelector)
   const dispatch = useAppDispatch()
 
   useEffect(() => {
@@ -84,6 +86,7 @@ export const PacksList = () => {
         <ButtonComponent onClick={addNewPackHandler}>Add New Pack</ButtonComponent>
       </div>
 
+      <FilterPanel />
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead sx={{ backgroundColor: '#EFEFEF' }}>

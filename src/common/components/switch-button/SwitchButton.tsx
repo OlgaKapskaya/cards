@@ -2,16 +2,24 @@ import { FC, useMemo, useState, MouseEvent, useEffect } from 'react'
 
 import ToggleButton from '@mui/material/ToggleButton'
 
+import { TypePacks } from '../../../features/packs/packsListSlice'
+
 import { StyledToggleButtonGroup } from './styled-toggle-button-group/StyledToggleButtonGroup'
 import s from './SwitchButton.module.css'
 
 type SwitchButtonPropsType = {
   label?: string
   buttons: string | string[]
-  currentButton: string
+  currentButton: TypePacks
+  setType: (type: TypePacks) => void
 }
 
-export const SwitchButton: FC<SwitchButtonPropsType> = ({ label, buttons, currentButton }) => {
+export const SwitchButton: FC<SwitchButtonPropsType> = ({
+  label,
+  buttons,
+  currentButton,
+  setType,
+}) => {
   const buttonsGroup = useMemo(() => {
     if (!Array.isArray(buttons)) return <ToggleButton value={buttons}>{buttons}</ToggleButton>
     else {
@@ -26,15 +34,13 @@ export const SwitchButton: FC<SwitchButtonPropsType> = ({ label, buttons, curren
   const [alignment, setAlignment] = useState(currentButton)
 
   useEffect(() => {
-    if (alignment === null) setAlignment(currentButton)
+    if (alignment === null) {
+      setAlignment(currentButton)
+    }
+    setType(alignment)
   }, [alignment])
 
-  // useEffect(() => {
-  //   if (alignment === currentButton) return
-  //   setAlignment(currentButton)
-  // }, [currentButton])
-
-  const onChangeHandler = (event: MouseEvent<HTMLElement>, newAlignment: string) => {
+  const onChangeHandler = (event: MouseEvent<HTMLElement>, newAlignment: TypePacks) => {
     setAlignment(newAlignment)
   }
 

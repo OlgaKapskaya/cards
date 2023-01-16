@@ -8,11 +8,21 @@ import {
   CreatePackPayloadType,
   DeletePackPayloadType,
   GetPacksPayloadType,
+  GetPacksResponseType,
   packsAPI,
   PackType,
   UpdatePackPayloadType,
 } from './packsAPI'
 
+export type TypePacks = 'My' | 'All'
+type SearchParamsType = {
+  page: number // выбранная страница
+  pageCount: number // количество элементов на странице
+  packName: string
+  user_id: string
+  min: number
+  max: number
+}
 export type CardType = {
   cardsCount: number
   created: Date
@@ -35,11 +45,18 @@ export type CardType = {
 
 const initialState = {
   packs: [],
-  cardPacksTotalCount: 10,
-  page: 1,
-  maxCardsCount: 1000,
+  cardPacksTotalCount: 0,
+  maxCardsCount: 100,
   minCardsCount: 0,
-  pageCount: 10,
+  typePacks: 'All',
+  searchParams: {
+    page: 1, // выбранная страница
+    pageCount: 4, // количество элементов на странице
+    packName: '',
+    user_id: '',
+    min: 0,
+    max: 0,
+  },
 } as initialStateType
 
 type initialStateType = {
@@ -47,30 +64,34 @@ type initialStateType = {
   cardPacksTotalCount?: number | undefined // количество колод
   maxCardsCount?: number
   minCardsCount?: number
-  page: number // выбранная страница
-  pageCount: number // количество элементов на странице
+  typePacks: TypePacks
+  searchParams: SearchParamsType
 }
 
-export const getPacks = createAsyncThunk(
-  'packs/getPacks',
-  async (payload: GetPacksPayloadType, { dispatch, getState }) => {
-    const state = getState() as AppRootStateType
-    const { page, pageCount, cardPacksTotalCount } = state.packsList
-
-    const finalPayload = { page, pageCount, cardPacksTotalCount, ...payload }
-
-    dispatch(setAppStatus('loading'))
-    try {
-      const res = await packsAPI.getPacks(finalPayload)
-
-      dispatch(setPacksTotalCount(res.data.cardPacksTotalCount))
-      dispatch(setPacks(res.data.cardPacks))
-      dispatch(setAppStatus('idle'))
-    } catch (e) {
-      errorNetworkUtil(dispatch, e)
-    }
+export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
+  const state = getState() as AppRootStateType
+  const { page, pageCount, packName, min, max } = state.packsList.searchParams
+  const params: GetPacksPayloadType = {
+    packName,
+    min,
+    max,
+    page,
+    pageCount,
   }
-)
+
+  dispatch(setAppStatus('loading'))
+  try {
+    const res = await packsAPI.getPacks(params)
+
+    dispatch(setPacks(res.data.cardPacks))
+    dispatch(setMinPacksCount(res.data.minCardsCount))
+    dispatch(setMaxPacksCount(res.data.maxCardsCount))
+    dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
+    dispatch(setAppStatus('succeeded'))
+  } catch (e) {
+    errorNetworkUtil(dispatch, e)
+  }
+})
 
 export const createPack = createAsyncThunk(
   'packs/createPack',
@@ -78,7 +99,7 @@ export const createPack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.createPack(payload)
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -91,7 +112,7 @@ export const deletePack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.deletePack(payload)
-      dispatch(setAppStatus('idle'))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
@@ -118,16 +139,45 @@ export const packsListSlice = createSlice({
     setPacks(state, action: PayloadAction<Array<PackType>>) {
       state.packs = action.payload
     },
-    setPage(state, action: PayloadAction<number>) {
-      state.page = action.payload
+    setMinPacksCount(state, action: PayloadAction<number>) {
+      state.minCardsCount = action.payload
     },
-    setPacksTotalCount(state, action: PayloadAction<number>) {
+    setMaxPacksCount(state, action: PayloadAction<number>) {
+      state.maxCardsCount = action.payload
+    },
+    setCardPacksTotalCount(state, action: PayloadAction<number>) {
       state.cardPacksTotalCount = action.payload
     },
-    setRowsPerPage(state, action: PayloadAction<number>) {
-      state.pageCount = action.payload
+    setCurrentPage(state, action: PayloadAction<number>) {
+      state.searchParams.page = action.payload
+    },
+    setPageCount(state, action: PayloadAction<number>) {
+      state.searchParams.pageCount = action.payload
+    },
+    setPackName(state, action: PayloadAction<string>) {
+      state.searchParams.packName = action.payload
+    },
+    setMaxCount(state, action: PayloadAction<number>) {
+      state.searchParams.max = action.payload
+    },
+    setMinCount(state, action: PayloadAction<number>) {
+      state.searchParams.min = action.payload
+    },
+    setTypePacks(state, action: PayloadAction<TypePacks>) {
+      state.typePacks = action.payload
     },
   },
 })
-export const { setPacks, setPage, setPacksTotalCount, setRowsPerPage } = packsListSlice.actions
+export const {
+  setPacks,
+  setTypePacks,
+  setMinPacksCount,
+  setMaxPacksCount,
+  setCardPacksTotalCount,
+  setCurrentPage,
+  setPageCount,
+  setMinCount,
+  setMaxCount,
+  setPackName,
+} = packsListSlice.actions
 export const packsListReducer = packsListSlice.reducer

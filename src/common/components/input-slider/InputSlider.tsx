@@ -2,6 +2,7 @@ import { ChangeEvent, FC, SyntheticEvent, useEffect, useState } from 'react'
 
 import TextField from '@mui/material/TextField'
 
+import { useDebounce } from '../../hooks/useDebounce'
 import SliderComponent from '../slider/SliderComponent'
 
 import s from './InputSlider.module.css'
@@ -21,36 +22,42 @@ export const InputSlider: FC<InputSliderPropsType> = ({
   sliderWidth,
   onChangeValues,
 }) => {
-  const [min, setMin] = useState<number>(minValue)
-  const [max, setMax] = useState<number>(maxValue)
+  const [value, setValue] = useState<number[]>([minValue, maxValue])
+
+  const debouncedValue = useDebounce<number[]>(value, 500)
 
   const onChangeSliderHandler = (
     event: Event | SyntheticEvent<Element, Event>,
     value: number | number[]
   ) => {
-    !Array.isArray(value) && setMin(value)
+    if (!Array.isArray(value)) return
     if (Array.isArray(value)) {
-      setMin(value[0])
-      setMax(value[1])
+      setValue([value[0], value[1]])
     }
   }
 
   const onChangeMinHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setMin(+e.currentTarget.value)
+    setValue([+e.currentTarget.value, maxValue])
   }
 
   const onChangeMaxHandler = (e: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setMax(+e.currentTarget.value)
+    setValue([minValue, +e.currentTarget.value])
   }
 
   useEffect(() => {
-    if (min > max) {
-      setMin(max)
-      setMax(min)
+    if (value[0] > value[1]) {
+      setValue([value[1], value[0]])
     }
+  }, [value])
 
-    onChangeValues([min, max])
-  }, [min, max])
+  useEffect(() => {
+    if (value[0] === minValue && value[1] === maxValue) return
+    setValue([minValue, maxValue])
+  }, [minValue, maxValue])
+
+  useEffect(() => {
+    onChangeValues(value)
+  }, [debouncedValue])
 
   const inputProps = {
     inputMode: 'numeric',
@@ -64,15 +71,21 @@ export const InputSlider: FC<InputSliderPropsType> = ({
         <TextField
           inputProps={inputProps}
           size="small"
-          value={min}
+          value={value[0]}
           onChange={onChangeMinHandler}
           className={`${s.input} ${s.value1}`}
         />
-        <SliderComponent value={[min, max]} onChange={onChangeSliderHandler} width={sliderWidth} />
+        <SliderComponent
+          value={value}
+          onChange={onChangeSliderHandler}
+          width={sliderWidth}
+          min={minValue}
+          max={maxValue}
+        />
         <TextField
           inputProps={inputProps}
           size="small"
-          value={max}
+          value={value[1]}
           onChange={onChangeMaxHandler}
           className={`${s.input} ${s.value2}`}
         />
