@@ -23,11 +23,11 @@ export const Pages = () => {
       <Route path={PATH.CHECK_EMAIL + '/:email'} element={<CheckEmail />} />
       <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
       <Route path={PATH.ERROR404} element={<Error404 />} />
-      <Route path={PATH.PACKS} element={<PacksList />} />
 
       <Route element={<PrivateRoutes />}>
         <Route index path="/" element={<Profile />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
+        <Route path={PATH.PACKS} element={<PacksList />} />
       </Route>
     </Routes>
   )

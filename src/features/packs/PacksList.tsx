@@ -9,26 +9,36 @@ import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { Loader } from '../../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
+import { packsSelector, packsStatusSelector } from '../../common/selectors/packsListSelectors'
 
+import { FilterPanel } from './filter-panel/FilterPanel'
 import s from './PacksList.module.css'
-import { createPack, deletePack, getPacks } from './packsListSlice'
-export const PacksList = () => {
-  const packs = useAppSelector(state => state.packsList.packs)
-  const dispatch = useAppDispatch()
+import { createPack, deletePack, getPacks, setPacksTC } from './packsListSlice'
 
-  useEffect(() => {
-    dispatch(getPacks({}))
-  }, [])
+export const PacksList = () => {
+  const packsStatus = useAppSelector(packsStatusSelector)
+  const packs = useAppSelector(packsSelector)
+  const dispatch = useAppDispatch()
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
-    dispatch(getPacks({}))
+    dispatch(getPacks())
   }
 
   const deletePackHandler = (id: string) => {
     dispatch(deletePack({ id }))
-    dispatch(getPacks({}))
+    dispatch(getPacks())
+  }
+
+  useEffect(() => {
+    console.log('1 - PacksList')
+    dispatch(setPacksTC())
+  }, [])
+
+  if (packsStatus === 'loading') {
+    return <Loader />
   }
 
   return (
@@ -38,6 +48,7 @@ export const PacksList = () => {
         <ButtonComponent onClick={addNewPackHandler}>Add New Pack</ButtonComponent>
       </div>
 
+      <FilterPanel />
       <TableContainer component={Paper}>
         <Table aria-label="simple table">
           <TableHead>
