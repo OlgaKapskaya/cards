@@ -29,7 +29,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
     // убрать загулшку (количество страниц и карточек)
     const response = await cardsAPI.getCards(params)
 
-    if (response.data.cards.length === 0) {
+    if (response.data.cards.length === 0 && params.page === 1) {
       if (params.cardQuestion.length === 0) {
         dispatch(setEmptyStatus(true))
       } else {
