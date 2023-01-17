@@ -36,6 +36,7 @@ export type GetPacksResponseType = {
 }
 
 export type PackType = {
+  user_name: string
   _id: string
   user_id: string
   name: string
@@ -96,7 +97,7 @@ export type DeletePackResponseType = {
   }
 }
 
-type UpdatePackPayloadType = {
+export type UpdatePackPayloadType = {
   cardsPack: {
     _id: string
     cardsCount?: number

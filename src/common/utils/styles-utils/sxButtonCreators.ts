@@ -1,6 +1,11 @@
+/**
+ * Параметр color - массив из 2-х элементов,
+ * где 1-й элемент цвет фона,
+ * 2-й элемент цвет текста
+ */
+
 export const sxButtonColorCreator = (
-  bgColor: string,
-  fontColor: string,
+  color: string[],
   width: string = '127px',
   mt: string = '20px',
   mb: string = '20px'
@@ -9,11 +14,11 @@ export const sxButtonColorCreator = (
     mb: mb,
     mt: mt,
     width: width,
-    background: bgColor,
-    color: fontColor,
+    background: color[0],
+    color: color[1],
     ':hover': {
-      background: bgColor,
-      color: fontColor,
+      background: color[0],
+      color: color[1],
     },
   }
 }

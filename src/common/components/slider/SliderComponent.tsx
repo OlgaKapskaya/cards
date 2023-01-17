@@ -2,20 +2,19 @@ import React from 'react'
 
 import { Slider, SliderProps } from '@mui/material'
 
-const SuperRange: React.FC<SliderProps> = props => {
+type SliderComponentPropsType = SliderProps & { width?: number }
+const SliderComponent: React.FC<SliderComponentPropsType> = ({ width, sx, ...restProps }) => {
   return (
     <Slider
       sx={{
         margin: '0 10px',
-        color: '#00CC22',
-        width: '147px',
-        height: 3,
+        height: 5,
+        width: `${width}px`,
         padding: '13px 0',
         '& .MuiSlider-thumb': {
-          height: 17,
-          width: 17,
-          backgroundColor: '#fff',
-          border: '1px solid currentColor',
+          height: 16,
+          width: 16,
+          backgroundColor: 'currentColor',
           '&:hover': {
             boxShadow: '0 0 0 8px rgba(58, 133, 137, 0.16)',
           },
@@ -31,16 +30,17 @@ const SuperRange: React.FC<SliderProps> = props => {
           height: 3,
         },
         '& .MuiSlider-thumb:after': {
-          width: '6px',
-          height: '6px',
+          width: '8px',
+          height: '8px',
           top: '50%',
           left: '50%',
-          backgroundColor: '#00CC22  ',
+          backgroundColor: '#FFF',
         },
+        ...sx,
       }}
-      {...props} // отдаём слайдеру пропсы если они есть (value например там внутри)
+      {...restProps}
     />
   )
 }
 
-export default SuperRange
+export default SliderComponent

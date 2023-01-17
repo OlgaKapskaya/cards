@@ -13,6 +13,7 @@ import { ProfileMenu } from './profile-menu/ProfileMenu'
 
 export const Header: FC = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
+
   const navigate = useNavigate()
   const loginHandler = () => navigate(PATH.LOGIN)
 
@@ -28,7 +29,13 @@ export const Header: FC = () => {
 
   return (
     <header className={s.header}>
-      <img src={logo} alt="logo" className={s.logo} />
+      <img
+        src={logo}
+        alt="logo"
+        className={s.logo}
+        onClick={isLoggedIn ? () => navigate(PATH.PACKS) : () => navigate(PATH.LOGIN)}
+      />
+      <ButtonComponent onClick={() => navigate(PATH.PACKS)}>packs</ButtonComponent>
       {headerBody}
     </header>
   )

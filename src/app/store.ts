@@ -2,8 +2,8 @@ import { AnyAction, configureStore } from '@reduxjs/toolkit'
 import { ThunkDispatch } from 'redux-thunk'
 
 import { authReducer } from '../features/auth/authSlice'
+import { packsReducer } from '../features/packs/packsSlice'
 import { cardsReducer } from '../features/cards/cardsSlice'
-import { packsListReducer } from '../features/packs/packsListSlice'
 import { profileReducer } from '../features/profile/profileSlice'
 
 import { appReducer } from './appSlice'
@@ -13,7 +13,7 @@ export const store = configureStore({
     app: appReducer,
     profile: profileReducer,
     auth: authReducer,
-    packsList: packsListReducer,
+    packs: packsReducer,
     cardsList: cardsReducer,
   },
 })

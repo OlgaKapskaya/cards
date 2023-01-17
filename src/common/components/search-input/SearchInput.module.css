@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  align-items: center;
+
+  height: 36px;
+  padding: 2px 4px;
+
+  background-color: transparent;
+  border: 1px solid #d9d9d9;
+  border-radius: 2px;
+}
+
+.title {
+  font-size: 14px;
+  font-weight: 500;
+  font-style: normal;
+  line-height: 17px;
+}
+
+.input {
+  display: flex;
+
+  margin-left: 10px;
+
+  background-color: transparent;
+}
+
+.findIcon {
+  margin-left: 10px;
+}

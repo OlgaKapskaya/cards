@@ -5,6 +5,7 @@ import Paper from '@mui/material/Paper'
 
 import logoutImg from '../../assets/img/logout.svg'
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { buttonWhite } from '../../common/constants/theme'
 import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
 import { sxBoxCreator } from '../../common/utils/styles-utils/sxBoxCreator'
 import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
@@ -32,7 +33,7 @@ export const Profile = () => {
             <ProfileAvatar withButton size={96} />
             <ProfilePersonalInfo />
 
-            <ButtonComponent sx={sxButtonColorCreator('#FCFCFC', '#000')} onClick={logoutHandler}>
+            <ButtonComponent sx={sxButtonColorCreator(buttonWhite)} onClick={logoutHandler}>
               <img src={logoutImg} alt="logout" className={s.logoutImg} /> Log out
             </ButtonComponent>
           </div>

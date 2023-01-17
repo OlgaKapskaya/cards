@@ -7,8 +7,8 @@ import { NewPassword } from '../../features/auth/forgot-password/new-password/Ne
 import { PasswordRecovery } from '../../features/auth/forgot-password/password-recovery/PasswordRecovery'
 import { Login } from '../../features/auth/login/Login'
 import { Registration } from '../../features/auth/registration/Registration'
+import { Packs } from '../../features/packs/Packs'
 import { Cards } from '../../features/cards/Cards'
-import { PacksList } from '../../features/packs/PacksList'
 import { Profile } from '../../features/profile/Profile'
 import { Test } from '../../features/test/Test'
 
@@ -24,12 +24,12 @@ export const Pages = () => {
       <Route path={PATH.CHECK_EMAIL + '/:email'} element={<CheckEmail />} />
       <Route path={PATH.NEW_PASSWORD} element={<NewPassword />} />
       <Route path={PATH.ERROR404} element={<Error404 />} />
-      <Route path={PATH.PACKS} element={<PacksList />} />
       <Route path={PATH.CARDS} element={<Cards />} />
 
       <Route element={<PrivateRoutes />}>
         <Route index path="/" element={<Profile />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
+        <Route path={PATH.PACKS} element={<Packs />} />
       </Route>
     </Routes>
   )
