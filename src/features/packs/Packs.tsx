@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { searchParamsSelector, typePacksSelector } from '../../common/selectors/packsListSelectors'
+import { isMySelector, searchParamsSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
@@ -10,7 +10,7 @@ import s from './Packs.module.css'
 import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
-  const typePacks = useAppSelector(typePacksSelector)
+  const isMy = useAppSelector(isMySelector)
 
   const dispatch = useAppDispatch()
   const searchParams = useAppSelector(searchParamsSelector)
@@ -21,7 +21,7 @@ export const Packs = () => {
 
   useEffect(() => {
     dispatch(getPacks())
-  }, [searchParams, typePacks])
+  }, [searchParams, isMy])
 
   return (
     <div className={s.container}>

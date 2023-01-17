@@ -1,63 +1,34 @@
-import { FC, useMemo, useState, MouseEvent, useEffect } from 'react'
+import { FC, memo } from 'react'
 
-import ToggleButton from '@mui/material/ToggleButton'
+import { ButtonComponent } from '../button/ButtonComponent'
 
-import { TypePacks } from '../../../features/packs/packsSlice'
-
-import { StyledToggleButtonGroup } from './styled-toggle-button-group/StyledToggleButtonGroup'
 import s from './SwitchButton.module.css'
+import { useSwitchButton } from './useSwitchButton'
 
 type SwitchButtonPropsType = {
   label?: string
-  buttons: string | string[]
-  currentButton: TypePacks
-  setType: (type: TypePacks) => void
+  buttonNames: string[]
+  toggle: boolean
+  setToggle: (toggle: boolean) => void
+  disabled?: boolean
 }
 
-export const SwitchButton: FC<SwitchButtonPropsType> = ({
-  label,
-  buttons,
-  currentButton,
-  setType,
-}) => {
-  const buttonsGroup = useMemo(() => {
-    if (!Array.isArray(buttons)) return <ToggleButton value={buttons}>{buttons}</ToggleButton>
-    else {
-      return buttons.map((elem, index) => (
-        <ToggleButton key={index} value={elem}>
-          {elem}
-        </ToggleButton>
-      ))
-    }
-  }, [buttons])
+export const SwitchButton: FC<SwitchButtonPropsType> = memo(
+  ({ label, toggle, setToggle, buttonNames, disabled }) => {
+    const { onClickHandler, sxTrueButton, sxFalseButton } = useSwitchButton(toggle, setToggle)
 
-  const [alignment, setAlignment] = useState(currentButton)
-
-  useEffect(() => {
-    if (alignment === null) {
-      setAlignment(currentButton)
-    }
-    setType(alignment)
-  }, [alignment])
-
-  const onChangeHandler = (event: MouseEvent<HTMLElement>, newAlignment: TypePacks) => {
-    setAlignment(newAlignment)
-  }
-
-  return (
-    <div>
-      <span className={s.title}> {label}</span>
-      <div className={s.container}>
-        <StyledToggleButtonGroup
-          color="primary"
-          value={alignment}
-          exclusive
-          onChange={onChangeHandler}
-          aria-label="Platform"
-        >
-          {buttonsGroup}
-        </StyledToggleButtonGroup>
+    return (
+      <div>
+        <span className={s.title}> {label}</span>
+        <div className={s.buttonsContainer}>
+          <ButtonComponent sx={sxTrueButton} onClick={onClickHandler} disabled={disabled}>
+            {buttonNames[0]}
+          </ButtonComponent>
+          <ButtonComponent sx={sxFalseButton} onClick={onClickHandler} disabled={disabled}>
+            {buttonNames[1]}
+          </ButtonComponent>
+        </div>
       </div>
-    </div>
-  )
-}
+    )
+  }
+)

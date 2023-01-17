@@ -13,7 +13,6 @@ import {
   UpdatePackPayloadType,
 } from './packsAPI'
 
-export type TypePacks = 'my' | 'all'
 type SearchParamsType = {
   page: number // выбранная страница
   pageCount: number // количество элементов на странице
@@ -45,7 +44,7 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
-  typePacks: 'all',
+  isOnlyMy: false,
   isLoading: false,
   searchParams: {
     page: 1,
@@ -60,7 +59,7 @@ type initialStateType = {
   cardPacksTotalCount?: number | undefined
   maxCardsCount?: number
   minCardsCount?: number
-  typePacks: TypePacks
+  isOnlyMy: boolean
   isLoading: boolean
   searchParams: SearchParamsType
 }
@@ -69,7 +68,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
   const state = getState() as AppRootStateType
   const { page, pageCount, packName, range } = state.packs.searchParams
   const user_id = state.profile.profile._id
-  const type = state.packs.typePacks
+  const isOnlyMy = state.packs.isOnlyMy
 
   const params: GetPacksPayloadType = {
     packName,
@@ -77,7 +76,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     max: range[1],
     page,
     pageCount,
-    user_id: type === 'my' ? user_id : '',
+    user_id: isOnlyMy ? user_id : '',
   }
 
   dispatch(setAppStatus('loading'))
@@ -139,19 +138,13 @@ export const updatePack = createAsyncThunk(
   }
 )
 
-export const resetFilters = createAsyncThunk(
-  'packs/resetFilters',
-  async (_, { dispatch, getState }) => {
-    const state = getState() as AppRootStateType
-    const min = state.packs.minCardsCount
-    const max = state.packs.maxCardsCount
-
-    if (min && max) {
-      dispatch(setRange([min, max]))
-    }
-    dispatch(setPackName(''))
-  }
-)
+export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { dispatch }) => {
+  dispatch(setMinPacksCount(0))
+  dispatch(setMaxPacksCount(0))
+  dispatch(setRange([] as number[]))
+  dispatch(setPackName(''))
+  dispatch(setCurrentPage(1))
+})
 
 export const packsSlice = createSlice({
   name: 'packs',
@@ -184,8 +177,8 @@ export const packsSlice = createSlice({
     setRange(state, action: PayloadAction<number[]>) {
       state.searchParams.range = action.payload
     },
-    setTypePacks(state, action: PayloadAction<TypePacks>) {
-      state.typePacks = action.payload
+    setTypePacks(state, action: PayloadAction<boolean>) {
+      state.isOnlyMy = action.payload
     },
   },
 })
