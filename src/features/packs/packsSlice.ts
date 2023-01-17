@@ -50,7 +50,7 @@ const initialState = {
   isLoading: false,
   searchParams: {
     page: 1,
-    pageCount: 8,
+    pageCount: 7,
     packName: '',
     range: [] as number[],
     sort: '0updated',
