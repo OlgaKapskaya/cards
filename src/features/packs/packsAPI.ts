@@ -54,7 +54,7 @@ export type CreatePackPayloadType = {
 }
 
 export type CreatePackResponseType = {
-  newCardsPack?: {
+  newCardsPack: {
     cardsCount: number
     created: string
     grade: number
@@ -118,20 +118,22 @@ export type UpdatePackPayloadType = {
 }
 
 type UpdatePackResponseType = {
-  cardsCount: number
-  created: string
-  deckCover: string | null
-  grade: number
-  more_id: string
-  name: string
-  path: string
-  private: boolean
-  rating: number
-  shots: number
-  type: string
-  updated: string
-  user_id: string
-  user_name: string
-  __v: number
-  _id: string
+  updatedCardsPack: {
+    cardsCount: number
+    created: string
+    deckCover: string | null
+    grade: number
+    more_id: string
+    name: string
+    path: string
+    private: boolean
+    rating: number
+    shots: number
+    type: string
+    updated: string
+    user_id: string
+    user_name: string
+    __v: number
+    _id: string
+  }
 }

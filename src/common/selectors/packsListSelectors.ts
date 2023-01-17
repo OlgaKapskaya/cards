@@ -12,3 +12,4 @@ export const searchParamsSelector = (state: AppRootStateType) => state.packs.sea
 export const rangeSelector = (state: AppRootStateType) => state.packs.searchParams.range
 export const packNameSelector = (state: AppRootStateType) => state.packs.searchParams.packName
 export const isLoadingSelector = (state: AppRootStateType) => state.packs.isLoading
+export const profileIdSelector = (state: AppRootStateType) => state.profile.profile._id

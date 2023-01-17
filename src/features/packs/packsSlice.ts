@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
-import { setAppStatus } from '../../app/appSlice'
+import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
@@ -18,6 +19,7 @@ type SearchParamsType = {
   pageCount: number // количество элементов на странице
   packName: string
   range: number[]
+  sort: string
 }
 export type CardType = {
   cardsCount: number
@@ -48,9 +50,10 @@ const initialState = {
   isLoading: false,
   searchParams: {
     page: 1,
-    pageCount: 4,
+    pageCount: 7,
     packName: '',
     range: [] as number[],
+    sort: '0updated',
   },
 } as initialStateType
 
@@ -66,7 +69,7 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, range } = state.packs.searchParams
+  const { page, pageCount, packName, range, sort } = state.packs.searchParams
   const user_id = state.profile.profile._id
   const isOnlyMy = state.packs.isOnlyMy
 
@@ -77,6 +80,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     page,
     pageCount,
     user_id: isOnlyMy ? user_id : '',
+    sortPacks: sort,
   }
 
   dispatch(setAppStatus('loading'))
@@ -84,7 +88,17 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
   try {
     const res = await packsAPI.getPacks(params)
 
-    dispatch(setPacks(res.data.cardPacks))
+    dispatch(
+      setPacks(
+        res.data.cardPacks.map(elem => {
+          return {
+            ...elem,
+            created: dayjs(elem.created).format('DD.MM.YYYY'),
+            updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+          }
+        })
+      )
+    )
     dispatch(setMinPacksCount(res.data.minCardsCount))
     dispatch(setMaxPacksCount(res.data.maxCardsCount))
     dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
@@ -100,12 +114,17 @@ export const createPack = createAsyncThunk(
   'packs/createPack',
   async (payload: CreatePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.createPack(payload)
+      const response = await packsAPI.createPack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.newCardsPack.name} successfully created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -114,12 +133,17 @@ export const deletePack = createAsyncThunk(
   'packs/deletePack',
   async (payload: DeletePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.deletePack(payload)
+      const response = await packsAPI.deletePack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.deletedCardsPack.name} successfully deleted`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -128,12 +152,17 @@ export const updatePack = createAsyncThunk(
   'packs/updatePack',
   async (payload: UpdatePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.updatePack(payload)
-      dispatch(setAppStatus('succeeded'))
+      const response = await packsAPI.updatePack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -180,6 +209,9 @@ export const packsSlice = createSlice({
     setTypePacks(state, action: PayloadAction<boolean>) {
       state.isOnlyMy = action.payload
     },
+    setSort(state, action: PayloadAction<string>) {
+      state.searchParams.sort = action.payload
+    },
   },
 })
 export const {
@@ -193,5 +225,6 @@ export const {
   setRange,
   setPackName,
   setIsLoading,
+  setSort,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer
