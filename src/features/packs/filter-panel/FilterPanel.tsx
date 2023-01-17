@@ -48,7 +48,7 @@ export const FilterPanel = () => {
   const resetButtonDisabled =
     (!isMy &&
       !packName &&
-      (range === ([] as number[]) || (range[0] === minCardsCount && range[1] === maxCardsCount))) ||
+      (range.length === 0 || (range[0] === minCardsCount && range[1] === maxCardsCount))) ||
     isLoading
 
   return (
