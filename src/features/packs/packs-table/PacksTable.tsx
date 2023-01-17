@@ -10,7 +10,7 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { Loader } from '../../../common/components/loader/Loader'
+import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
@@ -43,11 +43,13 @@ export const PacksTable = () => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
-  if (isLoading) return <Loader />
+  // if (isLoading) return <Loader />
+
+  if (packs.length === 0) return <IsEmptyMessage />
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="simple table">
+      <Table aria-label="simple table" stickyHeader>
         <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
           <TableRow>
             <TableCell>Name</TableCell>
