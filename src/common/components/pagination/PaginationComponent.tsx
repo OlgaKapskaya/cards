@@ -16,7 +16,6 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   currentPage,
   labelRowsPerPage,
 }) => {
-  const pagesCount = Math.ceil(totalCount / pageSize)
   const [rowsPerPage, setRowsPerPage] = useState(pageSize)
 
   useEffect(() => {
@@ -38,7 +37,7 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
     <TablePagination
       component="div"
       labelRowsPerPage={labelRowsPerPage}
-      count={pagesCount}
+      count={totalCount}
       page={currentPage - 1}
       onPageChange={onChangePageHandler}
       rowsPerPageOptions={[4, 7, 10, 15]}

@@ -52,7 +52,7 @@ export const CardsTableHead: FC<CardsTableProps> = props => {
 
   return (
     <TableHead>
-      <TableRow hover>
+      <TableRow sx={{ backgroundColor: '#EFEFEF' }}>
         {headCells.map(headCell => (
           <TableCell key={headCell.id}>
             <TableSortLabel

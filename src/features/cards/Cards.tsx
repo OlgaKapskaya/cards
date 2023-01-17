@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHoo
 import {
   emptySelector,
   foundSelector,
-  searchWordSelector,
+  searchParamsSelector,
 } from '../../common/selectors/cardsSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 
@@ -21,7 +21,7 @@ export const Cards = () => {
   const dispatch = useAppDispatch()
   const foundStatus = useAppSelector(foundSelector)
   const emptyStatus = useAppSelector(emptySelector)
-  const searchWord = useAppSelector(searchWordSelector)
+  const searchParams = useAppSelector(searchParamsSelector)
 
   const handleAddNewCard = () => {
     // убрать заглушку
@@ -37,11 +37,12 @@ export const Cards = () => {
   const handleSearchCard = (value: string) => {
     dispatch(setSearchWord(value))
   }
+  //сделать усеЕффект который будет доставть из урл айди пака
 
   useEffect(() => {
     // убрать заглушку
     dispatch(getCards())
-  }, [searchWord])
+  }, [searchParams])
 
   if (emptyStatus) {
     return (

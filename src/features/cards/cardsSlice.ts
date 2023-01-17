@@ -41,6 +41,9 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
     }
 
     dispatch(setCards(response.data.cards))
+    dispatch(setUserPackId(response.data.packUserId))
+    dispatch(setCardsTotalCount(response.data.cardsTotalCount))
+
     dispatch(setAppStatus('succeeded'))
   } catch (e: any) {
     errorNetworkUtil(dispatch, e)
@@ -101,11 +104,12 @@ const initialState = {
   cards: [] as CardType[],
   cardsPack_id: '63c416a4025403b6ce37c1d1',
   userPack_id: '',
+  cardsTotalCount: 0,
   found: true,
   empty: false,
   searchParams: {
     page: 1,
-    pageCount: 10,
+    pageCount: 4,
     searchWord: '',
   },
 }
@@ -126,8 +130,33 @@ export const cardsSlice = createSlice({
     setSearchWord: (state, action: PayloadAction<string>) => {
       state.searchParams.searchWord = action.payload
     },
+    setCardsPackId: (state, action: PayloadAction<string>) => {
+      state.cardsPack_id = action.payload
+    },
+    setUserPackId: (state, action: PayloadAction<string>) => {
+      state.userPack_id = action.payload
+    },
+    setCardsCurrentPage: (state, action: PayloadAction<number>) => {
+      state.searchParams.page = action.payload
+    },
+    setCardsPageCount: (state, action: PayloadAction<number>) => {
+      state.searchParams.pageCount = action.payload
+    },
+    setCardsTotalCount: (state, action: PayloadAction<number>) => {
+      state.cardsTotalCount = action.payload
+    },
   },
 })
 
-export const { setCards, setFoundStatus, setEmptyStatus, setSearchWord } = cardsSlice.actions
+export const {
+  setCards,
+  setFoundStatus,
+  setEmptyStatus,
+  setSearchWord,
+  setCardsPackId,
+  setUserPackId,
+  setCardsCurrentPage,
+  setCardsPageCount,
+  setCardsTotalCount,
+} = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

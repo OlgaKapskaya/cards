@@ -12,9 +12,15 @@ import dayjs from 'dayjs'
 
 import deleteIcon from '../../../assets/img/delete.svg'
 import editIcon from '../../../assets/img/edit.svg'
+import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { cardsSelector } from '../../../common/selectors/cardsSelectors'
-import { deleteCard, updateCard } from '../cardsSlice'
+import {
+  cardsCurrentPageSelector,
+  cardsPageCountSelector,
+  cardsSelector,
+  cardsTotalCountSelector,
+} from '../../../common/selectors/cardsSelectors'
+import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
 import s from './CardsTable.module.css'
 import { CardsTableHead } from './table-head/CardsTableHead'
@@ -33,6 +39,9 @@ export const CardsTable = () => {
   const [order, setOrder] = useState<Order>('asc')
   const [orderBy, setOrderBy] = useState<keyof Data>('updated')
   const cards = useAppSelector(cardsSelector)
+  const currentPage = useAppSelector(cardsCurrentPageSelector)
+  const pageCount = useAppSelector(cardsPageCountSelector)
+  const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
   const dispatch = useAppDispatch()
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
@@ -56,6 +65,11 @@ export const CardsTable = () => {
     }
 
     dispatch(updateCard(payload))
+  }
+
+  const handlePageChange = (page: number, pageSize: number) => {
+    dispatch(setCardsCurrentPage(page))
+    dispatch(setCardsPageCount(pageSize))
   }
 
   return (
@@ -93,6 +107,13 @@ export const CardsTable = () => {
               })}
             </TableBody>
           </Table>
+          <PaginationComponent
+            totalCount={cardsTotalCount}
+            currentPage={currentPage}
+            pageSize={pageCount}
+            onPageChanged={handlePageChange}
+            labelRowsPerPage="Cards per Page"
+          />
         </TableContainer>
       </Paper>
     </Box>
