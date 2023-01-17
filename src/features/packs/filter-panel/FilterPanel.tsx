@@ -8,12 +8,13 @@ import { SwitchButton } from '../../../common/components/switch-button/SwitchBut
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  isLoadingSelector,
+  isMySelector,
   maxCardsCountSelector,
   minCardsCountSelector,
   packNameSelector,
-  typePacksSelector,
 } from '../../../common/selectors/packsListSelectors'
-import { resetFilters, setPackName, setRange, setTypePacks, TypePacks } from '../packsSlice'
+import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
 
 import s from './FilterPanel.module.css'
 
@@ -21,7 +22,8 @@ export const FilterPanel = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
   const packName = useAppSelector(packNameSelector)
-  const typePacks = useAppSelector(typePacksSelector)
+  const isMy = useAppSelector(isMySelector)
+  const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
 
@@ -29,7 +31,7 @@ export const FilterPanel = () => {
     dispatch(setRange(values))
   }, [])
 
-  const onChangeTypePacks = useCallback((type: TypePacks) => {
+  const onChangeTypePacks = useCallback((type: boolean) => {
     dispatch(setTypePacks(type))
   }, [])
 
@@ -44,14 +46,20 @@ export const FilterPanel = () => {
   return (
     <div className={s.filterPanelContainer}>
       <div className={s.search}>
-        <SearchInput label="Search" onChangeText={onChangeSearchHandler} searchValue={packName} />
+        <SearchInput
+          label="Search"
+          onChangeText={onChangeSearchHandler}
+          searchValue={packName}
+          disabled={isLoading}
+        />
       </div>
 
       <SwitchButton
+        disabled={isLoading}
         label="Show packs cards"
-        buttons={['my', 'all']}
-        currentButton={typePacks}
-        setType={onChangeTypePacks}
+        toggle={isMy}
+        setToggle={onChangeTypePacks}
+        buttonNames={['my', 'all']}
       />
       <InputSlider
         minValue={minCardsCount ? minCardsCount : 0}
@@ -59,8 +67,9 @@ export const FilterPanel = () => {
         sliderWidth={155}
         label="Number of cards"
         onChangeValues={onChangeValuesHandler}
+        disabled={isLoading}
       />
-      <ButtonComponent sx={iconButton} onClick={onResetFiltersHandler}>
+      <ButtonComponent sx={iconButton} onClick={onResetFiltersHandler} disabled={isLoading}>
         <img src={filter} alt="resetFilter" />
       </ButtonComponent>
     </div>
