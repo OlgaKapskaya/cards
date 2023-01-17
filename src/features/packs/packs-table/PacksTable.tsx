@@ -2,6 +2,7 @@ import React from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
+import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
 import { Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -19,6 +20,7 @@ import {
   isLoadingSelector,
   packsSelector,
   pageCountSelector,
+  profileIdSelector,
 } from '../../../common/selectors/packsListSelectors'
 import s from '../Packs.module.css'
 import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
@@ -28,6 +30,8 @@ export const PacksTable = () => {
   const page = useAppSelector(currentPageSelector)
   const pageCount = useAppSelector(pageCountSelector)
   const isLoading = useAppSelector(isLoadingSelector)
+
+  const profile_id = useAppSelector(profileIdSelector)
 
   const dispatch = useAppDispatch()
   const deletePackHandler = (id: string) => {
@@ -57,10 +61,10 @@ export const PacksTable = () => {
         <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align="right">Cards</TableCell>
-            <TableCell align="right">Last updated</TableCell>
-            <TableCell align="right">Created by</TableCell>
-            <TableCell align="right">Actions</TableCell>
+            <TableCell align="left">Cards</TableCell>
+            <TableCell align="left">Last updated</TableCell>
+            <TableCell align="left">Created by</TableCell>
+            <TableCell align="left">Actions</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
@@ -69,12 +73,42 @@ export const PacksTable = () => {
               <TableCell component="th" scope="row">
                 {p.name}
               </TableCell>
-              <TableCell align="right">{p.name}</TableCell>
-              <TableCell align="right">{p.updated}</TableCell>
-              <TableCell align="right">{p.user_name}</TableCell>
-              <TableCell align="right">
-                {<DeleteOutlineIcon onClick={() => deletePackHandler(p._id)} />}
-                {<DriveFileRenameOutlineOutlinedIcon onClick={() => updatePackHandler(p._id)} />}
+              <TableCell align="left">{p.cardsCount}</TableCell>
+              <TableCell align="left">{p.updated}</TableCell>
+              <TableCell align="left">{p.user_name}</TableCell>
+              <TableCell align="left">
+                {p.cardsCount !== 0 && (
+                  <SchoolOutlinedIcon
+                    fontSize={'medium'}
+                    sx={{
+                      stroke: '#ffffff',
+                      strokeWidth: 1,
+                      marginRight: '10px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => {}}
+                  />
+                )}
+                {profile_id === p.user_id && (
+                  <DriveFileRenameOutlineOutlinedIcon
+                    fontSize={'medium'}
+                    sx={{
+                      stroke: '#ffffff',
+                      strokeWidth: 1,
+                      marginRight: '10px',
+                      cursor: 'pointer',
+                    }}
+                    onClick={() => updatePackHandler(p._id)}
+                  />
+                )}
+
+                {profile_id === p.user_id && (
+                  <DeleteOutlineIcon
+                    fontSize={'medium'}
+                    sx={{ stroke: '#ffffff', strokeWidth: 1, cursor: 'pointer' }}
+                    onClick={() => deletePackHandler(p._id)}
+                  />
+                )}
               </TableCell>
             </TableRow>
           ))}
