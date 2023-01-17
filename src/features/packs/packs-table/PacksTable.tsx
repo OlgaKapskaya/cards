@@ -1,9 +1,5 @@
 import React from 'react'
 
-import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
-import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
-import SchoolOutlinedIcon from '@mui/icons-material/SchoolOutlined'
-import { Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -12,7 +8,11 @@ import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
+import edit from '../../../assets/img/edit-2.svg'
+import learn from '../../../assets/img/teacher.svg'
+import del from '../../../assets/img/trash.svg'
 import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
+import { Loader } from '../../../common/components/loader/Loader'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
@@ -24,6 +24,8 @@ import {
   profileIdSelector,
 } from '../../../common/selectors/packsListSelectors'
 import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
+
+import s from './PacksTable.module.css'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
@@ -48,7 +50,7 @@ export const PacksTable = () => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
-  // if (isLoading) return <Loader />
+  if (isLoading) return <Loader />
 
   if (packs.length === 0) return <IsEmptyMessage />
 
@@ -75,35 +77,23 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <SchoolOutlinedIcon
-                    fontSize={'medium'}
-                    sx={{
-                      stroke: '#ffffff',
-                      strokeWidth: 1,
-                      marginRight: '10px',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => {}}
-                  />
+                  <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
                 )}
                 {profile_id === p.user_id && (
-                  <DriveFileRenameOutlineOutlinedIcon
-                    fontSize={'medium'}
-                    sx={{
-                      stroke: '#ffffff',
-                      strokeWidth: 1,
-                      marginRight: '10px',
-                      cursor: 'pointer',
-                    }}
+                  <img
+                    src={edit}
                     onClick={() => updatePackHandler(p._id)}
+                    className={s.icon}
+                    alt="update"
                   />
                 )}
 
                 {profile_id === p.user_id && (
-                  <DeleteOutlineIcon
-                    fontSize={'medium'}
-                    sx={{ stroke: '#ffffff', strokeWidth: 1, cursor: 'pointer' }}
+                  <img
+                    src={del}
                     onClick={() => deletePackHandler(p._id)}
+                    className={s.icon}
+                    alt="delete"
                   />
                 )}
               </TableCell>

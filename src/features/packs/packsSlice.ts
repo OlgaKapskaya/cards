@@ -77,7 +77,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     max: range[1],
     page,
     pageCount,
-    user_id: isOnlyMy ? user_id : '',
+    user_id: isOnlyMy ? user_id : undefined,
   }
 
   dispatch(setAppStatus('loading'))

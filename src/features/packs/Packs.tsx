@@ -14,11 +14,11 @@ import s from './Packs.module.css'
 import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
+  const searchParams = useAppSelector(searchParamsSelector)
   const isMy = useAppSelector(isMySelector)
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
-  const searchParams = useAppSelector(searchParamsSelector)
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
