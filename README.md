@@ -1,3 +1,11 @@
+## Authors:
+
+[![Contributors][contributors-shield]][contributors-url]
+
+- [@tepek92](https://github.com/tepek92)
+- [@OlgaKapskaya](https://github.com/OlgaKapskaya)
+- [@kirkade](https://github.com/kirkade)
+
 # Cards training
 
 [![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
@@ -8,7 +16,10 @@
 - [![Redux-toolkit][rtk]][rtk-url]
 - [![Redux-thunk][reduxthunk]][reduxthunk-url]
 - [![Redux-router-dom][rrd]][rrd-url]
-- [![React][rrd]][rrd-url]
+- [![Typescript][typescript]][typescript-url]
+- [![ESLint][eslint]][eslint-url]
+- [![Prettier][prettier]][prettier-url]
+- [![MaterialUI][mui]][mui-url]
 
 * react-hook-form
 * yup
@@ -53,13 +64,6 @@ WebStorm is preferred
 - [x] Run eslint --fix on save
 -
 
-## Authors:
-
-[![Contributors][contributors-shield]][contributors-url]
-
-- [@tepek92](https://github.com/tepek92)
-- [@OlgaKapskaya](https://github.com/OlgaKapskaya)
-- [@kirkade](https://github.com/kirkade)
 
 <!-- LINKS  -->
 
@@ -67,9 +71,20 @@ WebStorm is preferred
 [contributors-url]: https://github.com/OlgaKapskaya/cards/graphs/contributors
 [react.js]: https://img.shields.io/badge/React-0769AD?style=for-the-badge&logo=react&logoColor=white
 [react-url]: https://reactjs.org/
-[rtk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=rtk&logoColor=white
+[rtk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [rtk-url]: https://redux-toolkit.js.org/
 [reduxthunk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=rtk&logoColor=white
 [reduxthunk-url]: https://github.com/reduxjs/redux-thunk
-[rrd]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=rtk&logoColor=white
+[rrd]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [rrd-url]: https://reactrouter.com/en/main
+[typescript]:https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[typescript-url]: https://www.typescriptlang.org/
+[eslint]: https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
+[eslint-url]:https://eslint.org/
+[prettier]:https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
+[prettier-url]: https://prettier.io/
+[mui]:https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white
+[mui-url]:https://mui.com/
+
+
+
