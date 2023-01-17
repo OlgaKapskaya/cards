@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppStatus } from '../../app/appSlice'
+import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
 
@@ -100,12 +100,17 @@ export const createPack = createAsyncThunk(
   'packs/createPack',
   async (payload: CreatePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.createPack(payload)
+      const response = await packsAPI.createPack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.newCardsPack?.name} successfully created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -114,12 +119,17 @@ export const deletePack = createAsyncThunk(
   'packs/deletePack',
   async (payload: DeletePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.deletePack(payload)
+      const response = await packsAPI.deletePack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.deletedCardsPack.name} successfully deleted`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
@@ -128,12 +138,17 @@ export const updatePack = createAsyncThunk(
   'packs/updatePack',
   async (payload: UpdatePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
     try {
-      await packsAPI.updatePack(payload)
-      dispatch(setAppStatus('succeeded'))
+      const response = await packsAPI.updatePack(payload)
+
       dispatch(getPacks())
+      dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
+      dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
     }
   }
 )
