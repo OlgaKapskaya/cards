@@ -1,11 +1,12 @@
 import React from 'react'
 
+import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
 import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { foundSelector } from '../../common/selectors/cardsSelectors'
+import { emptySelector, foundSelector } from '../../common/selectors/cardsSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../common/utils/styles-utils/sxButtonCreators'
-import { ProfileBackLink } from '../profile/profile-back-link/ProfileBackLink'
 
 import { CardsMenu } from './cards-menu/CardsMenu'
 import s from './Cards.module.css'
@@ -15,6 +16,7 @@ import { EnhancedTable } from './table/Table'
 export const Cards = () => {
   const dispatch = useAppDispatch()
   const foundStatus = useAppSelector(foundSelector)
+  const emptyStatus = useAppSelector(emptySelector)
 
   const handleAddNewCard = () => {
     // убрать заглушку
@@ -41,9 +43,26 @@ export const Cards = () => {
     dispatch(searchCards(payload))
   }
 
+  if (emptyStatus) {
+    return (
+      <div className={s.cardsPage}>
+        <BackPackLink />
+        <CardsMenu />
+        <IsEmptyMessage message="This pack is empty. Click add new card to fill this pack">
+          <ButtonComponent
+            sx={sxButtonMarginTopWidthCreator('0', '184px')}
+            onClick={handleAddNewCard}
+          >
+            Add new card
+          </ButtonComponent>
+        </IsEmptyMessage>
+      </div>
+    )
+  }
+
   return (
     <div className={s.cardsPage}>
-      <ProfileBackLink />
+      <BackPackLink />
       <div className={s.titleMenu}>
         <CardsMenu />
         <ButtonComponent
@@ -56,7 +75,7 @@ export const Cards = () => {
       <div className={s.searchBlock}>
         <SearchInput label="Search" searchValue="" onChangeText={handleSearchCard} />
       </div>
-      {foundStatus ? <EnhancedTable /> : <div>НИЧЕГО НЕ НАЙДЕНО</div>}
+      {foundStatus ? <EnhancedTable /> : <IsEmptyMessage />}
     </div>
   )
 }

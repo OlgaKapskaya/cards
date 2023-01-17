@@ -25,6 +25,12 @@ export const getCards = createAsyncThunk(
         ...data,
       })
 
+      if (response.data.cards.length === 0) {
+        dispatch(setEmptyStatus(true))
+      } else {
+        dispatch(setEmptyStatus(false))
+      }
+
       dispatch(setCards(response.data.cards))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
@@ -127,6 +133,7 @@ export const searchCards = createAsyncThunk(
 const initialState = {
   cards: [] as CardType[],
   found: true,
+  empty: false,
 }
 
 export const cardsSlice = createSlice({
@@ -139,8 +146,11 @@ export const cardsSlice = createSlice({
     setFoundStatus: (state, action: PayloadAction<boolean>) => {
       state.found = action.payload
     },
+    setEmptyStatus: (state, action: PayloadAction<boolean>) => {
+      state.empty = action.payload
+    },
   },
 })
 
-export const { setCards, setFoundStatus } = cardsSlice.actions
+export const { setCards, setFoundStatus, setEmptyStatus } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
