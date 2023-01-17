@@ -18,6 +18,7 @@ type SearchParamsType = {
   pageCount: number // количество элементов на странице
   packName: string
   range: number[]
+  sort: string
 }
 export type CardType = {
   cardsCount: number
@@ -51,6 +52,7 @@ const initialState = {
     pageCount: 4,
     packName: '',
     range: [] as number[],
+    sort: '0updated',
   },
 } as initialStateType
 
@@ -66,7 +68,7 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, range } = state.packs.searchParams
+  const { page, pageCount, packName, range, sort } = state.packs.searchParams
   const user_id = state.profile.profile._id
   const isOnlyMy = state.packs.isOnlyMy
 
@@ -77,6 +79,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     page,
     pageCount,
     user_id: isOnlyMy ? user_id : '',
+    sortPacks: sort,
   }
 
   dispatch(setAppStatus('loading'))
@@ -180,6 +183,9 @@ export const packsSlice = createSlice({
     setTypePacks(state, action: PayloadAction<boolean>) {
       state.isOnlyMy = action.payload
     },
+    setSort(state, action: PayloadAction<string>) {
+      state.searchParams.sort = action.payload
+    },
   },
 })
 export const {
@@ -193,5 +199,6 @@ export const {
   setRange,
   setPackName,
   setIsLoading,
+  setSort,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer
