@@ -1,4 +1,6 @@
 .filterPanelContainer {
+  position: relative;
+
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
@@ -10,4 +12,15 @@
 
 .search {
   width: 45%;
+}
+
+.disablePanel {
+  position: absolute;
+  z-index: 100;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
+  background-color: transparent;
 }

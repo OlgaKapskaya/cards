@@ -2,31 +2,31 @@ import React from 'react'
 
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import DriveFileRenameOutlineOutlinedIcon from '@mui/icons-material/DriveFileRenameOutlineOutlined'
-import { Pagination } from '@mui/material'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableFooter from '@mui/material/TableFooter'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 
-import { Loader } from '../../../common/components/loader/Loader'
+import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
+import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  cardPacksTotalCountSelector,
   currentPageSelector,
   isLoadingSelector,
   packsSelector,
   pageCountSelector,
 } from '../../../common/selectors/packsListSelectors'
-import s from '../Packs.module.css'
 import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
   const page = useAppSelector(currentPageSelector)
   const pageCount = useAppSelector(pageCountSelector)
+  const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
@@ -34,26 +34,22 @@ export const PacksTable = () => {
     dispatch(deletePack({ id }))
   }
 
-  const onChangePageHandler = (event: React.ChangeEvent<unknown>, value: number) => {
-    dispatch(setCurrentPage(value))
+  const onChangePageHandler = (page: number, size: number) => {
+    dispatch(setCurrentPage(page))
+    dispatch(setPageCount(size))
   }
 
   const updatePackHandler = (_id: string) => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
-  const onChangeRowsPerPageHandler = (
-    event: React.MouseEvent<HTMLButtonElement> | null,
-    page: number
-  ) => {
-    dispatch(setPageCount(page))
-  }
+  // if (isLoading) return <Loader />
 
-  if (isLoading) return <Loader />
+  if (packs.length === 0) return <IsEmptyMessage />
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="simple table">
+      <Table aria-label="simple table" stickyHeader>
         <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
           <TableRow>
             <TableCell>Name</TableCell>
@@ -79,30 +75,14 @@ export const PacksTable = () => {
             </TableRow>
           ))}
         </TableBody>
-        <TableFooter className={s.tableFooter}>
-          <TableRow>
-            <Pagination count={pageCount} page={page} onChange={onChangePageHandler} />
-            {/*<TablePagination*/}
-            {/*  rowsPerPageOptions={[5, 10, 25, { label: 'All', value: -1 }]}*/}
-            {/*  colSpan={3}*/}
-            {/*  count={pageCount ? pageCount : 10}*/}
-            {/*  rowsPerPage={10}*/}
-            {/*  page={1}*/}
-            {/*  SelectProps={{*/}
-            {/*    inputProps: {*/}
-            {/*      'aria-label': 'Show',*/}
-            {/*    },*/}
-            {/*    native: true,*/}
-            {/*  }}*/}
-            {/*  onPageChange={() => {*/}
-            {/*    console.log('onpagechange')*/}
-            {/*  }}*/}
-            {/*  onRowsPerPageChange={() => onChangeRowsPerPageHandler}*/}
-            {/*  ActionsComponent={TablePaginationActions}*/}
-            {/*/>*/}
-          </TableRow>
-        </TableFooter>
       </Table>
+      <PaginationComponent
+        totalCount={cardPacksTotalCount ? cardPacksTotalCount : 0}
+        currentPage={page}
+        pageSize={pageCount}
+        onPageChanged={onChangePageHandler}
+        labelRowsPerPage="Cards per Page"
+      />
     </TableContainer>
   )
 }
