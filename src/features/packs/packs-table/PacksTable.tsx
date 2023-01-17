@@ -1,5 +1,6 @@
 import React from 'react'
 
+import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -23,8 +24,8 @@ import {
   isLoadingSelector,
   packsSelector,
   pageCountSelector,
-  profileIdSelector,
 } from '../../../common/selectors/packsListSelectors'
+import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deletePack, setCurrentPage, setPageCount, setSort, updatePack } from '../packsSlice'
 
 import s from './PacksTable.module.css'
@@ -38,7 +39,7 @@ export const PacksTable = () => {
   const sortPacks = useAppSelector(state => state.packs.searchParams.sort)
   const navigate = useNavigate()
 
-  const profile_id = useAppSelector(profileIdSelector)
+  const profile_id = useAppSelector(userIDSelector)
 
   const dispatch = useAppDispatch()
   const deletePackHandler = (id: string) => {
@@ -134,24 +135,30 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
+                  <IconButton size="small" disabled={p.onEdited}>
+                    <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
+                  </IconButton>
                 )}
                 {profile_id === p.user_id && (
-                  <img
-                    src={edit}
-                    onClick={() => updatePackHandler(p._id)}
-                    className={s.icon}
-                    alt="update"
-                  />
+                  <IconButton size="small" disabled={p.onEdited}>
+                    <img
+                      src={edit}
+                      onClick={() => updatePackHandler(p._id)}
+                      className={s.icon}
+                      alt="update"
+                    />
+                  </IconButton>
                 )}
 
                 {profile_id === p.user_id && (
-                  <img
-                    src={del}
-                    onClick={() => deletePackHandler(p._id)}
-                    className={s.icon}
-                    alt="delete"
-                  />
+                  <IconButton size="small" disabled={p.onEdited}>
+                    <img
+                      src={del}
+                      onClick={() => deletePackHandler(p._id)}
+                      className={s.icon}
+                      alt="delete"
+                    />
+                  </IconButton>
                 )}
               </TableCell>
             </TableRow>

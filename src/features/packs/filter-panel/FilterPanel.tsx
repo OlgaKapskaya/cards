@@ -13,6 +13,7 @@ import {
   maxCardsCountSelector,
   minCardsCountSelector,
   packNameSelector,
+  rangeIdSelector,
 } from '../../../common/selectors/packsListSelectors'
 import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
 
@@ -24,6 +25,7 @@ export const FilterPanel = () => {
   const packName = useAppSelector(packNameSelector)
   const isMy = useAppSelector(isMySelector)
   const isLoading = useAppSelector(isLoadingSelector)
+  const range = useAppSelector(rangeIdSelector)
 
   const dispatch = useAppDispatch()
 
@@ -42,6 +44,12 @@ export const FilterPanel = () => {
   const onResetFiltersHandler = () => {
     dispatch(resetFilters())
   }
+
+  const resetButtonDisabled =
+    (!isMy &&
+      !packName &&
+      (range === ([] as number[]) || (range[0] === minCardsCount && range[1] === maxCardsCount))) ||
+    isLoading
 
   return (
     <div className={s.filterPanelContainer}>
@@ -69,7 +77,11 @@ export const FilterPanel = () => {
         onChangeValues={onChangeValuesHandler}
         disabled={isLoading}
       />
-      <ButtonComponent sx={iconButton} onClick={onResetFiltersHandler} disabled={isLoading}>
+      <ButtonComponent
+        sx={iconButton}
+        onClick={onResetFiltersHandler}
+        disabled={resetButtonDisabled}
+      >
         <img src={filter} alt="resetFilter" />
       </ButtonComponent>
     </div>
