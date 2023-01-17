@@ -7,6 +7,7 @@ import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
+import TableSortLabel from '@mui/material/TableSortLabel/TableSortLabel'
 import { useNavigate } from 'react-router-dom'
 
 import edit from '../../../assets/img/edit-2.svg'
@@ -27,7 +28,6 @@ import {
 import { deletePack, setCurrentPage, setPageCount, setSort, updatePack } from '../packsSlice'
 
 import s from './PacksTable.module.css'
-import TableSortLabel from '@mui/material/TableSortLabel/TableSortLabel'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
@@ -134,8 +134,7 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <img src={learn} onClick={() => {
-                  }} className={s.icon} alt="learn" />
+                  <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
                 )}
                 {profile_id === p.user_id && (
                   <img
