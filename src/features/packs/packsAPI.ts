@@ -54,7 +54,7 @@ export type CreatePackPayloadType = {
 }
 
 export type CreatePackResponseType = {
-  newCardsPack?: {
+  newCardsPack: {
     cardsCount: number
     created: string
     grade: number

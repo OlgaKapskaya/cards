@@ -1,4 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
@@ -84,7 +85,17 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
   try {
     const res = await packsAPI.getPacks(params)
 
-    dispatch(setPacks(res.data.cardPacks))
+    dispatch(
+      setPacks(
+        res.data.cardPacks.map(elem => {
+          return {
+            ...elem,
+            created: dayjs(elem.created).format('DD.MM.YYYY'),
+            updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+          }
+        })
+      )
+    )
     dispatch(setMinPacksCount(res.data.minCardsCount))
     dispatch(setMaxPacksCount(res.data.maxCardsCount))
     dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
@@ -105,7 +116,7 @@ export const createPack = createAsyncThunk(
       const response = await packsAPI.createPack(payload)
 
       dispatch(getPacks())
-      dispatch(setAppMessage(`Pack ${response.data.newCardsPack?.name} successfully created`))
+      dispatch(setAppMessage(`Pack ${response.data.newCardsPack.name} successfully created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
