@@ -4,6 +4,7 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 
 import logoutImg from '../../assets/img/logout.svg'
+import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { buttonWhite } from '../../common/constants/theme'
 import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
@@ -12,7 +13,6 @@ import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCr
 import { logout } from '../auth/authSlice'
 
 import { ProfileAvatar } from './profile-avatar/ProfileAvatar'
-import { ProfileBackLink } from './profile-back-link/ProfileBackLink'
 import { ProfilePersonalInfo } from './profile-personal-info/ProfilePersonalInfo'
 import s from './Profile.module.css'
 
@@ -25,7 +25,7 @@ export const Profile = () => {
 
   return (
     <div className={s.mainContainer}>
-      <ProfileBackLink />
+      <BackPackLink />
       <Box sx={sxBoxCreator(360)}>
         <Paper elevation={3}>
           <div className={s.profileContainer}>
