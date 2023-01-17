@@ -14,7 +14,7 @@ type IsEmptyMessagePropsType = {
 export const IsEmptyMessage: FC<IsEmptyMessagePropsType> = ({ message, children }) => {
   return (
     <div className={s.container}>
-      <span>
+      <span className={s.message}>
         {message ? message : 'Nothing was found for your query. Change your search parameters.'}
       </span>
       {children}

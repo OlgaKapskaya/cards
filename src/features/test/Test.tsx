@@ -35,7 +35,7 @@ export const Test = () => {
       {/*    <SearchInput label="Search" />*/}
       {/*  </div>*/}
 
-      {/*  /!*<SwitchButton label="Show packs-table cards" buttons={['My', 'All']} currentButton="All" />*!/*/}
+      {/*  /!*<SwitchButton label="Show packs-cards-table cards" buttons={['My', 'All']} currentButton="All" />*!/*/}
       {/*  <InputSlider*/}
       {/*    minValue={0}*/}
       {/*    maxValue={100}*/}

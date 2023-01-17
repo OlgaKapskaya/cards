@@ -1,4 +1,5 @@
 import * as React from 'react'
+import { FC } from 'react'
 
 import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
@@ -7,9 +8,9 @@ import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
 import { visuallyHidden } from '@mui/utils'
 
-import { Data, Order } from '../Table'
+import { Data, Order } from '../CardsTable'
 
-interface EnhancedTableProps {
+interface CardsTableProps {
   onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void
   order: Order
   orderBy: string
@@ -43,7 +44,7 @@ const headCells: readonly HeadCell[] = [
   },
 ]
 
-export function EnhancedTableHead(props: EnhancedTableProps) {
+export const CardsTableHead: FC<CardsTableProps> = props => {
   const { order, orderBy, onRequestSort } = props
   const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
     onRequestSort(event, property)

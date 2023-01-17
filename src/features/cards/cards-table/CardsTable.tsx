@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { useEffect } from 'react'
+import React, { useState } from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -15,9 +14,10 @@ import deleteIcon from '../../../assets/img/delete.svg'
 import editIcon from '../../../assets/img/edit.svg'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import { cardsSelector } from '../../../common/selectors/cardsSelectors'
-import { deleteCard, getCards, updateCard } from '../cardsSlice'
+import { deleteCard, updateCard } from '../cardsSlice'
 
-import { EnhancedTableHead } from './table-head/TableHead'
+import s from './CardsTable.module.css'
+import { CardsTableHead } from './table-head/CardsTableHead'
 
 export interface Data {
   question: string
@@ -29,9 +29,9 @@ export interface Data {
 
 export type Order = 'asc' | 'desc'
 
-export function EnhancedTable() {
-  const [order, setOrder] = React.useState<Order>('asc')
-  const [orderBy, setOrderBy] = React.useState<keyof Data>('updated')
+export const CardsTable = () => {
+  const [order, setOrder] = useState<Order>('asc')
+  const [orderBy, setOrderBy] = useState<keyof Data>('updated')
   const cards = useAppSelector(cardsSelector)
   const dispatch = useAppDispatch()
 
@@ -58,17 +58,12 @@ export function EnhancedTable() {
     dispatch(updateCard(payload))
   }
 
-  useEffect(() => {
-    // убрать заглушку
-    dispatch(getCards({ cardsPack_id: '63c416a4025403b6ce37c1d1' }))
-  }, [])
-
   return (
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <EnhancedTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+            <CardsTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
             <TableBody>
               {cards.map(row => {
                 return (
@@ -80,9 +75,8 @@ export function EnhancedTable() {
                       <Rating name="simple-controlled" value={row.grade} />
                     </TableCell>
                     <TableCell align="right">
-                      <span>
+                      <span className={s.icons}>
                         <img
-                          style={{ marginRight: '20px' }}
                           src={editIcon}
                           alt="editIcon"
                           onClick={() => handleUpdateCard(row._id)}

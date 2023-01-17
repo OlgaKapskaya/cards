@@ -1,51 +1,62 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
+import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
-import { uniqueObjectsFromAnArray } from '../../common/utils/uniqueObjectsFromAnArray'
 
-import {
-  cardsAPI,
-  CardType,
-  CreateCardPayloadType,
-  DeleteCardType,
-  GetCardsPayloadType,
-  UpdateCardPayloadType,
-} from './cardsAPI'
+import { cardsAPI, CardType, DeleteCardType, UpdateCardPayloadType } from './cardsAPI'
 
-export const getCards = createAsyncThunk(
-  'cards/getCards',
-  async (data: GetCardsPayloadType, { dispatch }) => {
-    dispatch(setAppStatus('loading'))
-    try {
-      // убрать загулшку (количество страниц и карточек)
-      const response = await cardsAPI.getCards({
-        page: 1,
-        pageCount: 10,
-        ...data,
-      })
+export type CreateCardDataType = {
+  answer?: string
+  question?: string
+  grade?: number
+}
 
-      if (response.data.cards.length === 0) {
+export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch, getState }) => {
+  const state = getState() as AppRootStateType
+  const { page, pageCount, searchWord } = state.cards.searchParams
+  const cardsPack_id = state.cards.cardsPack_id
+
+  const params = {
+    cardsPack_id,
+    page,
+    pageCount,
+    cardQuestion: searchWord,
+  }
+
+  dispatch(setAppStatus('loading'))
+  try {
+    // убрать загулшку (количество страниц и карточек)
+    const response = await cardsAPI.getCards(params)
+
+    if (response.data.cards.length === 0) {
+      if (params.cardQuestion.length === 0) {
         dispatch(setEmptyStatus(true))
       } else {
-        dispatch(setEmptyStatus(false))
+        dispatch(setFoundStatus(false))
       }
-
-      dispatch(setCards(response.data.cards))
-      dispatch(setAppStatus('succeeded'))
-    } catch (e: any) {
-      errorNetworkUtil(dispatch, e)
+    } else {
+      dispatch(setEmptyStatus(false))
+      dispatch(setFoundStatus(true))
     }
+
+    dispatch(setCards(response.data.cards))
+    dispatch(setAppStatus('succeeded'))
+  } catch (e: any) {
+    errorNetworkUtil(dispatch, e)
   }
-)
+})
 
 export const createCard = createAsyncThunk(
   'cards/createCard',
-  async (data: CreateCardPayloadType, { dispatch }) => {
+  async (data: CreateCardDataType, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+    const cardsPack_id = state.cards.cardsPack_id
+
     dispatch(setAppStatus('loading'))
     try {
-      await cardsAPI.createCard(data)
-      dispatch(getCards({ cardsPack_id: data.card.cardsPack_id }))
+      await cardsAPI.createCard({ card: { ...data, cardsPack_id } })
+      dispatch(getCards())
       dispatch(setAppMessage('New card created'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
@@ -59,9 +70,9 @@ export const deleteCard = createAsyncThunk(
   async (data: DeleteCardType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
-      const response = await cardsAPI.deleteCard(data)
+      await cardsAPI.deleteCard(data)
 
-      dispatch(getCards({ cardsPack_id: response.data.deletedCard.cardsPack_id }))
+      dispatch(getCards())
       dispatch(setAppMessage('Card removed'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
@@ -75,9 +86,9 @@ export const updateCard = createAsyncThunk(
   async (data: UpdateCardPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
-      const response = await cardsAPI.updateCard(data)
+      await cardsAPI.updateCard(data)
 
-      dispatch(getCards({ cardsPack_id: response.data.updatedCard.cardsPack_id }))
+      dispatch(getCards())
       dispatch(setAppMessage('Card update'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
@@ -86,54 +97,17 @@ export const updateCard = createAsyncThunk(
   }
 )
 
-export const searchCards = createAsyncThunk(
-  'cards/searchCards',
-  async (data: GetCardsPayloadType, { dispatch }) => {
-    dispatch(setAppStatus('loading'))
-    const questionFilter = data.cardQuestion
-    const answerFilter = data.cardAnswer
-
-    try {
-      // убрать загулшку (количество страниц и карточек)
-      const responseQuestion = await cardsAPI.getCards({
-        page: 1,
-        pageCount: 10,
-        cardsPack_id: data.cardsPack_id,
-        cardQuestion: questionFilter,
-      })
-      const responseAnswer = await cardsAPI.getCards({
-        page: 1,
-        pageCount: 10,
-        cardsPack_id: data.cardsPack_id,
-        cardAnswer: answerFilter,
-      })
-
-      const resultResponse = uniqueObjectsFromAnArray(
-        responseQuestion.data.cards,
-        responseAnswer.data.cards
-      )
-
-      if (resultResponse.length === 0) {
-        dispatch(setFoundStatus(false))
-        dispatch(setAppMessage('There are no such cards'))
-        dispatch(setAppStatus('failed'))
-      } else {
-        dispatch(setFoundStatus(true))
-        dispatch(setAppMessage(null))
-        dispatch(setAppStatus('succeeded'))
-      }
-
-      dispatch(setCards(resultResponse))
-    } catch (e: any) {
-      errorNetworkUtil(dispatch, e)
-    }
-  }
-)
-
 const initialState = {
   cards: [] as CardType[],
+  cardsPack_id: '63c416a4025403b6ce37c1d1',
+  userPack_id: '',
   found: true,
   empty: false,
+  searchParams: {
+    page: 1,
+    pageCount: 10,
+    searchWord: '',
+  },
 }
 
 export const cardsSlice = createSlice({
@@ -149,8 +123,11 @@ export const cardsSlice = createSlice({
     setEmptyStatus: (state, action: PayloadAction<boolean>) => {
       state.empty = action.payload
     },
+    setSearchWord: (state, action: PayloadAction<string>) => {
+      state.searchParams.searchWord = action.payload
+    },
   },
 })
 
-export const { setCards, setFoundStatus, setEmptyStatus } = cardsSlice.actions
+export const { setCards, setFoundStatus, setEmptyStatus, setSearchWord } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
