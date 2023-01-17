@@ -1,14 +1,11 @@
+# Cards training
 ## Authors:
 
-[![Contributors][contributors-shield]][contributors-url]
+[![Contributors][contributors-shield]][contributors-url][![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
 
 - [@tepek92](https://github.com/tepek92)
 - [@OlgaKapskaya](https://github.com/OlgaKapskaya)
 - [@kirkade](https://github.com/kirkade)
-
-# Cards training
-
-[![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
 
 ## Stack:
 
@@ -20,12 +17,6 @@
 - [![ESLint][eslint]][eslint-url]
 - [![Prettier][prettier]][prettier-url]
 - [![MaterialUI][mui]][mui-url]
-
-* react-hook-form
-* yup
-* axios
-* mui
-*
 
 ## Environment Setup:
 
@@ -44,12 +35,12 @@ git clone https://github.com/OlgaKapskaya/cards.git
 yarn install
 ```
 
-WebStorm is preferred
+#### WebStorm is preferred
 
 - Prettier
   WebStorm -> Settings -> Languages & Frameworks -> JavaScript -> Prettier -> check the following:
 
--[x] Prettier Package ~/dev/path-to-project/node_modules/prettier
+- [x] Prettier Package ~/dev/path-to-project/node_modules/prettier
 
 - [x] Run for Files: {\*\*/\*,\*}.{js,ts,jsx,tsx}
 
@@ -62,7 +53,7 @@ WebStorm is preferred
 - [x] Automatic ESLint configuration
 - [x] Run for Files: {\*\*/\*,\*}.{js,ts,jsx,tsx,html,vue}
 - [x] Run eslint --fix on save
--
+
 
 
 <!-- LINKS  -->
@@ -73,7 +64,7 @@ WebStorm is preferred
 [react-url]: https://reactjs.org/
 [rtk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [rtk-url]: https://redux-toolkit.js.org/
-[reduxthunk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=rtk&logoColor=white
+[reduxthunk]: https://img.shields.io/badge/Redux%20Thunk-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [reduxthunk-url]: https://github.com/reduxjs/redux-thunk
 [rrd]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [rrd-url]: https://reactrouter.com/en/main
