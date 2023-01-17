@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { uniqueObjectsFromAnArray } from '../../common/utils/uniqueObjectsFromAnArray'
 
 import {
   cardsAPI,
@@ -79,8 +80,53 @@ export const updateCard = createAsyncThunk(
   }
 )
 
+export const searchCards = createAsyncThunk(
+  'cards/searchCards',
+  async (data: GetCardsPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    const questionFilter = data.cardQuestion
+    const answerFilter = data.cardAnswer
+
+    try {
+      // убрать загулшку (количество страниц и карточек)
+      const responseQuestion = await cardsAPI.getCards({
+        page: 1,
+        pageCount: 10,
+        cardsPack_id: data.cardsPack_id,
+        cardQuestion: questionFilter,
+      })
+      const responseAnswer = await cardsAPI.getCards({
+        page: 1,
+        pageCount: 10,
+        cardsPack_id: data.cardsPack_id,
+        cardAnswer: answerFilter,
+      })
+
+      const resultResponse = uniqueObjectsFromAnArray(
+        responseQuestion.data.cards,
+        responseAnswer.data.cards
+      )
+
+      if (resultResponse.length === 0) {
+        dispatch(setFoundStatus(false))
+        dispatch(setAppMessage('There are no such cards'))
+        dispatch(setAppStatus('failed'))
+      } else {
+        dispatch(setFoundStatus(true))
+        dispatch(setAppMessage(null))
+        dispatch(setAppStatus('succeeded'))
+      }
+
+      dispatch(setCards(resultResponse))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
 const initialState = {
   cards: [] as CardType[],
+  found: true,
 }
 
 export const cardsSlice = createSlice({
@@ -90,8 +136,11 @@ export const cardsSlice = createSlice({
     setCards: (state, action: PayloadAction<CardType[]>) => {
       state.cards = action.payload
     },
+    setFoundStatus: (state, action: PayloadAction<boolean>) => {
+      state.found = action.payload
+    },
   },
 })
 
-export const { setCards } = cardsSlice.actions
+export const { setCards, setFoundStatus } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

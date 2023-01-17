@@ -1,19 +1,20 @@
 import React from 'react'
 
-import TextField from '@mui/material/TextField'
-
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
-import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
+import { SearchInput } from '../../common/components/search-input/SearchInput'
+import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
+import { foundSelector } from '../../common/selectors/cardsSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 import { ProfileBackLink } from '../profile/profile-back-link/ProfileBackLink'
 
 import { CardsMenu } from './cards-menu/CardsMenu'
 import s from './Cards.module.css'
-import { createCard } from './cardsSlice'
+import { createCard, searchCards } from './cardsSlice'
 import { EnhancedTable } from './table/Table'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
+  const foundStatus = useAppSelector(foundSelector)
 
   const handleAddNewCard = () => {
     // убрать заглушку
@@ -29,6 +30,17 @@ export const Cards = () => {
     dispatch(createCard(payload))
   }
 
+  const handleSearchCard = (value: string) => {
+    // убрать загулшку
+    const payload = {
+      cardsPack_id: '63c416a4025403b6ce37c1d1',
+      cardQuestion: value,
+      cardAnswer: value,
+    }
+
+    dispatch(searchCards(payload))
+  }
+
   return (
     <div className={s.cardsPage}>
       <ProfileBackLink />
@@ -42,15 +54,9 @@ export const Cards = () => {
         </ButtonComponent>
       </div>
       <div className={s.searchBlock}>
-        <div>Search</div>
-        <TextField
-          variant="outlined"
-          label="Provide your text"
-          size="small"
-          sx={{ width: '100%', height: '36px' }}
-        />
+        <SearchInput label="Search" searchValue="" onChangeText={handleSearchCard} />
       </div>
-      <EnhancedTable />
+      {foundStatus ? <EnhancedTable /> : <div>НИЧЕГО НЕ НАЙДЕНО</div>}
     </div>
   )
 }

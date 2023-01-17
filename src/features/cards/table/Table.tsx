@@ -9,10 +9,12 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
 import TableRow from '@mui/material/TableRow'
+import dayjs from 'dayjs'
 
 import deleteIcon from '../../../assets/img/delete.svg'
 import editIcon from '../../../assets/img/edit.svg'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
+import { cardsSelector } from '../../../common/selectors/cardsSelectors'
 import { deleteCard, getCards, updateCard } from '../cardsSlice'
 
 import { EnhancedTableHead } from './table-head/TableHead'
@@ -30,7 +32,7 @@ export type Order = 'asc' | 'desc'
 export function EnhancedTable() {
   const [order, setOrder] = React.useState<Order>('asc')
   const [orderBy, setOrderBy] = React.useState<keyof Data>('updated')
-  const cards = useAppSelector(state => state.cardsList.cards)
+  const cards = useAppSelector(cardsSelector)
   const dispatch = useAppDispatch()
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
@@ -73,23 +75,22 @@ export function EnhancedTable() {
                   <TableRow hover key={row._id}>
                     <TableCell>{row.question}</TableCell>
                     <TableCell>{row.answer}</TableCell>
-                    <TableCell>{row.updated}</TableCell>
+                    <TableCell>{dayjs(row.updated).format('DD.MM.YYYY')}</TableCell>
                     <TableCell>
                       <Rating name="simple-controlled" value={row.grade} />
                     </TableCell>
-                    <TableCell>
+                    <TableCell align="right">
                       <span>
                         <img
-                          style={{ width: '24px', marginRight: '15px' }}
-                          src={deleteIcon}
-                          alt="deleteIcon"
-                          onClick={() => handleDeleteCard(row._id)}
-                        />
-                        <img
-                          style={{ width: '24px' }}
+                          style={{ marginRight: '20px' }}
                           src={editIcon}
                           alt="editIcon"
                           onClick={() => handleUpdateCard(row._id)}
+                        />
+                        <img
+                          src={deleteIcon}
+                          alt="deleteIcon"
+                          onClick={() => handleDeleteCard(row._id)}
                         />
                       </span>
                     </TableCell>
