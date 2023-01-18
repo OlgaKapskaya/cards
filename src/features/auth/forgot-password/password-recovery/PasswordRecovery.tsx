@@ -6,7 +6,7 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../../common/components/button/ButtonComponent'
+import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
 import { emailRecoveryMessage } from '../../../../common/constants/emailMessage'
 import { PATH } from '../../../../common/constants/path'
 import { forgotValidationSchema } from '../../../../common/constants/validators/validationSchemes'

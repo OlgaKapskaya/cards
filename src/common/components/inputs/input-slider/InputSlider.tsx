@@ -2,7 +2,7 @@ import { ChangeEvent, FC, memo, SyntheticEvent, useCallback, useEffect, useState
 
 import TextField from '@mui/material/TextField'
 
-import { SliderComponent } from '../slider/SliderComponent'
+import { SliderComponent } from '../../slider/SliderComponent'
 
 import s from './InputSlider.module.css'
 

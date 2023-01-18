@@ -6,8 +6,8 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
-import { PasswordInput } from '../../../common/components/password-input/PasswordInput'
+import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
+import { PasswordInput } from '../../../common/components/inputs/password-input/PasswordInput'
 import { PATH } from '../../../common/constants/path'
 import { loginValidationSchema } from '../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../common/hooks/useAuthForm'
@@ -26,7 +26,7 @@ export const Login: FC = () => {
     dispatch(login(data))
   }
 
-  if (isLoggedIn) return <Navigate to={PATH.PROFILE} />
+  if (isLoggedIn) return <Navigate to={PATH.PACKS} />
 
   return (
     <div>

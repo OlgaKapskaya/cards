@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from 'react'
 
 import { setAppMessage, setAppStatus } from '../../../app/appSlice'
-import EditableSpanComponent from '../../../common/components/editable-span/EditableSpanComponent'
+import EditableSpanComponent from '../../../common/components/inputs/editable-span/EditableSpanComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import { userEmailSelector, userNameSelector } from '../../../common/selectors/profileSelectors'
 import { changeUserDataTC } from '../profileSlice'
