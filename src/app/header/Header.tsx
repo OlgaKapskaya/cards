@@ -1,9 +1,9 @@
-import React, { FC, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
 import logo from '../../assets/img/incubator-logo.svg'
-import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { PATH } from '../../common/constants/path'
 import { useAppSelector } from '../../common/hooks/reactReduxHooks'
 import { isLoggedInSelector } from '../../common/selectors/authSelectors'
@@ -11,7 +11,7 @@ import { isLoggedInSelector } from '../../common/selectors/authSelectors'
 import s from './Header.module.css'
 import { ProfileMenu } from './profile-menu/ProfileMenu'
 
-export const Header: FC = () => {
+export const Header = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
 
   const navigate = useNavigate()
@@ -33,7 +33,7 @@ export const Header: FC = () => {
         src={logo}
         alt="logo"
         className={s.logo}
-        onClick={isLoggedIn ? () => navigate(PATH.PACKS) : () => navigate(PATH.LOGIN)}
+        onClick={() => (isLoggedIn ? navigate(PATH.PACKS) : navigate(PATH.LOGIN))}
       />
       {headerBody}
     </header>

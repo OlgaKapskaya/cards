@@ -17,18 +17,21 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
   const { page, pageCount, searchWord, sort } = state.cards.searchParams
   const cardsPack_id = state.cards.cardsPack_id
 
-  const params = {
-    cardsPack_id,
-    page,
-    pageCount,
-    cardQuestion: searchWord,
-    sortCards: sort,
-  }
+  // в thunk можжно return использовать?
+  // if (cardsPack_id.length === 0) return
+  if (cardsPack_id.length !== 0) {
+    const params = {
+      cardsPack_id,
+      page,
+      pageCount,
+      cardQuestion: searchWord,
+      sortCards: sort,
+    }
 
-  dispatch(setAppStatus('loading'))
-  try {
-    // убрать загулшку (количество страниц и карточек)
-    const response = await cardsAPI.getCards(params)
+    dispatch(setAppStatus('loading'))
+    try {
+      // убрать загулшку (количество страниц и карточек)
+      const response = await cardsAPI.getCards(params)
 
     if (response.data.cards.length === 0 && params.page === 1) {
       if (params.cardQuestion.length === 0) {
@@ -46,9 +49,10 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
     dispatch(setCardsTotalCount(response.data.cardsTotalCount))
     dispatch(setCardsPackName(response.data.packName))
 
-    dispatch(setAppStatus('succeeded'))
-  } catch (e: any) {
-    errorNetworkUtil(dispatch, e)
+      dispatch(setAppStatus('succeeded'))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
   }
 })
 
@@ -109,7 +113,7 @@ const initialState = {
   packName: '',
   cardsTotalCount: 0,
   found: true,
-  empty: false,
+  empty: true,
   searchParams: {
     page: 1,
     pageCount: 4,
@@ -125,6 +129,10 @@ export const cardsSlice = createSlice({
   reducers: {
     setCards: (state, action: PayloadAction<CardType[]>) => {
       state.cards = action.payload
+    },
+    clearCards(state) {
+      state.cards = []
+      state.empty = true
     },
     setFoundStatus: (state, action: PayloadAction<boolean>) => {
       state.found = action.payload
@@ -174,6 +182,7 @@ export const {
   setCardsTotalCount,
   setCardsSort,
   setCardsPackName,
+  clearCards,
   setIsCardsLoaded,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

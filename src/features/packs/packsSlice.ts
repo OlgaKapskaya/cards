@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { getCards } from '../cards/cardsSlice'
 
 import {
   CreatePackPayloadType,
@@ -163,6 +164,8 @@ export const updatePack = createAsyncThunk(
       const response = await packsAPI.updatePack(payload)
 
       dispatch(getPacks())
+      // для обновления имени pack в карточках при edit
+      dispatch(getCards())
       dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -178,6 +181,7 @@ export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { d
   dispatch(setMaxPacksCount(0))
   dispatch(setRange([] as number[]))
   dispatch(setPackName(''))
+  dispatch(setTypePacks(false))
   dispatch(setCurrentPage(1))
 })
 
@@ -190,6 +194,9 @@ export const packsSlice = createSlice({
     },
     setPacks(state, action: PayloadAction<PackDomainType[]>) {
       state.packs = action.payload
+    },
+    clearPacks(state) {
+      state.packs = []
     },
     setMinPacksCount(state, action: PayloadAction<number>) {
       state.minCardsCount = action.payload
@@ -243,5 +250,6 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
+  clearPacks,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer

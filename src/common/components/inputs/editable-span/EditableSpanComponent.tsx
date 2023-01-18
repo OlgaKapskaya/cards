@@ -1,6 +1,6 @@
 import React, { DetailedHTMLProps, InputHTMLAttributes, HTMLAttributes, useState, FC } from 'react'
 
-import editIcon from '../../../assets/img/edit-2.svg'
+import editIcon from '../../../../assets/img/edit-2.svg'
 
 import { CustomInputWithButton } from './custom-input-with-button/CustomInputWithButton'
 import s from './EditableSpanComponent.module.css'

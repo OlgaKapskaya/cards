@@ -1,0 +1,19 @@
+.linkCell {
+  cursor: pointer;
+
+  width: 30%;
+
+  word-break: break-word;
+}
+
+.linkCell:hover {
+  color: #1769aa;
+}
+
+.countCell {
+  width: 10%;
+}
+
+.cell {
+  width: 20%;
+}
