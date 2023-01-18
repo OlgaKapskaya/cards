@@ -178,6 +178,7 @@ export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { d
   dispatch(setMaxPacksCount(0))
   dispatch(setRange([] as number[]))
   dispatch(setPackName(''))
+  dispatch(setTypePacks(false))
   dispatch(setCurrentPage(1))
 })
 

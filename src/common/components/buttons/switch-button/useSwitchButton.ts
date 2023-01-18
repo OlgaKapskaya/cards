@@ -11,6 +11,11 @@ export const useSwitchButton = (toggle: boolean, setToggle: (value: boolean) => 
   }
 
   useEffect(() => {
+    if (value === toggle) return
+    setValue(toggle)
+  }, [toggle])
+
+  useEffect(() => {
     setToggle(value)
   }, [value])
 
