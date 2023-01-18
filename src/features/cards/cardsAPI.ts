@@ -21,7 +21,7 @@ export type GetCardsPayloadType = {
   cardQuestion?: string
   min?: number
   max?: number
-  sortCards?: number
+  sortCards?: string
   grade?: number
   page?: number
   pageCount?: number
