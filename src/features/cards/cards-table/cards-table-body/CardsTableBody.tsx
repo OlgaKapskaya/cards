@@ -8,12 +8,12 @@ import dayjs from 'dayjs'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
 import editIcon from '../../../../assets/img/edit.svg'
+import { ActionButton } from '../../../../common/components/action-button/ActionButton'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { cardsSelector, userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { deleteCard, updateCard } from '../../cardsSlice'
-import s from '../CardsTable.module.css'
 
 export const CardsTableBody = () => {
   const cards = useAppSelector(cardsSelector)
@@ -53,32 +53,32 @@ export const CardsTableBody = () => {
             </TableCell>
             {isMy && (
               <TableCell align="right">
-                <span className={s.icons}>
-                  <button
-                    onClick={() => handleUpdateCard(row._id)}
-                    disabled={loadingStatus === 'loading'}
-                  >
-                    <img src={editIcon} alt="editIcon" />
-                  </button>
-                  <button
-                    onClick={() => handleDeleteCard(row._id)}
-                    disabled={loadingStatus === 'loading'}
-                  >
-                    <img src={deleteIcon} alt="deleteIcon" />
-                  </button>
-                </span>
-                {/*    <ActionButton*/}
-                {/*      icon={editIcon}*/}
-                {/*      hint="update card"*/}
-                {/*      disabled={loadingStatus === 'loading'}*/}
-                {/*      onClick={() => handleUpdateCard(row._id)}*/}
-                {/*    />*/}
-                {/*<ActionButton*/}
-                {/*  icon={deleteIcon}*/}
-                {/*  hint="delete card"*/}
-                {/*  disabled={loadingStatus === 'loading'}*/}
-                {/*  onClick={() => handleDeleteCard(row._id)}*/}
-                {/*/>*/}
+                {/*<span className={s.icons}>*/}
+                {/*  <button*/}
+                {/*    onClick={() => handleUpdateCard(row._id)}*/}
+                {/*    disabled={loadingStatus === 'loading'}*/}
+                {/*  >*/}
+                {/*    <img src={editIcon} alt="editIcon" />*/}
+                {/*  </button>*/}
+                {/*  <button*/}
+                {/*    onClick={() => handleDeleteCard(row._id)}*/}
+                {/*    disabled={loadingStatus === 'loading'}*/}
+                {/*  >*/}
+                {/*    <img src={deleteIcon} alt="deleteIcon" />*/}
+                {/*  </button>*/}
+                {/*</span>*/}
+                <ActionButton
+                  icon={editIcon}
+                  hint="update card"
+                  disabled={loadingStatus === 'loading'}
+                  onClick={() => handleUpdateCard(row._id)}
+                />
+                <ActionButton
+                  icon={deleteIcon}
+                  hint="delete card"
+                  disabled={loadingStatus === 'loading'}
+                  onClick={() => handleDeleteCard(row._id)}
+                />
               </TableCell>
             )}
           </TableRow>
