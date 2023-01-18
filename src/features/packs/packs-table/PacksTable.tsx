@@ -25,7 +25,7 @@ import {
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
 
-import { PacksTableHead } from './table-head/PacksTableHead'
+import { PacksTableHead } from './packs-table-head/PacksTableHead'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)

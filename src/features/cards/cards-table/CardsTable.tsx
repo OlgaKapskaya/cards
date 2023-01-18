@@ -25,8 +25,8 @@ import {
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
-import { CardsTableHead } from './table-head/CardsTableHead'
 import s from './CardsTable.module.css'
+import { CardsTableHead } from './table-head/CardsTableHead'
 
 export const CardsTable = () => {
   const cards = useAppSelector(cardsSelector)

@@ -1,22 +1,22 @@
 .icons button:first-child {
-    margin-right: 20px;
+  margin-right: 20px;
 }
 
 .icons button {
-    cursor: pointer;
+  cursor: pointer;
 
-    max-width: 24px;
-    padding: 0;
+  max-width: 24px;
+  padding: 0;
 
-    font: inherit;
-    color: inherit;
+  font: inherit;
+  color: inherit;
 
-    background-color: transparent;
-    border: none;
+  background-color: transparent;
+  border: none;
 }
 
 .icons button:disabled img {
-    cursor: auto;
+  cursor: auto;
 
-    opacity: .5;
+  opacity: 0.5;
 }
