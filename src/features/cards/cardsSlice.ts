@@ -17,38 +17,42 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
   const { page, pageCount, searchWord, sort } = state.cards.searchParams
   const cardsPack_id = state.cards.cardsPack_id
 
-  const params = {
-    cardsPack_id,
-    page,
-    pageCount,
-    cardQuestion: searchWord,
-    sortCards: sort,
-  }
-
-  dispatch(setAppStatus('loading'))
-  try {
-    // убрать загулшку (количество страниц и карточек)
-    const response = await cardsAPI.getCards(params)
-
-    if (response.data.cards.length === 0 && params.page === 1) {
-      if (params.cardQuestion.length === 0) {
-        dispatch(setEmptyStatus(true))
-      } else {
-        dispatch(setFoundStatus(false))
-      }
-    } else {
-      dispatch(setEmptyStatus(false))
-      dispatch(setFoundStatus(true))
+  // в thunk можжно ретур использовать?
+  // if (cardsPack_id.length === 0) return
+  if (cardsPack_id.length !== 0) {
+    const params = {
+      cardsPack_id,
+      page,
+      pageCount,
+      cardQuestion: searchWord,
+      sortCards: sort,
     }
 
-    dispatch(setCards(response.data.cards))
-    dispatch(setUserPackId(response.data.packUserId))
-    dispatch(setCardsTotalCount(response.data.cardsTotalCount))
-    dispatch(setCardsPackName(response.data.packName))
+    dispatch(setAppStatus('loading'))
+    try {
+      // убрать загулшку (количество страниц и карточек)
+      const response = await cardsAPI.getCards(params)
 
-    dispatch(setAppStatus('succeeded'))
-  } catch (e: any) {
-    errorNetworkUtil(dispatch, e)
+      if (response.data.cards.length === 0 && params.page === 1) {
+        if (params.cardQuestion.length === 0) {
+          dispatch(setEmptyStatus(true))
+        } else {
+          dispatch(setFoundStatus(false))
+        }
+      } else {
+        dispatch(setEmptyStatus(false))
+        dispatch(setFoundStatus(true))
+      }
+
+      dispatch(setCards(response.data.cards))
+      dispatch(setUserPackId(response.data.packUserId))
+      dispatch(setCardsTotalCount(response.data.cardsTotalCount))
+      dispatch(setCardsPackName(response.data.packName))
+
+      dispatch(setAppStatus('succeeded'))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
   }
 })
 

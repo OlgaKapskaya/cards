@@ -4,6 +4,7 @@ import dayjs from 'dayjs'
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { getCards } from '../cards/cardsSlice'
 
 import {
   CreatePackPayloadType,
@@ -163,6 +164,7 @@ export const updatePack = createAsyncThunk(
       const response = await packsAPI.updatePack(payload)
 
       dispatch(getPacks())
+      dispatch(getCards())
       dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
