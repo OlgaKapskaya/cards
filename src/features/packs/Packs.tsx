@@ -31,7 +31,7 @@ export const Packs = () => {
   return (
     <div className={s.container}>
       <div className={s.header}>
-        <h2>Packs list</h2>
+        <span className={s.title}>Packs list</span>
         <ButtonComponent onClick={addNewPackHandler} disabled={isLoading}>
           Add New Pack
         </ButtonComponent>

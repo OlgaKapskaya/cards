@@ -13,9 +13,6 @@ export const useSortHead = <D>(orderStart: keyof D, actionCreator: (data: string
   const [orderBy, setOrderBy] = useState<keyof D>(orderStart)
   const dispatch = useAppDispatch()
 
-  console.log(order, 'order')
-  console.log(orderBy, 'orderBy')
-
   const requestSortHandler = (property: keyof D) => {
     const isAsc = orderBy === property && order === 'asc'
 
