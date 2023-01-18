@@ -24,12 +24,9 @@ import {
 } from '../../../common/selectors/cardsSelectors'
 import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
-import s from './CardsTable.module.css'
 import { CardsTableHead } from './table-head/CardsTableHead'
 
 export const CardsTable = () => {
-  // const [order, setOrder] = useState<Order>('asc')
-  // const [orderBy, setOrderBy] = useState<keyof Data>('updated')
   const cards = useAppSelector(cardsSelector)
   const currentPage = useAppSelector(cardsCurrentPageSelector)
   const pageCount = useAppSelector(cardsPageCountSelector)
@@ -85,30 +82,30 @@ export const CardsTable = () => {
                       <Rating name="simple-controlled" value={row.grade} />
                     </TableCell>
                     <TableCell align="right">
-                      <span className={s.icons}>
-                        <button
-                          onClick={() => handleUpdateCard(row._id)}
-                          disabled={loadingStatus === 'loading'}
-                        >
-                          <img src={editIcon} alt="editIcon" />
-                        </button>
-                        <button
-                          onClick={() => handleDeleteCard(row._id)}
-                          disabled={loadingStatus === 'loading'}
-                        >
-                          <img src={deleteIcon} alt="deleteIcon" />
-                        </button>
-                      </span>
+                      {/*<span className={s.icons}>*/}
+                      {/*  <button*/}
+                      {/*    onClick={() => handleUpdateCard(row._id)}*/}
+                      {/*    disabled={loadingStatus === 'loading'}*/}
+                      {/*  >*/}
+                      {/*    <img src={editIcon} alt="editIcon" />*/}
+                      {/*  </button>*/}
+                      {/*  <button*/}
+                      {/*    onClick={() => handleDeleteCard(row._id)}*/}
+                      {/*    disabled={loadingStatus === 'loading'}*/}
+                      {/*  >*/}
+                      {/*    <img src={deleteIcon} alt="deleteIcon" />*/}
+                      {/*  </button>*/}
+                      {/*</span>*/}
                       <ActionButton
                         icon={editIcon}
                         hint="update card"
-                        // disabled={p.onEdited}
+                        disabled={loadingStatus === 'loading'}
                         onClick={() => handleUpdateCard(row._id)}
                       />
                       <ActionButton
                         icon={deleteIcon}
                         hint="delete card"
-                        // disabled={p.onEdited}
+                        disabled={loadingStatus === 'loading'}
                         onClick={() => handleDeleteCard(row._id)}
                       />
                     </TableCell>

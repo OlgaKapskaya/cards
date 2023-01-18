@@ -7,5 +7,7 @@ import { isLoggedInSelector } from '../../common/selectors/authSelectors'
 export const PrivateRoutes = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
 
+  console.log(isLoggedIn)
+
   return isLoggedIn ? <Outlet /> : <Navigate to={PATH.LOGIN} />
 }
