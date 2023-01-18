@@ -12,6 +12,7 @@ import dayjs from 'dayjs'
 
 import deleteIcon from '../../../assets/img/delete.svg'
 import editIcon from '../../../assets/img/edit.svg'
+import { ActionButton } from '../../../common/components/action-button/ActionButton'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
@@ -22,7 +23,6 @@ import {
 } from '../../../common/selectors/cardsSelectors'
 import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
-import s from './CardsTable.module.css'
 import { CardsTableHead } from './table-head/CardsTableHead'
 
 export interface Data {
@@ -89,18 +89,16 @@ export const CardsTable = () => {
                       <Rating name="simple-controlled" value={row.grade} />
                     </TableCell>
                     <TableCell align="right">
-                      <span className={s.icons}>
-                        <img
-                          src={editIcon}
-                          alt="editIcon"
-                          onClick={() => handleUpdateCard(row._id)}
-                        />
-                        <img
-                          src={deleteIcon}
-                          alt="deleteIcon"
-                          onClick={() => handleDeleteCard(row._id)}
-                        />
-                      </span>
+                      <ActionButton
+                        icon={editIcon}
+                        // disabled={p.onEdited}
+                        onClick={() => handleUpdateCard(row._id)}
+                      />
+                      <ActionButton
+                        icon={deleteIcon}
+                        // disabled={p.onEdited}
+                        onClick={() => handleDeleteCard(row._id)}
+                      />
                     </TableCell>
                   </TableRow>
                 )

@@ -1,6 +1,5 @@
 import React from 'react'
 
-import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
@@ -14,6 +13,7 @@ import { useNavigate } from 'react-router-dom'
 import edit from '../../../assets/img/edit-2.svg'
 import learn from '../../../assets/img/teacher.svg'
 import del from '../../../assets/img/trash.svg'
+import { ActionButton } from '../../../common/components/action-button/ActionButton'
 import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
 import { Loader } from '../../../common/components/loader/Loader'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
@@ -27,8 +27,6 @@ import {
 } from '../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deletePack, setCurrentPage, setPageCount, setSort, updatePack } from '../packsSlice'
-
-import s from './PacksTable.module.css'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
@@ -135,30 +133,22 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
-                  </IconButton>
+                  <ActionButton icon={learn} disabled={p.onEdited} onClick={() => {}} />
                 )}
                 {profile_id === p.user_id && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img
-                      src={edit}
-                      onClick={() => updatePackHandler(p._id)}
-                      className={s.icon}
-                      alt="update"
-                    />
-                  </IconButton>
+                  <ActionButton
+                    icon={edit}
+                    disabled={p.onEdited}
+                    onClick={() => updatePackHandler(p._id)}
+                  />
                 )}
 
                 {profile_id === p.user_id && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img
-                      src={del}
-                      onClick={() => deletePackHandler(p._id)}
-                      className={s.icon}
-                      alt="delete"
-                    />
-                  </IconButton>
+                  <ActionButton
+                    icon={del}
+                    disabled={p.onEdited}
+                    onClick={() => deletePackHandler(p._id)}
+                  />
                 )}
               </TableCell>
             </TableRow>
