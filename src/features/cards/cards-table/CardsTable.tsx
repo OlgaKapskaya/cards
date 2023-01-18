@@ -91,11 +91,13 @@ export const CardsTable = () => {
                     <TableCell align="right">
                       <ActionButton
                         icon={editIcon}
+                        hint="update card"
                         // disabled={p.onEdited}
                         onClick={() => handleUpdateCard(row._id)}
                       />
                       <ActionButton
                         icon={deleteIcon}
+                        hint="delete card"
                         // disabled={p.onEdited}
                         onClick={() => handleDeleteCard(row._id)}
                       />

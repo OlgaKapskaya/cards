@@ -133,11 +133,17 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <ActionButton icon={learn} disabled={p.onEdited} onClick={() => {}} />
+                  <ActionButton
+                    icon={learn}
+                    hint="start learning"
+                    disabled={p.onEdited}
+                    onClick={() => {}}
+                  />
                 )}
                 {profile_id === p.user_id && (
                   <ActionButton
                     icon={edit}
+                    hint="update pack"
                     disabled={p.onEdited}
                     onClick={() => updatePackHandler(p._id)}
                   />
@@ -146,6 +152,7 @@ export const PacksTable = () => {
                 {profile_id === p.user_id && (
                   <ActionButton
                     icon={del}
+                    hint="delete pack"
                     disabled={p.onEdited}
                     onClick={() => deletePackHandler(p._id)}
                   />
