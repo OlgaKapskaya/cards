@@ -164,6 +164,7 @@ export const updatePack = createAsyncThunk(
       const response = await packsAPI.updatePack(payload)
 
       dispatch(getPacks())
+      // для обновления имени pack в карточках при edit
       dispatch(getCards())
       dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
       dispatch(setAppStatus('succeeded'))

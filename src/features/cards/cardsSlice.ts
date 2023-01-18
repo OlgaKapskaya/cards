@@ -17,7 +17,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
   const { page, pageCount, searchWord, sort } = state.cards.searchParams
   const cardsPack_id = state.cards.cardsPack_id
 
-  // в thunk можжно ретур использовать?
+  // в thunk можжно return использовать?
   // if (cardsPack_id.length === 0) return
   if (cardsPack_id.length !== 0) {
     const params = {

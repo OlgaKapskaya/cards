@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
 import editIcon from '../../../../assets/img/edit.svg'
@@ -11,12 +11,15 @@ import { deletePack, updatePack } from '../../../packs/packsSlice'
 
 export const useCardsMenuItems = () => {
   const dispatch = useAppDispatch()
-  const packId = useAppSelector(cardPackId)
+  // const packId = useAppSelector(cardPackId)
   const navigate = useNavigate()
 
-  const editPack = () => dispatch(updatePack({ cardsPack: { _id: packId, name: 'learn cards' } }))
+  let { packId } = useParams<{ packId: string }>()
+
+  const editPack = () =>
+    dispatch(updatePack({ cardsPack: { _id: packId as string, name: 'learn cards' } }))
   const deleteCardPack = () => {
-    dispatch(deletePack({ id: packId }))
+    dispatch(deletePack({ id: packId as string }))
     // можно ли тут перенаправлять? а если запрос не прошел?
     // без сет таймаут двойной запрос
     setTimeout(() => navigate(PATH.PACKS), 2000)

@@ -56,7 +56,9 @@ export const Cards = () => {
     return (
       <div className={s.cardsPage}>
         <BackPackLink />
-        <CardsMenu />
+        <div className={s.titleMenu}>
+          <CardsMenu />
+        </div>
         <IsEmptyMessage message={emptyMessage}>
           <ActiveCardsButton />
         </IsEmptyMessage>
