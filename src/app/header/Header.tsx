@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from 'react'
+import React, { useMemo } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -11,7 +11,7 @@ import { isLoggedInSelector } from '../../common/selectors/authSelectors'
 import s from './Header.module.css'
 import { ProfileMenu } from './profile-menu/ProfileMenu'
 
-export const Header: FC = () => {
+export const Header = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)
 
   const navigate = useNavigate()
@@ -33,9 +33,8 @@ export const Header: FC = () => {
         src={logo}
         alt="logo"
         className={s.logo}
-        onClick={isLoggedIn ? () => navigate(PATH.PACKS) : () => navigate(PATH.LOGIN)}
+        onClick={() => (isLoggedIn ? navigate(PATH.PACKS) : navigate(PATH.LOGIN))}
       />
-      <ButtonComponent onClick={() => navigate(PATH.PACKS)}>packs</ButtonComponent>
       {headerBody}
     </header>
   )
