@@ -1,0 +1,6 @@
+.cellQuestion,
+.cellAnswer {
+  width: 25%;
+
+  word-break: break-word;
+}

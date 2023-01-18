@@ -1,9 +1,8 @@
 import React from 'react'
 
-import { ButtonComponent } from '../../common/components/button/ButtonComponent'
-import EditableSpanComponent from '../../common/components/editable-span/EditableSpanComponent'
+import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
+import EditableSpanComponent from '../../common/components/inputs/editable-span/EditableSpanComponent'
 import { SliderComponent } from '../../common/components/slider/SliderComponent'
-import SuperPagination from '../../common/components/SuperPagination/SuperPagination'
 import { buttonRed, buttonWhite } from '../../common/constants/theme'
 import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 
@@ -28,11 +27,6 @@ export const Test = () => {
       <div className={s.container}>
         Custom slider:
         <SliderComponent />
-      </div>
-
-      <div className={s.container}>
-        Pagination:
-        <SuperPagination onChange={() => {}} totalCount={50} itemsCountForPage={4} page={4} />
       </div>
     </div>
   )

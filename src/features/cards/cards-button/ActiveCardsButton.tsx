@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
+import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
 import { PATH } from '../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../common/selectors/appSelectors'

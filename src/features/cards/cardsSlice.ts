@@ -109,7 +109,7 @@ const initialState = {
   packName: '',
   cardsTotalCount: 0,
   found: true,
-  empty: false,
+  empty: true,
   searchParams: {
     page: 1,
     pageCount: 4,
@@ -124,6 +124,10 @@ export const cardsSlice = createSlice({
   reducers: {
     setCards: (state, action: PayloadAction<CardType[]>) => {
       state.cards = action.payload
+    },
+    clearCards(state) {
+      state.cards = []
+      state.empty = true
     },
     setFoundStatus: (state, action: PayloadAction<boolean>) => {
       state.found = action.payload
@@ -170,5 +174,6 @@ export const {
   setCardsTotalCount,
   setCardsSort,
   setCardsPackName,
+  clearCards,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
