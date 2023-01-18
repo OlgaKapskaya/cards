@@ -9,3 +9,5 @@ export const cardsCurrentPageSelector = (state: AppRootStateType) => state.cards
 export const cardsPageCountSelector = (state: AppRootStateType) =>
   state.cards.searchParams.pageCount
 export const cardsTotalCountSelector = (state: AppRootStateType) => state.cards.cardsTotalCount
+export const userCardsPackIdSelector = (state: AppRootStateType) => state.cards.userPack_id
+export const cardPackNameSelector = (state: AppRootStateType) => state.cards.packName

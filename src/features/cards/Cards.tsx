@@ -1,40 +1,35 @@
 import React, { useEffect } from 'react'
 
 import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
 import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../common/selectors/appSelectors'
 import {
   emptySelector,
   foundSelector,
   searchParamsSelector,
+  userCardsPackIdSelector,
 } from '../../common/selectors/cardsSelectors'
-import { sxButtonMarginTopWidthCreator } from '../../common/utils/styles-utils/sxButtonCreators'
+import { userIDSelector } from '../../common/selectors/profileSelectors'
 
+import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { createCard, getCards, setSearchWord } from './cardsSlice'
+import { getCards, setSearchWord } from './cardsSlice'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
   const foundStatus = useAppSelector(foundSelector)
   const emptyStatus = useAppSelector(emptySelector)
   const searchParams = useAppSelector(searchParamsSelector)
-  const loadingStatus = useAppSelector(appStatusSelector)
+  const userId = useAppSelector(userCardsPackIdSelector)
+  const profileId = useAppSelector(userIDSelector)
 
-  const handleAddNewCard = () => {
-    // убрать заглушку
-    const payload = {
-      question: 'create new question',
-      answer: 'new answer',
-      grade: Math.floor(Math.random() * 5),
-    }
-
-    dispatch(createCard(payload))
-  }
+  const isMy = userId === profileId
+  const emptyMessage = isMy
+    ? 'This pack is empty. Click add new card to fill this pack'
+    : 'This pack is empty. Click back to packs list'
 
   const handleSearchCard = (value: string) => {
     dispatch(setSearchWord(value))
@@ -51,13 +46,8 @@ export const Cards = () => {
       <div className={s.cardsPage}>
         <BackPackLink />
         <CardsMenu />
-        <IsEmptyMessage message="This pack is empty. Click add new card to fill this pack">
-          <ButtonComponent
-            sx={sxButtonMarginTopWidthCreator('0', '184px')}
-            onClick={handleAddNewCard}
-          >
-            Add new card
-          </ButtonComponent>
+        <IsEmptyMessage message={emptyMessage}>
+          <ActiveCardsButton />
         </IsEmptyMessage>
       </div>
     )
@@ -68,13 +58,7 @@ export const Cards = () => {
       <BackPackLink />
       <div className={s.titleMenu}>
         <CardsMenu />
-        <ButtonComponent
-          sx={sxButtonMarginTopWidthCreator('0', '184px')}
-          onClick={handleAddNewCard}
-          disabled={loadingStatus === 'loading'}
-        >
-          Add new card
-        </ButtonComponent>
+        <ActiveCardsButton />
       </div>
       <div className={s.searchBlock}>
         <SearchInput label="Search" searchValue="" onChangeText={handleSearchCard} />

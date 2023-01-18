@@ -44,6 +44,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
     dispatch(setCards(response.data.cards))
     dispatch(setUserPackId(response.data.packUserId))
     dispatch(setCardsTotalCount(response.data.cardsTotalCount))
+    dispatch(setCardsPackName(response.data.packName))
 
     dispatch(setAppStatus('succeeded'))
   } catch (e: any) {
@@ -103,8 +104,11 @@ export const updateCard = createAsyncThunk(
 
 const initialState = {
   cards: [] as CardType[],
-  cardsPack_id: '63c416a4025403b6ce37c1d1',
+  cardsPack_id: '63c416a4025403b6ce37c1d1', // мой
+  // cardsPack_id: '63c787ebed5fe488f7f0e521', // пустой
+  // cardsPack_id: '63c778588e4eff1dc4d022f4', // не мой не пустой
   userPack_id: '',
+  packName: '',
   cardsTotalCount: 0,
   found: true,
   empty: false,
@@ -150,6 +154,9 @@ export const cardsSlice = createSlice({
     setCardsSort: (state, action: PayloadAction<string>) => {
       state.searchParams.sort = action.payload
     },
+    setCardsPackName: (state, action: PayloadAction<string>) => {
+      state.packName = action.payload
+    },
   },
 })
 
@@ -164,5 +171,6 @@ export const {
   setCardsPageCount,
   setCardsTotalCount,
   setCardsSort,
+  setCardsPackName,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
