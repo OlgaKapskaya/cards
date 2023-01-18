@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom'
 
 import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
+import { Loader } from '../../common/components/loader/Loader'
 import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
@@ -18,7 +19,7 @@ import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { getCards, setCardsPackId, setSearchWord } from './cardsSlice'
+import { getCards, setCardsPackId, setIsCardsLoaded, setSearchWord } from './cardsSlice'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
@@ -27,6 +28,7 @@ export const Cards = () => {
   const searchParams = useAppSelector(searchParamsSelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
+  const isCardsLoaded = useAppSelector(state => state.cards.isCardsLoaded)
 
   const isMy = userId === profileId
   const emptyMessage = isMy
@@ -41,6 +43,10 @@ export const Cards = () => {
 
   useEffect(() => {
     dispatch(setCardsPackId(packId ? packId : ''))
+
+    return () => {
+      dispatch(setIsCardsLoaded(false))
+    }
   }, [])
 
   useEffect(() => {
@@ -48,6 +54,9 @@ export const Cards = () => {
     dispatch(getCards())
   }, [searchParams])
 
+  if (!isCardsLoaded) {
+    return <Loader />
+  }
   if (emptyStatus) {
     return (
       <div className={s.cardsPage}>

@@ -40,7 +40,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
       dispatch(setEmptyStatus(false))
       dispatch(setFoundStatus(true))
     }
-
+    dispatch(setIsCardsLoaded(true))
     dispatch(setCards(response.data.cards))
     dispatch(setUserPackId(response.data.packUserId))
     dispatch(setCardsTotalCount(response.data.cardsTotalCount))
@@ -116,6 +116,7 @@ const initialState = {
     searchWord: '',
     sort: '0updated',
   },
+  isCardsLoaded: false,
 }
 
 export const cardsSlice = createSlice({
@@ -155,6 +156,9 @@ export const cardsSlice = createSlice({
     setCardsPackName: (state, action: PayloadAction<string>) => {
       state.packName = action.payload
     },
+    setIsCardsLoaded: (state, action: PayloadAction<boolean>) => {
+      state.isCardsLoaded = action.payload
+    },
   },
 })
 
@@ -170,5 +174,6 @@ export const {
   setCardsTotalCount,
   setCardsSort,
   setCardsPackName,
+  setIsCardsLoaded,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
