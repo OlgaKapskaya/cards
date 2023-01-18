@@ -1,21 +1,18 @@
 import React from 'react'
 
-import IconButton from '@mui/material/IconButton'
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableContainer from '@mui/material/TableContainer'
-import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
-import TableSortLabel from '@mui/material/TableSortLabel/TableSortLabel'
 import { useNavigate } from 'react-router-dom'
 
 import edit from '../../../assets/img/edit-2.svg'
 import learn from '../../../assets/img/teacher.svg'
 import del from '../../../assets/img/trash.svg'
+import { ActionButton } from '../../../common/components/action-button/ActionButton'
 import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
-import { Loader } from '../../../common/components/loader/Loader'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
@@ -26,9 +23,9 @@ import {
   pageCountSelector,
 } from '../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
-import { deletePack, setCurrentPage, setPageCount, setSort, updatePack } from '../packsSlice'
+import { deletePack, setCurrentPage, setPageCount, updatePack } from '../packsSlice'
 
-import s from './PacksTable.module.css'
+import { PacksTableHead } from './table-head/PacksTableHead'
 
 export const PacksTable = () => {
   const packs = useAppSelector(packsSelector)
@@ -36,7 +33,6 @@ export const PacksTable = () => {
   const pageCount = useAppSelector(pageCountSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const isLoading = useAppSelector(isLoadingSelector)
-  const sortPacks = useAppSelector(state => state.packs.searchParams.sort)
   const navigate = useNavigate()
 
   const profile_id = useAppSelector(userIDSelector)
@@ -55,75 +51,14 @@ export const PacksTable = () => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
-  if (isLoading) return <Loader />
-  const sortValue = (value: string) => {
-    if (value === 'update') {
-      sortPacks === '0updated' ? dispatch(setSort('1update')) : dispatch(setSort('0updated'))
-    }
-    if (value === 'cards') {
-      sortPacks === '0cardsCount'
-        ? dispatch(setSort('1cardsCount'))
-        : dispatch(setSort('0cardsCount'))
-    }
-    if (value === 'username') {
-      sortPacks === '0user_name' ? dispatch(setSort('1user_name')) : dispatch(setSort('0user_name'))
-    }
-    if (value === 'name') {
-      sortPacks === '0name' ? dispatch(setSort('1name')) : dispatch(setSort('0name'))
-    }
-  }
+  // if (isLoading) return <Loader />
 
   if (packs.length === 0) return <IsEmptyMessage />
 
   return (
     <TableContainer component={Paper}>
-      <Table aria-label="simple table" stickyHeader>
-        <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
-          <TableRow>
-            <TableCell>
-              <TableSortLabel
-                direction={sortPacks === '0name' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('name')
-                }}
-              >
-                Name
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="left">
-              <TableSortLabel
-                direction={sortPacks === '0cardsCount' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('cards')
-                }}
-              >
-                Cards
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="left">
-              <TableSortLabel
-                active
-                direction={sortPacks === '0updated' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('update')
-                }}
-              >
-                Last updated
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="left">
-              <TableSortLabel
-                direction={sortPacks === '0user_name' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('username')
-                }}
-              >
-                Created by
-              </TableSortLabel>
-            </TableCell>
-            <TableCell align="left">Actions</TableCell>
-          </TableRow>
-        </TableHead>
+      <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+        <PacksTableHead />
         <TableBody>
           {packs.map(p => (
             <TableRow key={p._id}>
@@ -135,30 +70,29 @@ export const PacksTable = () => {
               <TableCell align="left">{p.user_name}</TableCell>
               <TableCell align="left">
                 {p.cardsCount !== 0 && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img src={learn} onClick={() => {}} className={s.icon} alt="learn" />
-                  </IconButton>
+                  <ActionButton
+                    icon={learn}
+                    hint="start learning"
+                    disabled={p.onEdited}
+                    onClick={() => {}}
+                  />
                 )}
                 {profile_id === p.user_id && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img
-                      src={edit}
-                      onClick={() => updatePackHandler(p._id)}
-                      className={s.icon}
-                      alt="update"
-                    />
-                  </IconButton>
+                  <ActionButton
+                    icon={edit}
+                    hint="update pack"
+                    disabled={p.onEdited}
+                    onClick={() => updatePackHandler(p._id)}
+                  />
                 )}
 
                 {profile_id === p.user_id && (
-                  <IconButton size="small" disabled={p.onEdited}>
-                    <img
-                      src={del}
-                      onClick={() => deletePackHandler(p._id)}
-                      className={s.icon}
-                      alt="delete"
-                    />
-                  </IconButton>
+                  <ActionButton
+                    icon={del}
+                    hint="delete pack"
+                    disabled={p.onEdited}
+                    onClick={() => deletePackHandler(p._id)}
+                  />
                 )}
               </TableCell>
             </TableRow>

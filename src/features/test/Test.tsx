@@ -30,25 +30,6 @@ export const Test = () => {
         <SliderComponent />
       </div>
 
-      {/*<div className={s.filterContainer}>*/}
-      {/*  <div className={s.search}>*/}
-      {/*    <SearchInput label="Search" />*/}
-      {/*  </div>*/}
-
-      {/*  /!*<SwitchButton label="Show packs-cards-table cards" buttons={['My', 'All']} currentButton="All" />*!/*/}
-      {/*  <InputSlider*/}
-      {/*    minValue={0}*/}
-      {/*    maxValue={100}*/}
-      {/*    sliderWidth={155}*/}
-      {/*    label="Number of cards"*/}
-      {/*    onChangeValues={(a: number[]) => {*/}
-      {/*      console.log(a)*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*  <ButtonComponent sx={iconButton}>*/}
-      {/*    <img src={filter} alt="resetFilter" />*/}
-      {/*  </ButtonComponent>*/}
-      {/*</div>*/}
       <div className={s.container}>
         Pagination:
         <SuperPagination onChange={() => {}} totalCount={50} itemsCountForPage={4} page={4} />

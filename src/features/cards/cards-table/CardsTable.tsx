@@ -25,8 +25,8 @@ import {
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
-import s from './CardsTable.module.css'
 import { CardsTableHead } from './table-head/CardsTableHead'
+import s from './CardsTable.module.css'
 
 export const CardsTable = () => {
   const cards = useAppSelector(cardsSelector)
@@ -92,6 +92,18 @@ export const CardsTable = () => {
                           >
                             <img src={deleteIcon} alt="deleteIcon" />
                           </button>
+                          {/*    <ActionButton*/}
+                          {/*      icon={editIcon}*/}
+                          {/*      hint="update card"*/}
+                          {/*      disabled={loadingStatus === 'loading'}*/}
+                          {/*      onClick={() => handleUpdateCard(row._id)}*/}
+                          {/*    />*/}
+                          {/*<ActionButton*/}
+                          {/*  icon={deleteIcon}*/}
+                          {/*  hint="delete card"*/}
+                          {/*  disabled={loadingStatus === 'loading'}*/}
+                          {/*  onClick={() => handleDeleteCard(row._id)}*/}
+                          {/*/>*/}
                         </span>
                       </TableCell>
                     )}

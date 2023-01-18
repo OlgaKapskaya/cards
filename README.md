@@ -1,4 +1,5 @@
 # Cards training
+
 ## Authors:
 
 [![Contributors][contributors-shield]][contributors-url][![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
@@ -54,8 +55,6 @@ yarn install
 - [x] Run for Files: {\*\*/\*,\*}.{js,ts,jsx,tsx,html,vue}
 - [x] Run eslint --fix on save
 
-
-
 <!-- LINKS  -->
 
 [contributors-shield]: https://img.shields.io/github/contributors/OlgaKapskaya/cards.svg?style=for-the-badge
@@ -68,14 +67,11 @@ yarn install
 [reduxthunk-url]: https://github.com/reduxjs/redux-thunk
 [rrd]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [rrd-url]: https://reactrouter.com/en/main
-[typescript]:https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
+[typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
 [typescript-url]: https://www.typescriptlang.org/
 [eslint]: https://img.shields.io/badge/eslint-3A33D1?style=for-the-badge&logo=eslint&logoColor=white
-[eslint-url]:https://eslint.org/
-[prettier]:https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
+[eslint-url]: https://eslint.org/
+[prettier]: https://img.shields.io/badge/prettier-1A2C34?style=for-the-badge&logo=prettier&logoColor=F7BA3E
 [prettier-url]: https://prettier.io/
-[mui]:https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white
-[mui-url]:https://mui.com/
-
-
-
+[mui]: https://img.shields.io/badge/Material%20UI-007FFF?style=for-the-badge&logo=mui&logoColor=white
+[mui-url]: https://mui.com/
