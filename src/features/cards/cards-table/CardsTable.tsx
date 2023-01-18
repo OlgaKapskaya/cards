@@ -14,6 +14,7 @@ import deleteIcon from '../../../assets/img/delete.svg'
 import editIcon from '../../../assets/img/edit.svg'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import {
   cardsCurrentPageSelector,
   cardsPageCountSelector,
@@ -42,6 +43,7 @@ export const CardsTable = () => {
   const currentPage = useAppSelector(cardsCurrentPageSelector)
   const pageCount = useAppSelector(cardsPageCountSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+  const loadingStatus = useAppSelector(appStatusSelector)
   const dispatch = useAppDispatch()
 
   const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
@@ -52,9 +54,12 @@ export const CardsTable = () => {
   }
 
   const handleDeleteCard = (id: string) => {
+    if (loadingStatus === 'loading') return
     dispatch(deleteCard({ id }))
   }
   const handleUpdateCard = (id: string) => {
+    if (loadingStatus === 'loading') return
+
     // убрать заглушку
     const payload = {
       card: {
@@ -90,16 +95,18 @@ export const CardsTable = () => {
                     </TableCell>
                     <TableCell align="right">
                       <span className={s.icons}>
-                        <img
-                          src={editIcon}
-                          alt="editIcon"
+                        <button
                           onClick={() => handleUpdateCard(row._id)}
-                        />
-                        <img
-                          src={deleteIcon}
-                          alt="deleteIcon"
+                          disabled={loadingStatus === 'loading'}
+                        >
+                          <img src={editIcon} alt="editIcon" />
+                        </button>
+                        <button
                           onClick={() => handleDeleteCard(row._id)}
-                        />
+                          disabled={loadingStatus === 'loading'}
+                        >
+                          <img src={deleteIcon} alt="deleteIcon" />
+                        </button>
                       </span>
                     </TableCell>
                   </TableRow>
