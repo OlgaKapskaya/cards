@@ -29,7 +29,7 @@ export const Pages = () => {
         <Route index path="/" element={<Profile />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
-        <Route path={PATH.CARDS} element={<Cards />} />
+        <Route path={PATH.PACKS + PATH.CARDS + '/:packId'} element={<Cards />} />
       </Route>
     </Routes>
   )

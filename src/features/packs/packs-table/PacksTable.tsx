@@ -127,7 +127,7 @@ export const PacksTable = () => {
         <TableBody>
           {packs.map(p => (
             <TableRow key={p._id}>
-              <TableCell component="th" scope="row" onClick={() => navigate(`packs/${p._id}`)}>
+              <TableCell component="th" scope="row" onClick={() => navigate(`cards/${p._id}`)}>
                 {p.name}
               </TableCell>
               <TableCell align="left">{p.cardsCount}</TableCell>

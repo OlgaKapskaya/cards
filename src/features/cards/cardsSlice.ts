@@ -104,7 +104,8 @@ export const updateCard = createAsyncThunk(
 
 const initialState = {
   cards: [] as CardType[],
-  cardsPack_id: '63c416a4025403b6ce37c1d1', // мой
+  cardsPack_id: '',
+  // cardsPack_id: '63c416a4025403b6ce37c1d1', // мой
   // cardsPack_id: '63c787ebed5fe488f7f0e521', // пустой
   // cardsPack_id: '63c778588e4eff1dc4d022f4', // не мой не пустой
   userPack_id: '',

@@ -1,5 +1,7 @@
 import React, { useEffect } from 'react'
 
+import { useParams } from 'react-router-dom'
+
 import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
 import { SearchInput } from '../../common/components/search-input/SearchInput'
@@ -16,7 +18,7 @@ import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { getCards, setSearchWord } from './cardsSlice'
+import { getCards, setCardsPackId, setSearchWord } from './cardsSlice'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
@@ -34,7 +36,12 @@ export const Cards = () => {
   const handleSearchCard = (value: string) => {
     dispatch(setSearchWord(value))
   }
-  //сделать усеЕффект который будет доставть из урл айди пака
+
+  const { packId } = useParams<{ packId: string }>()
+
+  useEffect(() => {
+    dispatch(setCardsPackId(packId ? packId : ''))
+  }, [])
 
   useEffect(() => {
     // убрать заглушку
