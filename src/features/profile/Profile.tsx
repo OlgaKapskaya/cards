@@ -5,7 +5,7 @@ import Paper from '@mui/material/Paper'
 
 import logoutImg from '../../assets/img/logout.svg'
 import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { buttonWhite } from '../../common/constants/theme'
 import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
 import { sxBoxCreator } from '../../common/utils/styles-utils/sxBoxCreator'

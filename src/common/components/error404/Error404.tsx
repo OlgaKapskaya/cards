@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
 import { PATH } from '../../constants/path'
-import { ButtonComponent } from '../button/ButtonComponent'
+import { ButtonComponent } from '../buttons/button/ButtonComponent'
 
 import error404 from './404.svg'
 import s from './Error404.module.css'

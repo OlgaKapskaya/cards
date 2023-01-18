@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 
-import { buttonWhite } from '../../constants/theme'
-import { sxButtonColorCreator } from '../../utils/styles-utils/sxButtonCreators'
+import { buttonWhite } from '../../../constants/theme'
+import { sxButtonColorCreator } from '../../../utils/styles-utils/sxButtonCreators'
 
 export const useSwitchButton = (toggle: boolean, setToggle: (value: boolean) => void) => {
   const [value, setValue] = useState<boolean>(toggle)

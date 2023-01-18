@@ -3,8 +3,8 @@ import { ChangeEvent, FC, memo, useEffect, useState } from 'react'
 import InputBase, { InputBaseProps } from '@mui/material/InputBase'
 import Paper from '@mui/material/Paper'
 
-import find from '../../../assets/img/find.svg'
-import { useDebounce } from '../../hooks/useDebounce'
+import find from '../../../../assets/img/find.svg'
+import { useDebounce } from '../../../hooks/useDebounce'
 
 import s from './SearchInput.module.css'
 

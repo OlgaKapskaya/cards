@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { ButtonComponent } from '../../common/components/button/ButtonComponent'
+import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
   isLoadingSelector,

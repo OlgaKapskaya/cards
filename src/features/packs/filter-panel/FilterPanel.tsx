@@ -1,10 +1,10 @@
 import React, { useCallback } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
-import { ButtonComponent } from '../../../common/components/button/ButtonComponent'
-import { InputSlider } from '../../../common/components/input-slider/InputSlider'
-import { SearchInput } from '../../../common/components/search-input/SearchInput'
-import { SwitchButton } from '../../../common/components/switch-button/SwitchButton'
+import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
+import { SwitchButton } from '../../../common/components/buttons/switch-button/SwitchButton'
+import { InputSlider } from '../../../common/components/inputs/input-slider/InputSlider'
+import { SearchInput } from '../../../common/components/inputs/search-input/SearchInput'
 import { iconButton } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {

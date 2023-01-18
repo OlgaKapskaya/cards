@@ -8,12 +8,14 @@ import dayjs from 'dayjs'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
 import editIcon from '../../../../assets/img/edit.svg'
-import { ActionButton } from '../../../../common/components/action-button/ActionButton'
+import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { cardsSelector, userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { deleteCard, updateCard } from '../../cardsSlice'
+
+import s from './CardsTableBody.module.css'
 
 export const CardsTableBody = () => {
   const cards = useAppSelector(cardsSelector)
@@ -45,14 +47,14 @@ export const CardsTableBody = () => {
       {cards.map(row => {
         return (
           <TableRow hover key={row._id}>
-            <TableCell>{row.question}</TableCell>
-            <TableCell>{row.answer}</TableCell>
-            <TableCell>{dayjs(row.updated).format('DD.MM.YYYY')}</TableCell>
-            <TableCell>
+            <TableCell className={s.cellQuestion}>{row.question}</TableCell>
+            <TableCell className={s.cellAnswer}>{row.answer}</TableCell>
+            <TableCell className={s.cell}>{dayjs(row.updated).format('DD.MM.YYYY')}</TableCell>
+            <TableCell className={s.cell}>
               <Rating name="simple-controlled" value={row.grade} />
             </TableCell>
             {isMy && (
-              <TableCell align="right">
+              <TableCell align="right" className={s.cell}>
                 {/*<span className={s.icons}>*/}
                 {/*  <button*/}
                 {/*    onClick={() => handleUpdateCard(row._id)}*/}

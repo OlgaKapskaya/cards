@@ -3,8 +3,8 @@ import React, { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 
 import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
+import { SearchInput } from '../../common/components/inputs/search-input/SearchInput'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
-import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
   emptySelector,
