@@ -18,7 +18,7 @@ import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { getCards, setCardsPackId, setSearchWord } from './cardsSlice'
+import { clearCards, getCards, setCardsPackId, setSearchWord } from './cardsSlice'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
@@ -46,6 +46,10 @@ export const Cards = () => {
   useEffect(() => {
     // убрать заглушку
     dispatch(getCards())
+
+    return () => {
+      dispatch(clearCards())
+    }
   }, [searchParams])
 
   if (emptyStatus) {

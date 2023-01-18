@@ -191,6 +191,9 @@ export const packsSlice = createSlice({
     setPacks(state, action: PayloadAction<PackDomainType[]>) {
       state.packs = action.payload
     },
+    clearPacks(state) {
+      state.packs = []
+    },
     setMinPacksCount(state, action: PayloadAction<number>) {
       state.minCardsCount = action.payload
     },
@@ -243,5 +246,6 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
+  clearPacks,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer

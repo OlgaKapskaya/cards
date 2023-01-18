@@ -125,6 +125,9 @@ export const cardsSlice = createSlice({
     setCards: (state, action: PayloadAction<CardType[]>) => {
       state.cards = action.payload
     },
+    clearCards(state) {
+      state.cards = []
+    },
     setFoundStatus: (state, action: PayloadAction<boolean>) => {
       state.found = action.payload
     },
@@ -170,5 +173,6 @@ export const {
   setCardsTotalCount,
   setCardsSort,
   setCardsPackName,
+  clearCards,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer
