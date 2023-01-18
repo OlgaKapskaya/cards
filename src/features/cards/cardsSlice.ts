@@ -33,21 +33,21 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
       // убрать загулшку (количество страниц и карточек)
       const response = await cardsAPI.getCards(params)
 
-    if (response.data.cards.length === 0 && params.page === 1) {
-      if (params.cardQuestion.length === 0) {
-        dispatch(setEmptyStatus(true))
+      if (response.data.cards.length === 0 && params.page === 1) {
+        if (params.cardQuestion.length === 0) {
+          dispatch(setEmptyStatus(true))
+        } else {
+          dispatch(setFoundStatus(false))
+        }
       } else {
-        dispatch(setFoundStatus(false))
+        dispatch(setEmptyStatus(false))
+        dispatch(setFoundStatus(true))
       }
-    } else {
-      dispatch(setEmptyStatus(false))
-      dispatch(setFoundStatus(true))
-    }
-    dispatch(setIsCardsLoaded(true))
-    dispatch(setCards(response.data.cards))
-    dispatch(setUserPackId(response.data.packUserId))
-    dispatch(setCardsTotalCount(response.data.cardsTotalCount))
-    dispatch(setCardsPackName(response.data.packName))
+      dispatch(setIsCardsLoaded(true))
+      dispatch(setCards(response.data.cards))
+      dispatch(setUserPackId(response.data.packUserId))
+      dispatch(setCardsTotalCount(response.data.cardsTotalCount))
+      dispatch(setCardsPackName(response.data.packName))
 
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {

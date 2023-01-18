@@ -11,7 +11,7 @@ import {
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
-import { clearPacks, createPack, getPacks } from './packsSlice'
+import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
   const searchParams = useAppSelector(searchParamsSelector)
@@ -26,10 +26,6 @@ export const Packs = () => {
 
   useEffect(() => {
     dispatch(getPacks())
-
-    return () => {
-      dispatch(clearPacks())
-    }
   }, [searchParams, isMy])
 
   return (

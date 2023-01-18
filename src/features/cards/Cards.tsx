@@ -6,7 +6,6 @@ import { BackPackLink } from '../../common/components/back-pack-link/BackPackLin
 import { SearchInput } from '../../common/components/inputs/search-input/SearchInput'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
 import { Loader } from '../../common/components/loader/Loader'
-import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
   emptySelector,
@@ -20,7 +19,6 @@ import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { clearCards, getCards, setCardsPackId, setSearchWord } from './cardsSlice'
 import { getCards, setCardsPackId, setIsCardsLoaded, setSearchWord } from './cardsSlice'
 
 export const Cards = () => {
@@ -54,10 +52,6 @@ export const Cards = () => {
   useEffect(() => {
     // убрать заглушку
     dispatch(getCards())
-
-    return () => {
-      dispatch(clearCards())
-    }
   }, [searchParams])
 
   if (!isCardsLoaded) {
