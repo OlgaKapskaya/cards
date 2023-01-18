@@ -26,7 +26,7 @@ export const Login: FC = () => {
     dispatch(login(data))
   }
 
-  if (isLoggedIn) return <Navigate to={PATH.PROFILE} />
+  if (isLoggedIn) return <Navigate to={PATH.PACKS} />
 
   return (
     <div>
