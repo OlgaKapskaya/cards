@@ -109,7 +109,7 @@ const initialState = {
   packName: '',
   cardsTotalCount: 0,
   found: true,
-  empty: false,
+  empty: true,
   searchParams: {
     page: 1,
     pageCount: 4,
@@ -127,6 +127,7 @@ export const cardsSlice = createSlice({
     },
     clearCards(state) {
       state.cards = []
+      state.empty = true
     },
     setFoundStatus: (state, action: PayloadAction<boolean>) => {
       state.found = action.payload
