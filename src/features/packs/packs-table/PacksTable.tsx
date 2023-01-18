@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
 import Paper from '@mui/material/Paper'
 import Table from '@mui/material/Table'
@@ -17,6 +17,7 @@ import { ActionButton } from '../../../common/components/action-button/ActionBut
 import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
 import { Loader } from '../../../common/components/loader/Loader'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
+import SuperSort from '../../../common/components/SuperSort/SuperSort'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
   cardPacksTotalCountSelector,
@@ -29,12 +30,13 @@ import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { deletePack, setCurrentPage, setPageCount, setSort, updatePack } from '../packsSlice'
 
 export const PacksTable = () => {
+  const [sortCell, setSortCell] = useState('')
+
   const packs = useAppSelector(packsSelector)
   const page = useAppSelector(currentPageSelector)
   const pageCount = useAppSelector(pageCountSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
   const isLoading = useAppSelector(isLoadingSelector)
-  const sortPacks = useAppSelector(state => state.packs.searchParams.sort)
   const navigate = useNavigate()
 
   const profile_id = useAppSelector(userIDSelector)
@@ -53,23 +55,15 @@ export const PacksTable = () => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
-  if (isLoading) return <Loader />
-  const sortValue = (value: string) => {
-    if (value === 'update') {
-      sortPacks === '0updated' ? dispatch(setSort('1update')) : dispatch(setSort('0updated'))
-    }
-    if (value === 'cards') {
-      sortPacks === '0cardsCount'
-        ? dispatch(setSort('1cardsCount'))
-        : dispatch(setSort('0cardsCount'))
-    }
-    if (value === 'username') {
-      sortPacks === '0user_name' ? dispatch(setSort('1user_name')) : dispatch(setSort('0user_name'))
-    }
-    if (value === 'name') {
-      sortPacks === '0name' ? dispatch(setSort('1name')) : dispatch(setSort('0name'))
-    }
+  const onChangeSort = (newSortCell: string) => {
+    setSortCell(newSortCell)
   }
+
+  useEffect(() => {
+    dispatch(setSort(sortCell))
+  }, [sortCell])
+
+  if (isLoading) return <Loader />
 
   if (packs.length === 0) return <IsEmptyMessage />
 
@@ -79,45 +73,20 @@ export const PacksTable = () => {
         <TableHead sx={{ backgroundColor: '#EFEFEF' }}>
           <TableRow>
             <TableCell>
-              <TableSortLabel
-                direction={sortPacks === '0name' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('name')
-                }}
-              >
-                Name
-              </TableSortLabel>
+              <TableSortLabel>Name</TableSortLabel>
+              <SuperSort sort={sortCell} value={'name'} onChange={onChangeSort} />
             </TableCell>
             <TableCell align="left">
-              <TableSortLabel
-                direction={sortPacks === '0cardsCount' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('cards')
-                }}
-              >
-                Cards
-              </TableSortLabel>
+              <TableSortLabel>Cards</TableSortLabel>
+              <SuperSort sort={sortCell} value={'cardsCount'} onChange={onChangeSort} />
             </TableCell>
             <TableCell align="left">
-              <TableSortLabel
-                active
-                direction={sortPacks === '0updated' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('update')
-                }}
-              >
-                Last updated
-              </TableSortLabel>
+              <TableSortLabel>Last updated</TableSortLabel>
+              <SuperSort sort={sortCell} value={'updated'} onChange={onChangeSort} />
             </TableCell>
             <TableCell align="left">
-              <TableSortLabel
-                direction={sortPacks === '0user_name' ? 'asc' : 'desc'}
-                onClick={() => {
-                  sortValue('username')
-                }}
-              >
-                Created by
-              </TableSortLabel>
+              <TableSortLabel>Created by</TableSortLabel>
+              <SuperSort sort={sortCell} value={'user_name'} onChange={onChangeSort} />
             </TableCell>
             <TableCell align="left">Actions</TableCell>
           </TableRow>

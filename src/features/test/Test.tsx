@@ -1,15 +1,26 @@
 import React from 'react'
 
+import { nanoid } from '@reduxjs/toolkit'
+
 import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import EditableSpanComponent from '../../common/components/editable-span/EditableSpanComponent'
 import { SliderComponent } from '../../common/components/slider/SliderComponent'
 import SuperPagination from '../../common/components/SuperPagination/SuperPagination'
+import { HeaderType, TableComponent } from '../../common/components/table/TableComponent'
 import { buttonRed, buttonWhite } from '../../common/constants/theme'
 import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 
 import s from './Test.module.css'
 
 export const Test = () => {
+  const headersPacksArray: HeaderType[] = [
+    { id: nanoid(), title: 'Name', cellName: 'name' },
+    { id: nanoid(), title: 'Cards', cellName: 'cardsCount' },
+    { id: nanoid(), title: 'Last updated', cellName: 'updated' },
+    { id: nanoid(), title: 'Created by', cellName: 'user_name' },
+    { id: nanoid(), title: 'Actions', cellName: 'actions' },
+  ]
+
   return (
     <div>
       <div className={s.container}>
@@ -30,25 +41,10 @@ export const Test = () => {
         <SliderComponent />
       </div>
 
-      {/*<div className={s.filterContainer}>*/}
-      {/*  <div className={s.search}>*/}
-      {/*    <SearchInput label="Search" />*/}
-      {/*  </div>*/}
+      <div className={s.container}>
+        <TableComponent headers={headersPacksArray} />
+      </div>
 
-      {/*  /!*<SwitchButton label="Show packs-cards-table cards" buttons={['My', 'All']} currentButton="All" />*!/*/}
-      {/*  <InputSlider*/}
-      {/*    minValue={0}*/}
-      {/*    maxValue={100}*/}
-      {/*    sliderWidth={155}*/}
-      {/*    label="Number of cards"*/}
-      {/*    onChangeValues={(a: number[]) => {*/}
-      {/*      console.log(a)*/}
-      {/*    }}*/}
-      {/*  />*/}
-      {/*  <ButtonComponent sx={iconButton}>*/}
-      {/*    <img src={filter} alt="resetFilter" />*/}
-      {/*  </ButtonComponent>*/}
-      {/*</div>*/}
       <div className={s.container}>
         Pagination:
         <SuperPagination onChange={() => {}} totalCount={50} itemsCountForPage={4} page={4} />
