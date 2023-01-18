@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { ReactNode } from 'react'
 
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
@@ -13,12 +13,17 @@ export type HeaderType<D> = {
   label: string
 }
 
-interface Props<D> {
+type Props<D> = {
   headers: readonly HeaderType<D>[]
   setSortAC: (data: string) => AnyAction
+  children?: ReactNode
 }
 
-export const TableHeadComponent = <D extends unknown>({ headers, setSortAC }: Props<D>) => {
+export const TableHeadComponent = <D extends unknown>({
+  headers,
+  setSortAC,
+  children,
+}: Props<D>) => {
   const { order, orderBy, requestSortHandler } = useSortHead<D>('updated' as keyof D, setSortAC)
 
   return (
@@ -35,6 +40,7 @@ export const TableHeadComponent = <D extends unknown>({ headers, setSortAC }: Pr
             </TableSortLabel>
           </TableCell>
         ))}
+        {children}
       </TableRow>
     </TableHead>
   )

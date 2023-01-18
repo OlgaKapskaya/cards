@@ -35,7 +35,6 @@ export const Header: FC = () => {
         className={s.logo}
         onClick={isLoggedIn ? () => navigate(PATH.PACKS) : () => navigate(PATH.LOGIN)}
       />
-      <ButtonComponent onClick={() => navigate(PATH.PACKS)}>packs</ButtonComponent>
       {headerBody}
     </header>
   )

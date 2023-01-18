@@ -21,7 +21,6 @@ export const CardsMenu: FC = () => {
   const profileMenuItems = useCardsMenuItems()
 
   const isMy = userId === profileId
-  // const isMy = false
 
   if (!isMy) return <span className={s.titleSpan}>{packName}</span>
 
