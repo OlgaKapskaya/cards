@@ -1,22 +1,21 @@
 import * as React from 'react'
 import { FC } from 'react'
 
-import Box from '@mui/material/Box'
 import TableCell from '@mui/material/TableCell'
 import TableHead from '@mui/material/TableHead'
 import TableRow from '@mui/material/TableRow'
 import TableSortLabel from '@mui/material/TableSortLabel'
-import { visuallyHidden } from '@mui/utils'
 
-import { Data, Order } from '../CardsTable'
+import { useSortHead } from '../../../../common/hooks/useSortHead'
 
-interface CardsTableProps {
-  onRequestSort: (event: React.MouseEvent<unknown>, property: keyof Data) => void
-  order: Order
-  orderBy: string
+export type Data = {
+  question: string
+  answer: string
+  updated: string
+  grade: string
+  empty: string
 }
-
-interface HeadCell {
+type HeadCell = {
   id: keyof Data
   label: string
 }
@@ -44,11 +43,8 @@ const headCells: readonly HeadCell[] = [
   },
 ]
 
-export const CardsTableHead: FC<CardsTableProps> = props => {
-  const { order, orderBy, onRequestSort } = props
-  const createSortHandler = (property: keyof Data) => (event: React.MouseEvent<unknown>) => {
-    onRequestSort(event, property)
-  }
+export const CardsTableHead: FC = () => {
+  const { order, orderBy, handleRequestSort } = useSortHead<Data>('updated')
 
   return (
     <TableHead>
@@ -58,14 +54,9 @@ export const CardsTableHead: FC<CardsTableProps> = props => {
             <TableSortLabel
               active={orderBy === headCell.id}
               direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={createSortHandler(headCell.id)}
+              onClick={() => handleRequestSort(headCell.id)}
             >
               {headCell.label}
-              {orderBy === headCell.id ? (
-                <Box component="span" sx={visuallyHidden}>
-                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
-                </Box>
-              ) : null}
             </TableSortLabel>
           </TableCell>
         ))}

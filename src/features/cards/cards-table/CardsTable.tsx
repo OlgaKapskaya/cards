@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
@@ -15,6 +15,7 @@ import editIcon from '../../../assets/img/edit.svg'
 import { ActionButton } from '../../../common/components/action-button/ActionButton'
 import { PaginationComponent } from '../../../common/components/pagination/PaginationComponent'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import {
   cardsCurrentPageSelector,
   cardsPageCountSelector,
@@ -23,38 +24,33 @@ import {
 } from '../../../common/selectors/cardsSelectors'
 import { deleteCard, setCardsCurrentPage, setCardsPageCount, updateCard } from '../cardsSlice'
 
+import s from './CardsTable.module.css'
 import { CardsTableHead } from './table-head/CardsTableHead'
 
-export interface Data {
-  question: string
-  answer: string
-  updated: string
-  grade: string
-  empty: string
-}
-
-export type Order = 'asc' | 'desc'
-
 export const CardsTable = () => {
-  const [order, setOrder] = useState<Order>('asc')
-  const [orderBy, setOrderBy] = useState<keyof Data>('updated')
+  // const [order, setOrder] = useState<Order>('asc')
+  // const [orderBy, setOrderBy] = useState<keyof Data>('updated')
   const cards = useAppSelector(cardsSelector)
   const currentPage = useAppSelector(cardsCurrentPageSelector)
   const pageCount = useAppSelector(cardsPageCountSelector)
   const cardsTotalCount = useAppSelector(cardsTotalCountSelector)
+  const loadingStatus = useAppSelector(appStatusSelector)
   const dispatch = useAppDispatch()
 
-  const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
-    const isAsc = orderBy === property && order === 'asc'
-
-    setOrder(isAsc ? 'desc' : 'asc')
-    setOrderBy(property)
-  }
+  // const handleRequestSort = (event: React.MouseEvent<unknown>, property: keyof Data) => {
+  //   const isAsc = orderBy === property && order === 'asc'
+  //
+  //   setOrder(isAsc ? 'desc' : 'asc')
+  //   setOrderBy(property)
+  // }
 
   const handleDeleteCard = (id: string) => {
+    if (loadingStatus === 'loading') return
     dispatch(deleteCard({ id }))
   }
   const handleUpdateCard = (id: string) => {
+    if (loadingStatus === 'loading') return
+
     // убрать заглушку
     const payload = {
       card: {
@@ -77,7 +73,7 @@ export const CardsTable = () => {
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer>
           <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
-            <CardsTableHead order={order} orderBy={orderBy} onRequestSort={handleRequestSort} />
+            <CardsTableHead />
             <TableBody>
               {cards.map(row => {
                 return (
@@ -89,6 +85,20 @@ export const CardsTable = () => {
                       <Rating name="simple-controlled" value={row.grade} />
                     </TableCell>
                     <TableCell align="right">
+                      <span className={s.icons}>
+                        <button
+                          onClick={() => handleUpdateCard(row._id)}
+                          disabled={loadingStatus === 'loading'}
+                        >
+                          <img src={editIcon} alt="editIcon" />
+                        </button>
+                        <button
+                          onClick={() => handleDeleteCard(row._id)}
+                          disabled={loadingStatus === 'loading'}
+                        >
+                          <img src={deleteIcon} alt="deleteIcon" />
+                        </button>
+                      </span>
                       <ActionButton
                         icon={editIcon}
                         hint="update card"

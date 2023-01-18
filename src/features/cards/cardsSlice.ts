@@ -14,7 +14,7 @@ export type CreateCardDataType = {
 
 export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, searchWord } = state.cards.searchParams
+  const { page, pageCount, searchWord, sort } = state.cards.searchParams
   const cardsPack_id = state.cards.cardsPack_id
 
   const params = {
@@ -22,6 +22,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
     page,
     pageCount,
     cardQuestion: searchWord,
+    sortCards: sort,
   }
 
   dispatch(setAppStatus('loading'))
@@ -111,6 +112,7 @@ const initialState = {
     page: 1,
     pageCount: 4,
     searchWord: '',
+    sort: '0updated',
   },
 }
 
@@ -145,6 +147,9 @@ export const cardsSlice = createSlice({
     setCardsTotalCount: (state, action: PayloadAction<number>) => {
       state.cardsTotalCount = action.payload
     },
+    setCardsSort: (state, action: PayloadAction<string>) => {
+      state.searchParams.sort = action.payload
+    },
   },
 })
 
@@ -158,5 +163,6 @@ export const {
   setCardsCurrentPage,
   setCardsPageCount,
   setCardsTotalCount,
+  setCardsSort,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

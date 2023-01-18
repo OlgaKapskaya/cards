@@ -5,6 +5,7 @@ import { ButtonComponent } from '../../common/components/button/ButtonComponent'
 import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
 import { SearchInput } from '../../common/components/search-input/SearchInput'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../common/selectors/appSelectors'
 import {
   emptySelector,
   foundSelector,
@@ -22,6 +23,7 @@ export const Cards = () => {
   const foundStatus = useAppSelector(foundSelector)
   const emptyStatus = useAppSelector(emptySelector)
   const searchParams = useAppSelector(searchParamsSelector)
+  const loadingStatus = useAppSelector(appStatusSelector)
 
   const handleAddNewCard = () => {
     // убрать заглушку
@@ -69,6 +71,7 @@ export const Cards = () => {
         <ButtonComponent
           sx={sxButtonMarginTopWidthCreator('0', '184px')}
           onClick={handleAddNewCard}
+          disabled={loadingStatus === 'loading'}
         >
           Add new card
         </ButtonComponent>
