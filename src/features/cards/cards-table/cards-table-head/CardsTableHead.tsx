@@ -27,13 +27,13 @@ export const CardsTableHead = () => {
     { id: 'answer', label: 'Answer' },
     { id: 'updated', label: 'Last Updated' },
     { id: 'grade', label: 'Grade' },
-    { id: 'empty', label: '' },
   ]
 
   return (
     <>
-      <TableHeadComponent headers={headersCardArray} setSortAC={setCardsSort} />
-      {isMy && <TableCell key="empty"></TableCell>}
+      <TableHeadComponent headers={headersCardArray} setSortAC={setCardsSort}>
+        {isMy && <TableCell key="empty"></TableCell>}
+      </TableHeadComponent>
     </>
   )
 }

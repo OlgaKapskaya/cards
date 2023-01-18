@@ -31,13 +31,12 @@ export const ActiveCardsButton = () => {
   }
 
   const isMy = userId === profileId
-  // const isMy = false
-  let textButton = isMy ? 'Add new card' : 'Learn to pack'
-  let handleOnClick = isMy ? handleAddNewCard : () => alert('learn')
+  let handleOnClick = handleAddNewCard
+  let textButton = 'Add new card'
 
-  if (emptyStatus) {
-    textButton = 'Back to packs list'
-    handleOnClick = () => navigate(PATH.PACKS)
+  if (!isMy) {
+    handleOnClick = emptyStatus ? () => navigate(PATH.PACKS) : () => alert('learn')
+    textButton = emptyStatus ? 'Back to packs list' : 'Learn to pack'
   }
 
   return (
