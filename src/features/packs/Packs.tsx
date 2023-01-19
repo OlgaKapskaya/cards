@@ -9,7 +9,7 @@ import { isLoadingSelector, searchParamsSelector } from '../../common/selectors/
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
-import { createPack, getPacks } from './packsSlice'
+import { createPack, getPacks, setTypePacks, setUserId } from './packsSlice'
 
 export const Packs = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -34,8 +34,14 @@ export const Packs = () => {
     }
 
     setSearchParams(params)
-    dispatch(getPacks({ ...params, user_id }))
-  }, [stateSearchParams, user_id])
+    dispatch(getPacks())
+  }, [stateSearchParams])
+
+  useEffect(() => {
+    dispatch(setUserId(user_id))
+
+    dispatch(setTypePacks(!!user_id))
+  }, [user_id])
 
   return (
     <div className={s.container}>

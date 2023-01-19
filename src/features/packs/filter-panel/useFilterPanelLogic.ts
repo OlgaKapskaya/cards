@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
@@ -15,7 +15,6 @@ import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice
 
 export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: any) => void) => {
   const paramsObject = Object.fromEntries(searchParams)
-  const user_id = searchParams.get('user_id') || ''
 
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
@@ -54,10 +53,6 @@ export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: 
   const resetButtonDisabled =
     (!isMy && !packName && ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
     isLoading
-
-  useEffect(() => {
-    dispatch(setTypePacks(!!user_id))
-  }, [user_id])
 
   return {
     packName,
