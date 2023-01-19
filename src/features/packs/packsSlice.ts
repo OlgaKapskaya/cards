@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
-import { getCards } from '../cards/cardsSlice'
 
 import {
   CreatePackPayloadType,
@@ -132,10 +131,10 @@ export const createPack = createAsyncThunk(
   async (payload: CreatePackPayloadType, { dispatch }) => {
     dispatch(setAppStatus('loading'))
     try {
-      const response = await packsAPI.createPack(payload)
+      await packsAPI.createPack(payload)
 
       dispatch(getPacks())
-      dispatch(setAppMessage(`Pack ${response.data.newCardsPack.name} successfully created`))
+      dispatch(setAppMessage(`New pack created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
@@ -149,10 +148,10 @@ export const deletePack = createAsyncThunk(
     dispatch(setEdited({ id: payload.id, onEdited: true }))
     dispatch(setAppStatus('loading'))
     try {
-      const response = await packsAPI.deletePack(payload)
+      await packsAPI.deletePack(payload)
 
       dispatch(getPacks())
-      dispatch(setAppMessage(`Pack ${response.data.deletedCardsPack.name} successfully deleted`))
+      dispatch(setAppMessage(`Pack deleted`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
@@ -166,12 +165,14 @@ export const updatePack = createAsyncThunk(
     dispatch(setEdited({ id: payload.cardsPack._id, onEdited: true }))
     dispatch(setAppStatus('loading'))
     try {
-      const response = await packsAPI.updatePack(payload)
+      await packsAPI.updatePack(payload)
 
       dispatch(getPacks())
       // для обновления имени pack в карточках при edit
-      dispatch(getCards())
-      dispatch(setAppMessage(`Pack ${response.data.updatedCardsPack.name} successfully updated`))
+      // можем ли мы использовать setTimeout в thunk и как его чистить
+      // setTimeout(() => dispatch(getCards()), 700)
+
+      dispatch(setAppMessage(`Pack updated`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)

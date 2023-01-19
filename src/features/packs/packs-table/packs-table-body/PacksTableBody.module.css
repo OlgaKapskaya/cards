@@ -1,13 +1,11 @@
-.linkCell {
+.tableRow {
   cursor: pointer;
+}
 
+.nameCell {
   width: 30%;
 
   word-break: break-word;
-}
-
-.linkCell:hover {
-  color: #1769aa;
 }
 
 .countCell {

@@ -1,8 +1,10 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import dayjs from 'dayjs'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { DeletePackPayloadType, packsAPI, UpdatePackPayloadType } from '../packs/packsAPI'
 
 import { cardsAPI, CardType, DeleteCardType, UpdateCardPayloadType } from './cardsAPI'
 
@@ -44,7 +46,18 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
         dispatch(setFoundStatus(true))
       }
       dispatch(setIsCardsLoaded(true))
-      dispatch(setCards(response.data.cards))
+      dispatch(
+        setCards(
+          response.data.cards.map(elem => {
+            return {
+              ...elem,
+              created: dayjs(elem.created).format('DD.MM.YYYY'),
+              updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+            }
+          })
+        )
+      )
+
       dispatch(setUserPackId(response.data.packUserId))
       dispatch(setCardsTotalCount(response.data.cardsTotalCount))
       dispatch(setCardsPackName(response.data.packName))
@@ -82,7 +95,7 @@ export const deleteCard = createAsyncThunk(
       await cardsAPI.deleteCard(data)
 
       dispatch(getCards())
-      dispatch(setAppMessage('Card removed'))
+      dispatch(setAppMessage('Card deleted'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
       errorNetworkUtil(dispatch, e)
@@ -98,9 +111,39 @@ export const updateCard = createAsyncThunk(
       await cardsAPI.updateCard(data)
 
       dispatch(getCards())
-      dispatch(setAppMessage('Card update'))
+      dispatch(setAppMessage('Card updated'))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
+export const updateCardPack = createAsyncThunk(
+  'cards/updateCardPack',
+  async (data: UpdatePackPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      await packsAPI.updatePack(data)
+      dispatch(getCards())
+      dispatch(setAppMessage('Pack updated'))
+      dispatch(setAppStatus('succeeded'))
+    } catch (e: any) {
+      errorNetworkUtil(dispatch, e)
+    }
+  }
+)
+
+export const deleteCardPack = createAsyncThunk(
+  'cards/deleteCardPack',
+  async (data: DeletePackPayloadType, { dispatch }) => {
+    dispatch(setAppStatus('loading'))
+    try {
+      await packsAPI.deletePack(data)
+
+      dispatch(setAppMessage(`Pack deleted`))
+      dispatch(setAppStatus('succeeded'))
+    } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
   }
