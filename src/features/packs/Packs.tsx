@@ -1,12 +1,10 @@
 import React, { useEffect } from 'react'
 
+import { useSearchParams } from 'react-router-dom'
+
 import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import {
-  isLoadingSelector,
-  isMySelector,
-  searchParamsSelector,
-} from '../../common/selectors/packsListSelectors'
+import { isLoadingSelector, searchParamsSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
@@ -14,19 +12,30 @@ import s from './Packs.module.css'
 import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
-  const searchParams = useAppSelector(searchParamsSelector)
-  const isMy = useAppSelector(isMySelector)
+  const [searchParams, setSearchParams] = useSearchParams()
+
+  const stateSearchParams = useAppSelector(searchParamsSelector)
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
+  const user_id = searchParams.get('user_id') || ''
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
   }
 
   useEffect(() => {
-    dispatch(getPacks())
-  }, [searchParams, isMy])
+    const params = {
+      page: stateSearchParams.page.toString(),
+      pageCount: stateSearchParams.pageCount.toString(),
+      packName: stateSearchParams.packName ?? '',
+      sortPacks: stateSearchParams.sort ?? '0updated',
+      user_id,
+    }
+
+    setSearchParams(params)
+    dispatch(getPacks({ ...params, user_id }))
+  }, [stateSearchParams, user_id])
 
   return (
     <div className={s.container}>
@@ -37,7 +46,7 @@ export const Packs = () => {
         </ButtonComponent>
       </div>
 
-      <FilterPanel />
+      <FilterPanel searchParams={searchParams} setSearchParams={setSearchParams} />
       <PacksTable />
     </div>
   )

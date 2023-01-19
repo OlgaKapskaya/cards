@@ -11,4 +11,5 @@ export const pageCountSelector = (state: AppRootStateType) => state.packs.search
 export const searchParamsSelector = (state: AppRootStateType) => state.packs.searchParams
 export const packNameSelector = (state: AppRootStateType) => state.packs.searchParams.packName
 export const isLoadingSelector = (state: AppRootStateType) => state.packs.isLoading
-export const rangeIdSelector = (state: AppRootStateType) => state.packs.searchParams.range
+export const minRangeSelector = (state: AppRootStateType) => state.packs.searchParams.min
+export const maxRangeSelector = (state: AppRootStateType) => state.packs.searchParams.max
