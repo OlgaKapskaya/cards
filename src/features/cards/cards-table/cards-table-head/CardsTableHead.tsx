@@ -5,7 +5,10 @@ import {
   TableHeadComponent,
 } from '../../../../common/components/table/TableHeadComponent'
 import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
+import {
+  sortCardSelector,
+  userCardsPackIdSelector,
+} from '../../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { setCardsSort } from '../../cardsSlice'
 
@@ -18,6 +21,7 @@ export type CardData = {
 }
 
 export const CardsTableHead = () => {
+  const sort = useAppSelector(sortCardSelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const isMy = userId === profileId
@@ -31,7 +35,11 @@ export const CardsTableHead = () => {
 
   return (
     <>
-      <TableHeadComponent headers={headersCardArray} setSortAC={setCardsSort}>
+      <TableHeadComponent
+        headers={headersCardArray}
+        setSortAC={setCardsSort}
+        sortBy={sort.substring(1)}
+      >
         {isMy && <TableCell key="empty"></TableCell>}
       </TableHeadComponent>
     </>
