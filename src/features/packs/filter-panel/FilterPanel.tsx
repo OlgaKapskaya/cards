@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react'
+import React, { FC, useCallback, useEffect } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
@@ -11,21 +11,35 @@ import {
   isLoadingSelector,
   isMySelector,
   maxCardsCountSelector,
+  maxRangeSelector,
   minCardsCountSelector,
+  minRangeSelector,
   packNameSelector,
-  rangeIdSelector,
 } from '../../../common/selectors/packsListSelectors'
+import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
 
 import s from './FilterPanel.module.css'
 
-export const FilterPanel = () => {
+type FilterPanelPropsType = {
+  searchParams: any
+  setSearchParams: (param: any) => void
+}
+
+export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchParams }) => {
+  const paramsObject = Object.fromEntries(searchParams)
+
+  const user_id = searchParams.get('user_id') || ''
+
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
+  const max = useAppSelector(maxRangeSelector)
+  const min = useAppSelector(minRangeSelector)
+
+  const current_user_id = useAppSelector(userIDSelector)
   const packName = useAppSelector(packNameSelector)
   const isMy = useAppSelector(isMySelector)
   const isLoading = useAppSelector(isLoadingSelector)
-  const range = useAppSelector(rangeIdSelector)
 
   const dispatch = useAppDispatch()
 
@@ -35,6 +49,12 @@ export const FilterPanel = () => {
 
   const onChangeTypePacks = useCallback((type: boolean) => {
     dispatch(setTypePacks(type))
+    if (type) {
+      setSearchParams({ ...paramsObject, user_id: current_user_id })
+    } else {
+      delete paramsObject.user_id
+      setSearchParams({ ...paramsObject })
+    }
   }, [])
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
@@ -46,10 +66,13 @@ export const FilterPanel = () => {
   }
 
   const resetButtonDisabled =
-    (!isMy &&
-      !packName &&
-      (range.length === 0 || (range[0] === minCardsCount && range[1] === maxCardsCount))) ||
+    (!isMy && !packName && ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
     isLoading
+
+  useEffect(() => {
+    if (user_id) dispatch(setTypePacks(true))
+    else dispatch(setTypePacks(false))
+  }, [user_id])
 
   return (
     <div className={s.filterPanelContainer}>
@@ -57,7 +80,7 @@ export const FilterPanel = () => {
         <SearchInput
           label="Search"
           onChangeText={onChangeSearchHandler}
-          searchValue={packName}
+          searchValue={packName ?? ''}
           disabled={isLoading}
         />
       </div>
