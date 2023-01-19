@@ -70,8 +70,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchP
     isLoading
 
   useEffect(() => {
-    if (user_id) dispatch(setTypePacks(true))
-    else dispatch(setTypePacks(false))
+    dispatch(setTypePacks(!!user_id))
   }, [user_id])
 
   return (

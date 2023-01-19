@@ -67,8 +67,6 @@ export const getPacks = createAsyncThunk(
 
     const params: GetPacksPayloadType = {
       packName,
-      // min: range[0],
-      // max: range[1],
       min,
       max,
       page,
@@ -97,6 +95,7 @@ export const getPacks = createAsyncThunk(
       dispatch(setMinPacksCount(res.data.minCardsCount))
       dispatch(setMaxPacksCount(res.data.maxCardsCount))
       dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
+      dispatch(setAppMessage(null))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
@@ -171,6 +170,22 @@ export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { d
   dispatch(setCurrentPage(1))
 })
 
+export const setSearchParams = createAsyncThunk(
+  'packs/setSearchParams',
+  async (payload: any, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+    const stateSearchParams = state.packs.searchParams
+    const params = Object.fromEntries(payload)
+
+    if (JSON.stringify(params) !== JSON.stringify(stateSearchParams)) {
+      dispatch(setCurrentPage(+params.page || 1))
+      dispatch(setPageCount(+params.pageCount || 4))
+      dispatch(setPackName(params.packName || ''))
+      dispatch(setSort(params.sortPacks))
+    }
+  }
+)
+
 export const packsSlice = createSlice({
   name: 'packs',
   initialState: initialState,
@@ -198,9 +213,6 @@ export const packsSlice = createSlice({
     },
     setPackName(state, action: PayloadAction<string>) {
       state.searchParams.packName = action.payload
-    },
-    setUserID(state, action: PayloadAction<string>) {
-      state.searchParams.user_id = action.payload
     },
     setRange(state, action: PayloadAction<number[]>) {
       state.searchParams.min = action.payload[0]
@@ -237,6 +249,5 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
-  setUserID,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer
