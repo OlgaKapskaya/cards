@@ -1,6 +1,4 @@
-import React, { useCallback } from 'react'
-
-import { useSearchParams } from 'react-router-dom'
+import React, { FC, useCallback, useEffect } from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
@@ -13,45 +11,53 @@ import {
   isLoadingSelector,
   isMySelector,
   maxCardsCountSelector,
+  maxRangeSelector,
   minCardsCountSelector,
-  rangeIdSelector,
+  minRangeSelector,
+  packNameSelector,
 } from '../../../common/selectors/packsListSelectors'
+import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
 
 import s from './FilterPanel.module.css'
 
-export const FilterPanel = () => {
+type FilterPanelPropsType = {
+  searchParams: any
+  setSearchParams: (param: any) => void
+}
+
+export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchParams }) => {
+  const paramsObject = Object.fromEntries(searchParams)
+
+  const user_id = searchParams.get('user_id') || ''
+
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
+  const max = useAppSelector(maxRangeSelector)
+  const min = useAppSelector(minRangeSelector)
+
+  const current_user_id = useAppSelector(userIDSelector)
+  const packName = useAppSelector(packNameSelector)
   const isMy = useAppSelector(isMySelector)
   const isLoading = useAppSelector(isLoadingSelector)
-  const range = useAppSelector(rangeIdSelector)
-  const [searchParams, setSearchParams] = useSearchParams()
-  const packName = searchParams.get('packName') || ''
-  const profile_id = useAppSelector(state => state.profile.profile._id)
+
   const dispatch = useAppDispatch()
-  const user_id = searchParams.get('user_id') || ''
-  const paramsObject = Object.fromEntries(searchParams)
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
     dispatch(setRange(values))
   }, [])
 
-  if (user_id) {
-    dispatch(setTypePacks(true))
-  }
   const onChangeTypePacks = useCallback((type: boolean) => {
+    dispatch(setTypePacks(type))
     if (type) {
-      setSearchParams({ ...paramsObject, user_id: profile_id })
-    }
-    if (!type) {
+      setSearchParams({ ...paramsObject, user_id: current_user_id })
+    } else {
       delete paramsObject.user_id
       setSearchParams({ ...paramsObject })
     }
   }, [])
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
-    debugger
     dispatch(setPackName(searchValue))
   }, [])
 
@@ -61,10 +67,12 @@ export const FilterPanel = () => {
   }
 
   const resetButtonDisabled =
-    (!isMy &&
-      !packName &&
-      (range.length === 0 || (range[0] === minCardsCount && range[1] === maxCardsCount))) ||
+    (!isMy && !packName && ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
     isLoading
+
+  useEffect(() => {
+    dispatch(setTypePacks(!!user_id))
+  }, [user_id])
 
   return (
     <div className={s.filterPanelContainer}>
@@ -72,7 +80,7 @@ export const FilterPanel = () => {
         <SearchInput
           label="Search"
           onChangeText={onChangeSearchHandler}
-          searchValue={packName}
+          searchValue={packName ?? ''}
           disabled={isLoading}
         />
       </div>
@@ -80,7 +88,7 @@ export const FilterPanel = () => {
       <SwitchButton
         disabled={isLoading}
         label="Show packs cards"
-        toggle={!!user_id}
+        toggle={isMy}
         setToggle={onChangeTypePacks}
         buttonNames={['my', 'all']}
       />

@@ -45,6 +45,13 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
         dispatch(setEmptyStatus(false))
         dispatch(setFoundStatus(true))
       }
+
+      // при удалении последнего эелемента таблицы не на последней странице
+      // чтобы перекидывало на страницу вниз
+      if (response.data.cards.length === 0 && params.page !== 1) {
+        dispatch(setCardsCurrentPage(params.page - 1))
+      }
+
       dispatch(setIsCardsLoaded(true))
       dispatch(
         setCards(
