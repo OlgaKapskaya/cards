@@ -29,7 +29,7 @@ export const PacksTableHead = () => {
     <TableHeadComponent
       headers={headersPacksArray}
       setSortAC={setSort}
-      sortBy={sort.substring(1)}
+      sortBy={sort?.substring(1)}
     />
   )
 }
