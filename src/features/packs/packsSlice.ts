@@ -79,52 +79,50 @@ type initialStateType = {
   searchParams: SearchParamsType
 }
 
-export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
-  const state = getState() as AppRootStateType
-  const { packName, page, pageCount, range, sort, user_id } = state.packs.searchParams
-  const profile_id = state.profile.profile._id
+export const getPacks = createAsyncThunk(
+  'packs/getPacks',
+  async (payload: GetPacksPayloadType, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+    const { packName, page, pageCount, range, sort } = state.packs.searchParams
 
-  if (user_id === profile_id) {
-    dispatch(setTypePacks(true))
-  }
+    const params: GetPacksPayloadType = {
+      packName,
+      min: range[0],
+      max: range[1],
+      page,
+      pageCount,
+      user_id: payload.user_id,
+      sortPacks: sort,
+    }
 
-  const params: GetPacksPayloadType = {
-    packName,
-    min: range[0],
-    max: range[1],
-    page,
-    pageCount,
-    user_id,
-    sortPacks: sort,
-  }
+    dispatch(setAppStatus('loading'))
+    dispatch(setIsLoading(true))
+    try {
+      const res = await packsAPI.getPacks(params)
 
-  dispatch(setAppStatus('loading'))
-  dispatch(setIsLoading(true))
-  try {
-    const res = await packsAPI.getPacks(params)
-
-    dispatch(
-      setPacks(
-        res.data.cardPacks.map(elem => {
-          return {
-            ...elem,
-            created: dayjs(elem.created).format('DD.MM.YYYY'),
-            updated: dayjs(elem.updated).format('DD.MM.YYYY'),
-            onEdited: false,
-          }
-        })
+      dispatch(
+        setPacks(
+          res.data.cardPacks.map(elem => {
+            return {
+              ...elem,
+              created: dayjs(elem.created).format('DD.MM.YYYY'),
+              updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+              onEdited: false,
+            }
+          })
+        )
       )
-    )
-    dispatch(setMinPacksCount(res.data.minCardsCount))
-    dispatch(setMaxPacksCount(res.data.maxCardsCount))
-    dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
-    dispatch(setAppStatus('succeeded'))
-  } catch (e) {
-    errorNetworkUtil(dispatch, e)
-  } finally {
-    dispatch(setIsLoading(false))
+      dispatch(setMinPacksCount(res.data.minCardsCount))
+      dispatch(setMaxPacksCount(res.data.maxCardsCount))
+      dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
+      dispatch(setAppStatus('succeeded'))
+    } catch (e) {
+      errorNetworkUtil(dispatch, e)
+    } finally {
+      dispatch(setIsLoading(false))
+    }
   }
-})
+)
 
 export const createPack = createAsyncThunk(
   'packs/createPack',
@@ -133,7 +131,7 @@ export const createPack = createAsyncThunk(
     try {
       await packsAPI.createPack(payload)
 
-      dispatch(getPacks())
+      dispatch(getPacks({}))
       dispatch(setAppMessage(`New pack created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -150,7 +148,7 @@ export const deletePack = createAsyncThunk(
     try {
       await packsAPI.deletePack(payload)
 
-      dispatch(getPacks())
+      dispatch(getPacks({}))
       dispatch(setAppMessage(`Pack deleted`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -167,7 +165,7 @@ export const updatePack = createAsyncThunk(
     try {
       await packsAPI.updatePack(payload)
 
-      dispatch(getPacks())
+      dispatch(getPacks({}))
       // для обновления имени pack в карточках при edit
       // можем ли мы использовать setTimeout в thunk и как его чистить
       // setTimeout(() => dispatch(getCards()), 700)
@@ -220,7 +218,6 @@ export const packsSlice = createSlice({
       state.searchParams.pageCount = action.payload
     },
     setPackName(state, action: PayloadAction<string>) {
-      debugger
       state.searchParams.packName = action.payload
     },
     setRange(state, action: PayloadAction<number[]>) {
@@ -242,9 +239,6 @@ export const packsSlice = createSlice({
           : elem
       )
     },
-    setUserId(state, action: PayloadAction<string>) {
-      state.searchParams.user_id = action.payload
-    },
   },
 })
 export const {
@@ -260,7 +254,6 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
-  setUserId,
 } = packsSlice.actions
 
 export const packsReducer = packsSlice.reducer

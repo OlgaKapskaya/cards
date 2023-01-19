@@ -9,49 +9,23 @@ import { isLoadingSelector, searchParamsSelector } from '../../common/selectors/
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
-import {
-  createPack,
-  getPacks,
-  setCurrentPage,
-  setPackName,
-  setPageCount,
-  setUserId,
-} from './packsSlice'
+import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
-  const searchParams = useAppSelector(searchParamsSelector)
   const isLoading = useAppSelector(isLoadingSelector)
+  const searchParams = useAppSelector(searchParamsSelector)
 
   const dispatch = useAppDispatch()
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
   }
-  const [params, setParams] = useSearchParams()
-  const page = params.get('page') || 1
-  const pageCount = params.get('pageCount') || 7
-  const packName = params.get('packName') || ''
+  const [params] = useSearchParams()
   const user_id = params.get('user_id') || ''
-  const paramsObject = Object.fromEntries(params)
 
   useEffect(() => {
-    dispatch(setCurrentPage(+page))
-    dispatch(setPageCount(+pageCount))
-    dispatch(setPackName(packName))
-    dispatch(setUserId(user_id))
-    // setSearchParams({ ...paramsObject, page: (page + 1).toString() })
-    // setSearchParams({ ...paramsObject, pageCount: event.target.value.toString() })
-  }, [])
-
-  useEffect(() => {
-    setParams({
-      // page: JSON.stringify(searchParams.page),
-      // pageCount: searchParams.pageCount,
-      // packName: searchParams.packName,
-      user_id: searchParams.user_id,
-    })
-    dispatch(getPacks())
-  }, [searchParams])
+    dispatch(getPacks({ user_id }))
+  }, [user_id, searchParams])
 
   return (
     <div className={s.container}>

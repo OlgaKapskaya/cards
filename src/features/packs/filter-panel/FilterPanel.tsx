@@ -16,7 +16,7 @@ import {
   minCardsCountSelector,
   rangeIdSelector,
 } from '../../../common/selectors/packsListSelectors'
-import { resetFilters, setPackName, setRange, setTypePacks, setUserId } from '../packsSlice'
+import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
 
 import s from './FilterPanel.module.css'
 
@@ -37,27 +37,21 @@ export const FilterPanel = () => {
     dispatch(setRange(values))
   }, [])
 
-  // useEffect(() => {
-  //   if (user_id) {
-  //     setSearchParams({ ...paramsObject, user_id: profile_id })
-  //   } else {
-  //     debugger
-  //     delete paramsObject.user_id
-  //     setSearchParams({ ...paramsObject })
-  //   }
-  // }, [])
-
+  if (user_id) {
+    dispatch(setTypePacks(true))
+  }
   const onChangeTypePacks = useCallback((type: boolean) => {
-    dispatch(setTypePacks(type))
     if (type) {
-      dispatch(setUserId(profile_id))
+      setSearchParams({ ...paramsObject, user_id: profile_id })
     }
     if (!type) {
-      dispatch(setUserId(''))
+      delete paramsObject.user_id
+      setSearchParams({ ...paramsObject })
     }
   }, [])
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
+    debugger
     dispatch(setPackName(searchValue))
   }, [])
 
