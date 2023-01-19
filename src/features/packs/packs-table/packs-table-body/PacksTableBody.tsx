@@ -33,22 +33,26 @@ export const PacksTableBody = () => {
   return (
     <TableBody>
       {packs.map(p => (
-        <TableRow key={p._id}>
+        <TableRow hover key={p._id} className={s.tableRow}>
           <TableCell
-            className={s.linkCell}
+            onClick={() => navigate(`cards/${p._id}`)}
+            className={s.nameCell}
             component="th"
             scope="row"
-            onClick={() => navigate(`cards/${p._id}`)}
           >
             {p.name}
           </TableCell>
-          <TableCell align="left" className={s.countCell}>
+          <TableCell
+            onClick={() => navigate(`cards/${p._id}`)}
+            align="left"
+            className={s.countCell}
+          >
             {p.cardsCount}
           </TableCell>
-          <TableCell align="left" className={s.cell}>
+          <TableCell onClick={() => navigate(`cards/${p._id}`)} align="left" className={s.cell}>
             {p.updated}
           </TableCell>
-          <TableCell align="left" className={s.cell}>
+          <TableCell onClick={() => navigate(`cards/${p._id}`)} align="left" className={s.cell}>
             {p.user_name}
           </TableCell>
           <TableCell align="left">

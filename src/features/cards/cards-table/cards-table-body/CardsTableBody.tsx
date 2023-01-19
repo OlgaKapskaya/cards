@@ -45,29 +45,21 @@ export const CardsTableBody = () => {
     <TableBody>
       {cards.map(row => {
         return (
-          <TableRow hover key={row._id}>
-            <TableCell className={s.cellQuestion}>{row.question}</TableCell>
-            <TableCell className={s.cellAnswer}>{row.answer}</TableCell>
-            <TableCell className={s.cell}>{row.updated}</TableCell>
+          <TableRow hover key={row._id} className={s.tableRow}>
+            <TableCell className={s.cellQuestion} onClick={() => alert('open card')}>
+              {row.question}
+            </TableCell>
+            <TableCell className={s.cellAnswer} onClick={() => alert('open card')}>
+              {row.answer}
+            </TableCell>
+            <TableCell className={s.cell} onClick={() => alert('open card')}>
+              {row.updated}
+            </TableCell>
             <TableCell className={s.cell}>
               <Rating name="simple-controlled" value={row.grade} />
             </TableCell>
             {isMy && (
               <TableCell align="right" className={s.cell}>
-                {/*<span className={s.icons}>*/}
-                {/*  <button*/}
-                {/*    onClick={() => handleUpdateCard(row._id)}*/}
-                {/*    disabled={loadingStatus === 'loading'}*/}
-                {/*  >*/}
-                {/*    <img src={editIcon} alt="editIcon" />*/}
-                {/*  </button>*/}
-                {/*  <button*/}
-                {/*    onClick={() => handleDeleteCard(row._id)}*/}
-                {/*    disabled={loadingStatus === 'loading'}*/}
-                {/*  >*/}
-                {/*    <img src={deleteIcon} alt="deleteIcon" />*/}
-                {/*  </button>*/}
-                {/*</span>*/}
                 <ActionButton
                   icon={editIcon}
                   hint="update card"
