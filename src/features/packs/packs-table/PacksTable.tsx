@@ -10,7 +10,7 @@ import {
   packsSelector,
   pageCountSelector,
 } from '../../../common/selectors/packsListSelectors'
-import { setCurrentPage, setPageCount } from '../packsSlice'
+import { updateSearchParams } from '../packsSlice'
 
 import { PacksTableBody } from './packs-table-body/PacksTableBody'
 import { PacksTableHead } from './packs-table-head/PacksTableHead'
@@ -25,8 +25,7 @@ export const PacksTable = () => {
   const dispatch = useAppDispatch()
 
   const onChangePageHandler = (page: number, size: number) => {
-    dispatch(setCurrentPage(page))
-    dispatch(setPageCount(size))
+    dispatch(updateSearchParams({ page, pageCount: size }))
   }
 
   // if (isLoading) return <Loader />

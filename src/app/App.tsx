@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import { Loader } from '../common/components/loader/Loader'
 import { useAppDispatch, useAppSelector } from '../common/hooks/reactReduxHooks'
 import { appIsInitializedSelector, appStatusSelector } from '../common/selectors/appSelectors'
-import { setSearchParams } from '../features/packs/packsSlice'
+import { getSearchParams } from '../features/packs/packsSlice'
 
 import s from './App.module.css'
 import { me } from './appSlice'
@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(me())
-    dispatch(setSearchParams(searchParams))
+    dispatch(getSearchParams(searchParams))
   }, [dispatch])
 
   if (!isInitialized) {

@@ -13,6 +13,16 @@ import {
   UpdatePackPayloadType,
 } from './packsAPI'
 
+type SearchParamsPayloadType = {
+  page?: number
+  pageCount?: number
+  packName?: string
+  min?: number
+  max?: number
+  sort?: string
+  user_id?: string
+}
+
 type SearchParamsType = {
   page: number // выбранная страница
   pageCount: number // количество элементов на странице
@@ -162,26 +172,47 @@ export const updatePack = createAsyncThunk(
 )
 
 export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { dispatch }) => {
+  dispatch(updateSearchParams({}))
   dispatch(setMinPacksCount(0))
   dispatch(setMaxPacksCount(0))
-  dispatch(setRange([] as number[]))
-  dispatch(setPackName(''))
-  dispatch(setTypePacks(false))
-  dispatch(setCurrentPage(1))
 })
 
-export const setSearchParams = createAsyncThunk(
-  'packs/setSearchParams',
+export const updateSearchParams = createAsyncThunk(
+  'packs/updateSearchParams',
+  async (payload: SearchParamsPayloadType, { dispatch, getState }) => {
+    const state = getState() as AppRootStateType
+
+    const searchParamsModel: SearchParamsType = {
+      page: state.packs.searchParams.page,
+      pageCount: state.packs.searchParams.pageCount,
+      packName: state.packs.searchParams.packName,
+      min: state.packs.searchParams.min,
+      max: state.packs.searchParams.max,
+      sort: state.packs.searchParams.sort,
+      user_id: state.packs.searchParams.user_id,
+      ...payload,
+    }
+
+    dispatch(setSearchParams(searchParamsModel))
+  }
+)
+
+export const getSearchParams = createAsyncThunk(
+  'packs/getSearchParams',
   async (payload: any, { dispatch, getState }) => {
     const state = getState() as AppRootStateType
     const stateSearchParams = state.packs.searchParams
     const params = Object.fromEntries(payload)
 
     if (JSON.stringify(params) !== JSON.stringify(stateSearchParams)) {
-      dispatch(setCurrentPage(+params.page || 1))
-      dispatch(setPageCount(+params.pageCount || 4))
-      dispatch(setPackName(params.packName || ''))
-      dispatch(setSort(params.sortPacks))
+      const param = {
+        page: +params.page || 1,
+        pageCount: +params.pageCount || 4,
+        packName: params.packName || '',
+        sort: params.sortPacks,
+      }
+
+      dispatch(updateSearchParams(param))
     }
   }
 )
@@ -192,6 +223,9 @@ export const packsSlice = createSlice({
   reducers: {
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload
+    },
+    setSearchParams(state, action: PayloadAction<SearchParamsType>) {
+      state.searchParams = action.payload
     },
     setPacks(state, action: PayloadAction<PackDomainType[]>) {
       state.packs = action.payload
@@ -204,19 +238,6 @@ export const packsSlice = createSlice({
     },
     setCardPacksTotalCount(state, action: PayloadAction<number>) {
       state.cardPacksTotalCount = action.payload
-    },
-    setCurrentPage(state, action: PayloadAction<number>) {
-      state.searchParams.page = action.payload
-    },
-    setPageCount(state, action: PayloadAction<number>) {
-      state.searchParams.pageCount = action.payload
-    },
-    setPackName(state, action: PayloadAction<string>) {
-      state.searchParams.packName = action.payload
-    },
-    setRange(state, action: PayloadAction<number[]>) {
-      state.searchParams.min = action.payload[0]
-      state.searchParams.max = action.payload[1]
     },
     setTypePacks(state, action: PayloadAction<boolean>) {
       state.isOnlyMy = action.payload
@@ -242,12 +263,9 @@ export const {
   setMinPacksCount,
   setMaxPacksCount,
   setCardPacksTotalCount,
-  setCurrentPage,
-  setPageCount,
-  setRange,
-  setPackName,
   setIsLoading,
   setSort,
   setEdited,
+  setSearchParams,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer

@@ -11,7 +11,7 @@ import {
   packNameSelector,
 } from '../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
-import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
+import { resetFilters, setTypePacks, updateSearchParams } from '../packsSlice'
 
 export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: any) => void) => {
   const paramsObject = Object.fromEntries(searchParams)
@@ -30,12 +30,18 @@ export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: 
   const dispatch = useAppDispatch()
 
   const onChangeValuesHandler = useCallback((values: number[]) => {
-    dispatch(setRange(values))
+    dispatch(
+      updateSearchParams({
+        min: values[0],
+        max: values[1],
+      })
+    )
   }, [])
 
   const onChangeTypePacks = useCallback((type: boolean) => {
     dispatch(setTypePacks(type))
     if (type) {
+      // dispatch(updateSearchParams({ page: 1, user_id: current_user_id }))
       setSearchParams({ ...paramsObject, user_id: current_user_id })
     } else {
       delete paramsObject.user_id
@@ -44,7 +50,7 @@ export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: 
   }, [])
 
   const onChangeSearchHandler = useCallback((searchValue: string) => {
-    dispatch(setPackName(searchValue))
+    dispatch(updateSearchParams({ packName: searchValue }))
   }, [])
 
   const onResetFiltersHandler = () => {
