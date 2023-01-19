@@ -12,7 +12,7 @@ import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactRe
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { cardsSelector, userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
-import { deleteCard, updateCard } from '../../cardsSlice'
+import { deleteCard, setCardsCurrentPage, updateCard } from '../../cardsSlice'
 
 import s from './CardsTableBody.module.css'
 
@@ -39,6 +39,10 @@ export const CardsTableBody = () => {
     }
 
     dispatch(updateCard(payload))
+  }
+
+  if (cards.length === 0) {
+    dispatch(setCardsCurrentPage(1))
   }
 
   return (

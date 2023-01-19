@@ -2,6 +2,8 @@ import { ChangeEvent, MouseEvent, FC, useEffect, useState } from 'react'
 
 import TablePagination from '@mui/material/TablePagination'
 
+import { useThrottle } from '../../hooks/useThrottle'
+
 type PaginationComponentPropsType = {
   labelRowsPerPage?: string
   totalCount: number
@@ -9,6 +11,7 @@ type PaginationComponentPropsType = {
   pageSize: number
   onPageChanged: (page: number, pageSize: number) => void
 }
+
 export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   totalCount,
   pageSize,
@@ -17,20 +20,28 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
   labelRowsPerPage,
 }) => {
   const [rowsPerPage, setRowsPerPage] = useState(pageSize)
+  const [page, setPage] = useState(currentPage)
+  const throttledPage = useThrottle(page, 1000)
 
   useEffect(() => {
-    if (pageSize === rowsPerPage) return
     setRowsPerPage(pageSize)
   }, [pageSize])
+
+  useEffect(() => {
+    setPage(currentPage)
+  }, [currentPage])
+
+  useEffect(() => {
+    onPageChanged(page, rowsPerPage)
+  }, [rowsPerPage, throttledPage])
 
   const onChangeRowsPerPageHandler = (
     event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     setRowsPerPage(parseInt(event.target.value, 10))
-    onPageChanged(1, parseInt(event.target.value, 10))
   }
   const onChangePageHandler = (event: MouseEvent<HTMLButtonElement> | null, page: number) => {
-    onPageChanged(page + 1, rowsPerPage)
+    setPage(page + 1)
   }
 
   return (
@@ -43,6 +54,8 @@ export const PaginationComponent: FC<PaginationComponentPropsType> = ({
       rowsPerPageOptions={[4, 7, 10, 15]}
       rowsPerPage={rowsPerPage}
       onRowsPerPageChange={onChangeRowsPerPageHandler}
+      showFirstButton
+      showLastButton
     />
   )
 }
