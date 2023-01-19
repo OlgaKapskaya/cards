@@ -13,3 +13,4 @@ export const packNameSelector = (state: AppRootStateType) => state.packs.searchP
 export const isLoadingSelector = (state: AppRootStateType) => state.packs.isLoading
 export const minRangeSelector = (state: AppRootStateType) => state.packs.searchParams.min
 export const maxRangeSelector = (state: AppRootStateType) => state.packs.searchParams.max
+export const sortPackSelector = (state: AppRootStateType) => state.packs.searchParams.sort

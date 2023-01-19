@@ -2,6 +2,8 @@ import {
   HeaderType,
   TableHeadComponent,
 } from '../../../../common/components/table/TableHeadComponent'
+import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
+import { sortPackSelector } from '../../../../common/selectors/packsListSelectors'
 import { setSort } from '../../packsSlice'
 
 export type PackData = {
@@ -13,6 +15,8 @@ export type PackData = {
 }
 
 export const PacksTableHead = () => {
+  const sort = useAppSelector(sortPackSelector)
+
   const headersPacksArray: readonly HeaderType<PackData>[] = [
     { id: 'name', label: 'Name' },
     { id: 'cardsCount', label: 'Cards' },
@@ -21,5 +25,11 @@ export const PacksTableHead = () => {
     { id: 'empty', label: 'Actions' },
   ]
 
-  return <TableHeadComponent headers={headersPacksArray} setSortAC={setSort} />
+  return (
+    <TableHeadComponent
+      headers={headersPacksArray}
+      setSortAC={setSort}
+      sortBy={sort.substring(1)}
+    />
+  )
 }

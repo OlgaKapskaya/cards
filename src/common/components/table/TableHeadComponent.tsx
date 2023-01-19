@@ -17,14 +17,16 @@ type Props<D> = {
   headers: readonly HeaderType<D>[]
   setSortAC: (data: string) => AnyAction
   children?: ReactNode
+  sortBy?: string
 }
 
 export const TableHeadComponent = <D extends unknown>({
   headers,
   setSortAC,
   children,
+  sortBy,
 }: Props<D>) => {
-  const { order, orderBy, requestSortHandler } = useSortHead<D>('updated' as keyof D, setSortAC)
+  const { order, orderBy, requestSortHandler } = useSortHead<D>(sortBy as keyof D, setSortAC)
 
   return (
     <TableHead>

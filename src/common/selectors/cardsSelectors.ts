@@ -11,3 +11,4 @@ export const cardsTotalCountSelector = (state: AppRootStateType) => state.cards.
 export const userCardsPackIdSelector = (state: AppRootStateType) => state.cards.userPack_id
 export const cardPackNameSelector = (state: AppRootStateType) => state.cards.packName
 export const cardPackId = (state: AppRootStateType) => state.cards.cardsPack_id
+export const sortCardSelector = (state: AppRootStateType) => state.cards.searchParams.sort
