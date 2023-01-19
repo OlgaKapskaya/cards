@@ -26,7 +26,7 @@ export const Pages = () => {
       <Route path={PATH.ERROR404} element={<Error404 />} />
 
       <Route element={<PrivateRoutes />}>
-        <Route index path="/" element={<Profile />} />
+        <Route index path="/" element={<Packs />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
         <Route path={PATH.PACKS + PATH.CARDS + '/:packId'} element={<Cards />} />
