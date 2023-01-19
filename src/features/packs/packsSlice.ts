@@ -20,6 +20,7 @@ type SearchParamsType = {
   packName: string
   range: number[]
   sort: string
+  user_id: string
 }
 export type PackDomainType = {
   user_name: string
@@ -65,6 +66,7 @@ const initialState = {
     packName: '',
     range: [] as number[],
     sort: '0updated',
+    user_id: '',
   },
 } as initialStateType
 
@@ -80,9 +82,12 @@ type initialStateType = {
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, range, sort } = state.packs.searchParams
-  const user_id = state.profile.profile._id
-  const isOnlyMy = state.packs.isOnlyMy
+  const { packName, page, pageCount, range, sort, user_id } = state.packs.searchParams
+  const profile_id = state.profile.profile._id
+
+  if (user_id === profile_id) {
+    dispatch(setTypePacks(true))
+  }
 
   const params: GetPacksPayloadType = {
     packName,
@@ -90,7 +95,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     max: range[1],
     page,
     pageCount,
-    user_id: isOnlyMy ? user_id : '',
+    user_id,
     sortPacks: sort,
   }
 
@@ -214,6 +219,7 @@ export const packsSlice = createSlice({
       state.searchParams.pageCount = action.payload
     },
     setPackName(state, action: PayloadAction<string>) {
+      debugger
       state.searchParams.packName = action.payload
     },
     setRange(state, action: PayloadAction<number[]>) {
@@ -235,6 +241,9 @@ export const packsSlice = createSlice({
           : elem
       )
     },
+    setUserId(state, action: PayloadAction<string>) {
+      state.searchParams.user_id = action.payload
+    },
   },
 })
 export const {
@@ -250,6 +259,7 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
-  clearPacks,
+  setUserId,
 } = packsSlice.actions
+
 export const packsReducer = packsSlice.reducer
