@@ -2,7 +2,9 @@
 
 ## Authors:
 
-[![Contributors][contributors-shield]][contributors-url][![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
+[![Contributors][contributors-shield]][contributors-url]
+
+[![demo](https://img.shields.io/badge/-demo-brightgreen?style=for-the-badge&logo=github)](https://olgakapskaya.github.io/cards/)
 
 - [@tepek92](https://github.com/tepek92)
 - [@OlgaKapskaya](https://github.com/OlgaKapskaya)
@@ -12,7 +14,6 @@
 
 - [![React][react.js]][react-url]
 - [![Redux-toolkit][rtk]][rtk-url]
-- [![Redux-thunk][reduxthunk]][reduxthunk-url]
 - [![Redux-router-dom][rrd]][rrd-url]
 - [![Typescript][typescript]][typescript-url]
 - [![ESLint][eslint]][eslint-url]
@@ -21,14 +22,13 @@
 
 ## Environment Setup:
 
-1. Get API Key at [https://social-network.samuraijs.com]
-2. Clone the project onto your machine
+1. Clone the project onto your machine
 
 ```sh
 git clone https://github.com/OlgaKapskaya/cards.git
 ```
 
-3. Install packages
+2. Install packages
 
 - yarn
 
@@ -63,8 +63,6 @@ yarn install
 [react-url]: https://reactjs.org/
 [rtk]: https://img.shields.io/badge/Redux%20Toolkit-0769AD?style=for-the-badge&logo=redux&logoColor=white
 [rtk-url]: https://redux-toolkit.js.org/
-[reduxthunk]: https://img.shields.io/badge/Redux%20Thunk-0769AD?style=for-the-badge&logo=redux&logoColor=white
-[reduxthunk-url]: https://github.com/reduxjs/redux-thunk
 [rrd]: https://img.shields.io/badge/React_Router-CA4245?style=for-the-badge&logo=react-router&logoColor=white
 [rrd-url]: https://reactrouter.com/en/main
 [typescript]: https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white
