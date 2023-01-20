@@ -2,6 +2,7 @@ import { yupResolver } from '@hookform/resolvers/yup/dist/yup'
 import { FieldValues, useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
 
+import { appStatusSelector } from '../selectors/appSelectors'
 import {
   isLoggedInSelector,
   isRecoveredPasswordSelector,
@@ -16,6 +17,7 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
   const isRegistered = useAppSelector(isRegisteredSelector)
   const isSentRecoveryEmail = useAppSelector(isSentRecoveryEmailSelector)
   const isRecoveredPassword = useAppSelector(isRecoveredPasswordSelector)
+  const appStatus = useAppSelector(appStatusSelector)
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -39,5 +41,6 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
     register,
     handleSubmit,
     errors,
+    appStatus,
   }
 }
