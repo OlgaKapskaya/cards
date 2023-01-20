@@ -18,6 +18,7 @@ type Props<D> = {
   setSortAC: (data: string) => AnyAction
   children?: ReactNode
   sortBy?: string
+  sortOrderStart: string
 }
 
 export const TableHeadComponent = <D extends unknown>({
@@ -25,8 +26,13 @@ export const TableHeadComponent = <D extends unknown>({
   setSortAC,
   children,
   sortBy,
+  sortOrderStart,
 }: Props<D>) => {
-  const { order, orderBy, requestSortHandler } = useSortHead<D>(sortBy as keyof D, setSortAC)
+  const { order, orderBy, requestSortHandler } = useSortHead<D>(
+    sortBy as keyof D,
+    setSortAC,
+    sortOrderStart
+  )
 
   return (
     <TableHead>

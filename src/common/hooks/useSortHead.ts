@@ -8,8 +8,12 @@ export type Order = 'asc' | 'desc'
 // ascending - восходящий 0
 // decreasing - убывающий 1
 
-export const useSortHead = <D>(orderStart: keyof D, actionCreator: (data: string) => AnyAction) => {
-  const [order, setOrder] = useState<Order>('asc')
+export const useSortHead = <D>(
+  orderStart: keyof D,
+  actionCreator: (data: string) => AnyAction,
+  sortOrderStart: string
+) => {
+  const [order, setOrder] = useState<Order>(sortOrderStart === '1' ? 'asc' : 'desc')
   const [orderBy, setOrderBy] = useState<keyof D>(orderStart)
   const dispatch = useAppDispatch()
 
