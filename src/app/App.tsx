@@ -24,7 +24,7 @@ const App = () => {
 
   useEffect(() => {
     dispatch(me())
-    dispatch(setSearchParams(searchParams))
+    searchParams.toString().length > 0 && dispatch(setSearchParams(searchParams))
   }, [dispatch])
 
   if (!isInitialized) {
