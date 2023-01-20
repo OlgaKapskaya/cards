@@ -38,7 +38,7 @@ export const CardsTableHead = () => {
       <TableHeadComponent
         headers={headersCardArray}
         setSortAC={setCardsSort}
-        sortBy={sort.substring(1)}
+        sortBy={sort?.substring(1)}
       >
         {isMy && <TableCell key="empty"></TableCell>}
       </TableHeadComponent>

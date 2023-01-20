@@ -1,30 +1,27 @@
-import { useCallback, useEffect } from 'react'
+import { useCallback } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
   isLoadingSelector,
-  isMySelector,
   maxCardsCountSelector,
   maxRangeSelector,
   minCardsCountSelector,
   minRangeSelector,
   packNameSelector,
+  searchUserIdSelector,
 } from '../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
-import { resetFilters, setPackName, setRange, setTypePacks } from '../packsSlice'
+import { resetFilters, setCurrentPage, setPackName, setRange, setUserId } from '../packsSlice'
 
-export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: any) => void) => {
-  const paramsObject = Object.fromEntries(searchParams)
-  const user_id = searchParams.get('user_id') || ''
-
+export const useFilterPanelLogic = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)
   const minCardsCount = useAppSelector(minCardsCountSelector)
   const max = useAppSelector(maxRangeSelector)
   const min = useAppSelector(minRangeSelector)
 
-  const current_user_id = useAppSelector(userIDSelector)
+  const currentUserId = useAppSelector(userIDSelector)
+  const searchUserId = useAppSelector(searchUserIdSelector)
   const packName = useAppSelector(packNameSelector)
-  const isMy = useAppSelector(isMySelector)
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
@@ -34,12 +31,11 @@ export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: 
   }, [])
 
   const onChangeTypePacks = useCallback((type: boolean) => {
-    dispatch(setTypePacks(type))
     if (type) {
-      setSearchParams({ ...paramsObject, user_id: current_user_id })
+      dispatch(setUserId(currentUserId))
+      dispatch(setCurrentPage(1))
     } else {
-      delete paramsObject.user_id
-      setSearchParams({ ...paramsObject })
+      dispatch(setUserId(''))
     }
   }, [])
 
@@ -51,17 +47,16 @@ export const useFilterPanelLogic = (searchParams: any, setSearchParams: (param: 
     dispatch(resetFilters())
   }
 
+  //если нет userId и нет поисковой строки и не установлен диапазон
   const resetButtonDisabled =
-    (!isMy && !packName && ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
+    (!searchUserId &&
+      !packName &&
+      ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
     isLoading
-
-  useEffect(() => {
-    dispatch(setTypePacks(!!user_id))
-  }, [user_id])
 
   return {
     packName,
-    isMy,
+    searchUserId,
     isLoading,
     minCardsCount,
     maxCardsCount,

@@ -36,8 +36,8 @@ export const PacksTable = () => {
   return (
     <TableComponent
       totalCount={cardPacksTotalCount}
-      page={page}
-      pageSize={pageCount}
+      page={page ?? 1}
+      pageSize={pageCount ?? 4}
       onPageChanged={onChangePageHandler}
       paginationLabel="Packs per Page"
     >

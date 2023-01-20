@@ -19,7 +19,7 @@ import { login } from '../authSlice'
 import s from './Login.module.css'
 
 export const Login: FC = () => {
-  const { isLoggedIn, dispatch, register, handleSubmit, errors } =
+  const { isLoggedIn, dispatch, register, handleSubmit, errors, appStatus } =
     useAuthForm<LoginRequestType>(loginValidationSchema)
 
   const onSubmit = (data: LoginRequestType) => {
@@ -54,7 +54,11 @@ export const Login: FC = () => {
               <NavLink className={s.forgot} to={PATH.PASSWORD_RECOVERY}>
                 Forgot Password?
               </NavLink>
-              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('60px')}>
+              <ButtonComponent
+                type="submit"
+                sx={sxButtonMarginTopWidthCreator('60px')}
+                disabled={appStatus === 'loading'}
+              >
                 Sign In
               </ButtonComponent>
             </form>

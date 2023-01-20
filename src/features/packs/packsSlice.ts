@@ -13,15 +13,6 @@ import {
   UpdatePackPayloadType,
 } from './packsAPI'
 
-type SearchParamsType = {
-  page: number // выбранная страница
-  pageCount: number // количество элементов на странице
-  packName?: string
-  min?: number
-  max?: number
-  sort: string
-  user_id?: string
-}
 export type PackDomainType = {
   user_name: string
   _id: string
@@ -38,13 +29,12 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
-  isOnlyMy: false,
   isLoading: false,
   searchParams: {
     page: 1,
     pageCount: 7,
     packName: '',
-    sort: '0updated',
+    sortPacks: '0updated',
     user_id: '',
   },
 } as initialStateType
@@ -54,56 +44,51 @@ type initialStateType = {
   cardPacksTotalCount?: number | undefined
   maxCardsCount?: number
   minCardsCount?: number
-  isOnlyMy: boolean
   isLoading: boolean
-  searchParams: SearchParamsType
+  searchParams: GetPacksPayloadType
 }
 
-export const getPacks = createAsyncThunk(
-  'packs/getPacks',
-  async (payload: any, { dispatch, getState }) => {
-    const state = getState() as AppRootStateType
-    const { page, pageCount, packName, sort, min, max } = state.packs.searchParams
+export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
+  const state = getState() as AppRootStateType
+  const { page, pageCount, packName, sortPacks, min, max, user_id } = state.packs.searchParams
 
-    const params: GetPacksPayloadType = {
-      packName,
-      min,
-      max,
-      page,
-      pageCount,
-      user_id: payload.user_id,
-      sortPacks: sort,
-    }
-
-    dispatch(setAppStatus('loading'))
-    dispatch(setIsLoading(true))
-    try {
-      const res = await packsAPI.getPacks(params)
-
-      dispatch(
-        setPacks(
-          res.data.cardPacks.map(elem => {
-            return {
-              ...elem,
-              created: dayjs(elem.created).format('DD.MM.YYYY'),
-              updated: dayjs(elem.updated).format('DD.MM.YYYY'),
-              onEdited: false,
-            }
-          })
-        )
-      )
-      dispatch(setMinPacksCount(res.data.minCardsCount))
-      dispatch(setMaxPacksCount(res.data.maxCardsCount))
-      dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
-      dispatch(setAppMessage(null))
-      dispatch(setAppStatus('succeeded'))
-    } catch (e) {
-      errorNetworkUtil(dispatch, e)
-    } finally {
-      dispatch(setIsLoading(false))
-    }
+  const params: GetPacksPayloadType = {
+    packName,
+    min,
+    max,
+    page,
+    pageCount,
+    user_id,
+    sortPacks,
   }
-)
+
+  dispatch(setAppStatus('loading'))
+  dispatch(setIsLoading(true))
+  try {
+    const res = await packsAPI.getPacks(params)
+
+    dispatch(
+      setPacks(
+        res.data.cardPacks.map(elem => {
+          return {
+            ...elem,
+            created: dayjs(elem.created).format('DD.MM.YYYY'),
+            updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+            onEdited: false,
+          }
+        })
+      )
+    )
+    dispatch(setMinPacksCount(res.data.minCardsCount))
+    dispatch(setMaxPacksCount(res.data.maxCardsCount))
+    dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
+    dispatch(setAppStatus('succeeded'))
+  } catch (e) {
+    errorNetworkUtil(dispatch, e)
+  } finally {
+    dispatch(setIsLoading(false))
+  }
+})
 
 export const createPack = createAsyncThunk(
   'packs/createPack',
@@ -112,7 +97,7 @@ export const createPack = createAsyncThunk(
     try {
       await packsAPI.createPack(payload)
 
-      dispatch(getPacks({}))
+      dispatch(getPacks())
       dispatch(setAppMessage(`New pack created`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -129,7 +114,7 @@ export const deletePack = createAsyncThunk(
     try {
       await packsAPI.deletePack(payload)
 
-      dispatch(getPacks({}))
+      dispatch(getPacks())
       dispatch(setAppMessage(`Pack deleted`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
@@ -146,7 +131,7 @@ export const updatePack = createAsyncThunk(
     try {
       await packsAPI.updatePack(payload)
 
-      dispatch(getPacks({}))
+      dispatch(getPacks())
       // для обновления имени pack в карточках при edit
       // можем ли мы использовать setTimeout в thunk и как его чистить
       // setTimeout(() => dispatch(getCards()), 700)
@@ -166,7 +151,7 @@ export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { d
   dispatch(setMaxPacksCount(0))
   dispatch(setRange([] as number[]))
   dispatch(setPackName(''))
-  dispatch(setTypePacks(false))
+  dispatch(setUserId(''))
   dispatch(setCurrentPage(1))
 })
 
@@ -182,6 +167,7 @@ export const setSearchParams = createAsyncThunk(
       dispatch(setPageCount(+params.pageCount || 4))
       dispatch(setPackName(params.packName || ''))
       dispatch(setSort(params.sortPacks))
+      dispatch(setUserId(params.user_id) || '')
     }
   }
 )
@@ -218,11 +204,11 @@ export const packsSlice = createSlice({
       state.searchParams.min = action.payload[0]
       state.searchParams.max = action.payload[1]
     },
-    setTypePacks(state, action: PayloadAction<boolean>) {
-      state.isOnlyMy = action.payload
-    },
     setSort(state, action: PayloadAction<string>) {
-      state.searchParams.sort = action.payload
+      state.searchParams.sortPacks = action.payload
+    },
+    setUserId(state, action: PayloadAction<string>) {
+      state.searchParams.user_id = action.payload
     },
     setEdited(state, action: PayloadAction<{ id: string; onEdited: boolean }>) {
       state.packs = state.packs.map(elem =>
@@ -238,7 +224,6 @@ export const packsSlice = createSlice({
 })
 export const {
   setPacks,
-  setTypePacks,
   setMinPacksCount,
   setMaxPacksCount,
   setCardPacksTotalCount,
@@ -249,5 +234,6 @@ export const {
   setIsLoading,
   setSort,
   setEdited,
+  setUserId,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer

@@ -1,4 +1,4 @@
-import { Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes } from 'react-router-dom'
 
 import { Error404 } from '../../common/components/error404/Error404'
 import { PATH } from '../../common/constants/path'
@@ -26,7 +26,7 @@ export const Pages = () => {
       <Route path={PATH.ERROR404} element={<Error404 />} />
 
       <Route element={<PrivateRoutes />}>
-        <Route index path="/" element={<Packs />} />
+        <Route path="/" element={<Navigate to={PATH.PACKS} />} />
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
         <Route path={PATH.PACKS + PATH.CARDS + '/:packId'} element={<Cards />} />

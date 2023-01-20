@@ -21,7 +21,7 @@ export interface INewPasswordForm {
 }
 
 export const NewPassword: FC = () => {
-  const { isRecoveredPassword, dispatch, register, errors, handleSubmit } =
+  const { isRecoveredPassword, dispatch, register, errors, handleSubmit, appStatus } =
     useAuthForm<INewPasswordForm>(newPasswordValidationScheme)
 
   const { token } = useParams<{ token: string }>()
@@ -53,7 +53,11 @@ export const NewPassword: FC = () => {
               <p className={s.textInfo}>
                 {`Create new password and we will send you further instructions to email`}
               </p>
-              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator()}>
+              <ButtonComponent
+                type="submit"
+                sx={sxButtonMarginTopWidthCreator()}
+                disabled={appStatus === 'loading'}
+              >
                 Create new password
               </ButtonComponent>
             </form>
