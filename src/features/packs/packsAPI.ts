@@ -20,8 +20,8 @@ export type GetPacksPayloadType = {
   min?: number
   max?: number
   sortPacks?: string
-  page?: number | string
-  pageCount?: number | string
+  page?: number
+  pageCount?: number
   user_id?: string // чьи колоды,если не передан то придут все
   block?: boolean
 }

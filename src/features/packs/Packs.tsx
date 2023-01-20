@@ -4,7 +4,8 @@ import { useSearchParams } from 'react-router-dom'
 
 import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { isLoadingSelector, searchParamsSelector } from '../../common/selectors/packsListSelectors'
+import { appStatusSelector } from '../../common/selectors/appSelectors'
+import { searchParamsSelector } from '../../common/selectors/packsListSelectors'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
@@ -15,7 +16,7 @@ export const Packs = () => {
   const [, setSearchParams] = useSearchParams()
 
   const stateSearchParams = useAppSelector(searchParamsSelector)
-  const isLoading = useAppSelector(isLoadingSelector)
+  const loadingStatus = useAppSelector(appStatusSelector)
 
   const dispatch = useAppDispatch()
 
@@ -40,7 +41,7 @@ export const Packs = () => {
     <div className={s.container}>
       <div className={s.header}>
         <span className={s.title}>Packs list</span>
-        <ButtonComponent onClick={addNewPackHandler} disabled={isLoading}>
+        <ButtonComponent onClick={addNewPackHandler} disabled={loadingStatus === 'loading'}>
           Add New Pack
         </ButtonComponent>
       </div>
