@@ -11,10 +11,12 @@ type ActionButtonPropsType = IconButtonProps & {
 }
 export const ActionButton: FC<ActionButtonPropsType> = memo(({ icon, hint, ...restProps }) => {
   return (
-    <Tooltip title={hint} arrow>
-      <IconButton size="small" {...restProps}>
-        <img src={icon} className={s.icon} alt="action" />
-      </IconButton>
-    </Tooltip>
+    <>
+      <Tooltip title={hint} arrow>
+        <IconButton size="small" {...restProps}>
+          <img src={icon} className={s.icon} alt="action" />
+        </IconButton>
+      </Tooltip>
+    </>
   )
 })

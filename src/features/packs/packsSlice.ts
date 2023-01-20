@@ -10,19 +10,9 @@ import {
   DeletePackPayloadType,
   GetPacksPayloadType,
   packsAPI,
+  PackType,
   UpdatePackPayloadType,
 } from './packsAPI'
-
-export type PackDomainType = {
-  user_name: string
-  _id: string
-  user_id: string
-  name: string
-  cardsCount: number
-  created: string
-  updated: string
-  onEdited: boolean
-}
 
 const initialState = {
   packs: [],
@@ -40,7 +30,7 @@ const initialState = {
 } as initialStateType
 
 type initialStateType = {
-  packs: PackDomainType[]
+  packs: PackType[]
   cardPacksTotalCount?: number | undefined
   maxCardsCount?: number
   minCardsCount?: number
@@ -74,7 +64,6 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
             ...elem,
             created: dayjs(elem.created).format('DD.MM.YYYY'),
             updated: dayjs(elem.updated).format('DD.MM.YYYY'),
-            onEdited: false,
           }
         })
       )
@@ -109,7 +98,6 @@ export const createPack = createAsyncThunk(
 export const deletePack = createAsyncThunk(
   'packs/deletePack',
   async (payload: DeletePackPayloadType, { dispatch }) => {
-    dispatch(setEdited({ id: payload.id, onEdited: true }))
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.deletePack(payload)
@@ -126,7 +114,6 @@ export const deletePack = createAsyncThunk(
 export const updatePack = createAsyncThunk(
   'packs/updatePack',
   async (payload: UpdatePackPayloadType, { dispatch }) => {
-    dispatch(setEdited({ id: payload.cardsPack._id, onEdited: true }))
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.updatePack(payload)
@@ -140,8 +127,6 @@ export const updatePack = createAsyncThunk(
       dispatch(setAppStatus('succeeded'))
     } catch (e) {
       errorNetworkUtil(dispatch, e)
-    } finally {
-      dispatch(setEdited({ id: payload.cardsPack._id, onEdited: false }))
     }
   }
 )
@@ -179,7 +164,7 @@ export const packsSlice = createSlice({
     setIsLoading(state, action: PayloadAction<boolean>) {
       state.isLoading = action.payload
     },
-    setPacks(state, action: PayloadAction<PackDomainType[]>) {
+    setPacks(state, action: PayloadAction<PackType[]>) {
       state.packs = action.payload
     },
     setMinPacksCount(state, action: PayloadAction<number>) {
@@ -210,16 +195,6 @@ export const packsSlice = createSlice({
     setUserId(state, action: PayloadAction<string>) {
       state.searchParams.user_id = action.payload
     },
-    setEdited(state, action: PayloadAction<{ id: string; onEdited: boolean }>) {
-      state.packs = state.packs.map(elem =>
-        elem._id === action.payload.id
-          ? {
-              ...elem,
-              onEdited: action.payload.onEdited,
-            }
-          : elem
-      )
-    },
   },
 })
 export const {
@@ -233,7 +208,6 @@ export const {
   setPackName,
   setIsLoading,
   setSort,
-  setEdited,
   setUserId,
 } = packsSlice.actions
 export const packsReducer = packsSlice.reducer

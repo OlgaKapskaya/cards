@@ -10,6 +10,7 @@ import learn from '../../../../assets/img/teacher.svg'
 import del from '../../../../assets/img/trash.svg'
 import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { deletePack, updatePack } from '../../packsSlice'
@@ -18,7 +19,8 @@ import s from './PacksTableBody.module.css'
 
 export const PacksTableBody = () => {
   const packs = useAppSelector(packsSelector)
-  const profile_id = useAppSelector(userIDSelector)
+  const profileId = useAppSelector(userIDSelector)
+  const loadingStatus = useAppSelector(appStatusSelector)
   const navigate = useNavigate()
 
   const dispatch = useAppDispatch()
@@ -30,12 +32,16 @@ export const PacksTableBody = () => {
     dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
   }
 
+  const onClickNavigateHandler = (packId: string) => {
+    navigate(`cards/${packId}`)
+  }
+
   return (
     <TableBody>
       {packs.map(p => (
         <TableRow hover key={p._id} className={s.tableRow}>
           <TableCell
-            onClick={() => navigate(`cards/${p._id}`)}
+            onClick={() => onClickNavigateHandler(p._id)}
             className={s.nameCell}
             component="th"
             scope="row"
@@ -43,16 +49,16 @@ export const PacksTableBody = () => {
             {p.name}
           </TableCell>
           <TableCell
-            onClick={() => navigate(`cards/${p._id}`)}
+            onClick={() => onClickNavigateHandler(p._id)}
             align="left"
             className={s.countCell}
           >
             {p.cardsCount}
           </TableCell>
-          <TableCell onClick={() => navigate(`cards/${p._id}`)} align="left" className={s.cell}>
+          <TableCell onClick={() => onClickNavigateHandler(p._id)} align="left" className={s.cell}>
             {p.updated}
           </TableCell>
-          <TableCell onClick={() => navigate(`cards/${p._id}`)} align="left" className={s.cell}>
+          <TableCell onClick={() => onClickNavigateHandler(p._id)} align="left" className={s.cell}>
             {p.user_name}
           </TableCell>
           <TableCell align="left">
@@ -60,24 +66,24 @@ export const PacksTableBody = () => {
               <ActionButton
                 icon={learn}
                 hint="start learning"
-                disabled={p.onEdited}
+                disabled={loadingStatus === 'loading'}
                 onClick={() => {}}
               />
             )}
-            {profile_id === p.user_id && (
+            {profileId === p.user_id && (
               <ActionButton
                 icon={edit}
                 hint="update pack"
-                disabled={p.onEdited}
+                disabled={loadingStatus === 'loading'}
                 onClick={() => updatePackHandler(p._id)}
               />
             )}
 
-            {profile_id === p.user_id && (
+            {profileId === p.user_id && (
               <ActionButton
                 icon={del}
                 hint="delete pack"
-                disabled={p.onEdited}
+                disabled={loadingStatus === 'loading'}
                 onClick={() => deletePackHandler(p._id)}
               />
             )}

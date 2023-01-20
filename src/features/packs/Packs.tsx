@@ -12,7 +12,7 @@ import s from './Packs.module.css'
 import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
-  const [searchParams, setSearchParams] = useSearchParams()
+  const [, setSearchParams] = useSearchParams()
 
   const stateSearchParams = useAppSelector(searchParamsSelector)
   const isLoading = useAppSelector(isLoadingSelector)
