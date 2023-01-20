@@ -1,7 +1,7 @@
 import React, { FC, memo } from 'react'
 
+import { Tooltip } from '@mui/material'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
-import Tooltip from '@mui/material/Tooltip'
 
 import s from './ActionButton.module.css'
 
@@ -11,12 +11,10 @@ type ActionButtonPropsType = IconButtonProps & {
 }
 export const ActionButton: FC<ActionButtonPropsType> = memo(({ icon, hint, ...restProps }) => {
   return (
-    <>
+    <IconButton size="small" {...restProps}>
       <Tooltip title={hint} arrow>
-        <IconButton size="small" {...restProps}>
-          <img src={icon} className={s.icon} alt="action" />
-        </IconButton>
+        <img src={icon} className={s.icon} alt="action" />
       </Tooltip>
-    </>
+    </IconButton>
   )
 })
