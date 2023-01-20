@@ -22,7 +22,7 @@ type IFormInput = {
 }
 
 export const PasswordRecovery: FC = () => {
-  const { isSentRecoveryEmail, dispatch, register, navigate, handleSubmit, errors } =
+  const { isSentRecoveryEmail, dispatch, register, navigate, handleSubmit, errors, appStatus } =
     useAuthForm<IFormInput>(forgotValidationSchema)
   const [email, setEmail] = useState('')
 
@@ -64,7 +64,11 @@ export const PasswordRecovery: FC = () => {
               <div className={s.describe}>
                 Enter your email address and we will send you further instructions
               </div>
-              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('60px')}>
+              <ButtonComponent
+                type="submit"
+                sx={sxButtonMarginTopWidthCreator('60px')}
+                disabled={appStatus === 'loading'}
+              >
                 Send instructions
               </ButtonComponent>
             </form>

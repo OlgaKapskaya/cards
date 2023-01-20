@@ -16,6 +16,7 @@ export type PackData = {
 
 export const PacksTableHead = () => {
   const sort = useAppSelector(sortPackSelector)
+  const sortBy = sort ? sort.substring(1) : 'update'
 
   const headersPacksArray: readonly HeaderType<PackData>[] = [
     { id: 'name', label: 'Name' },
@@ -25,11 +26,5 @@ export const PacksTableHead = () => {
     { id: 'empty', label: 'Actions' },
   ]
 
-  return (
-    <TableHeadComponent
-      headers={headersPacksArray}
-      setSortAC={setSort}
-      sortBy={sort?.substring(1)}
-    />
-  )
+  return <TableHeadComponent headers={headersPacksArray} setSortAC={setSort} sortBy={sortBy} />
 }

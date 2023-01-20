@@ -24,7 +24,7 @@ type IFormInput = {
 }
 
 export const Registration = () => {
-  const { isRegistered, dispatch, register, navigate, handleSubmit, errors } =
+  const { isRegistered, dispatch, register, navigate, handleSubmit, errors, appStatus } =
     useAuthForm<IFormInput>(registrationValidationSchema)
   const onSubmit: SubmitHandler<IFormInput> = data =>
     dispatch(signUp({ email: data.email, password: data.password }))
@@ -59,7 +59,11 @@ export const Registration = () => {
                 error={errors.confirmPassword}
                 register={register}
               />
-              <ButtonComponent type="submit" sx={sxButtonMarginTopWidthCreator('40px')}>
+              <ButtonComponent
+                type="submit"
+                sx={sxButtonMarginTopWidthCreator('40px')}
+                disabled={appStatus === 'loading'}
+              >
                 Sign Up
               </ButtonComponent>
             </form>
