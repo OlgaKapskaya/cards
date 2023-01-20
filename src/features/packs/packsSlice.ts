@@ -151,7 +151,7 @@ export const setSearchParams = createAsyncThunk(
       dispatch(setCurrentPage(+params.page || 1))
       dispatch(setPageCount(+params.pageCount || 4))
       dispatch(setPackName(params.packName || ''))
-      dispatch(setSort(params.sortPacks))
+      dispatch(setSort(params.sortPacks || '0updated'))
       dispatch(setUserId(params.user_id) || '')
     }
   }

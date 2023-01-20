@@ -24,7 +24,10 @@ const App = () => {
 
   useEffect(() => {
     dispatch(me())
-    dispatch(setSearchParams(searchParams))
+    setTimeout(() => {
+      dispatch(setSearchParams(searchParams))
+    }, 1000)
+    // searchParams.entries.length > 1 && dispatch(setSearchParams(searchParams))
   }, [dispatch])
 
   if (!isInitialized) {

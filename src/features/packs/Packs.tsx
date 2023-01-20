@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useLayoutEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
@@ -13,8 +13,7 @@ import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
   const [, setSearchParams] = useSearchParams()
-
-  const stateSearchParams = useAppSelector(searchParamsSelector)
+  const searchParams = useAppSelector(searchParamsSelector)
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
@@ -24,17 +23,20 @@ export const Packs = () => {
   }
 
   useEffect(() => {
+    dispatch(getPacks())
+  }, [searchParams])
+
+  useLayoutEffect(() => {
     const params = {
-      page: stateSearchParams.page?.toString() || '1',
-      pageCount: stateSearchParams.pageCount?.toString() || '4',
-      packName: stateSearchParams.packName ?? '',
-      sortPacks: stateSearchParams.sortPacks ?? '0updated',
-      user_id: stateSearchParams.user_id ?? '',
+      page: searchParams.page?.toString() || '1',
+      pageCount: searchParams.pageCount?.toString() || '4',
+      packName: searchParams.packName ?? '',
+      sortPacks: searchParams.sortPacks ?? '0updated',
+      user_id: searchParams.user_id ?? '',
     }
 
     setSearchParams(params)
-    dispatch(getPacks())
-  }, [stateSearchParams])
+  }, [searchParams])
 
   return (
     <div className={s.container}>
