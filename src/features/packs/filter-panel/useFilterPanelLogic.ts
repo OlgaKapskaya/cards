@@ -54,9 +54,11 @@ export const useFilterPanelLogic = () => {
       ((!min && !max) || (min === minCardsCount && max === maxCardsCount))) ||
     isLoading
 
+  const isMy = currentUserId === searchUserId
+
   return {
     packName,
-    searchUserId,
+    isMy,
     isLoading,
     minCardsCount,
     maxCardsCount,

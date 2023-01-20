@@ -22,6 +22,7 @@ export type CardData = {
 
 export const CardsTableHead = () => {
   const sort = useAppSelector(sortCardSelector)
+  const sortOrder = sort ? sort[0] : '0'
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const isMy = userId === profileId
@@ -39,6 +40,7 @@ export const CardsTableHead = () => {
         headers={headersCardArray}
         setSortAC={setCardsSort}
         sortBy={sort?.substring(1)}
+        sortOrderStart={sortOrder}
       >
         {isMy && <TableCell key="empty"></TableCell>}
       </TableHeadComponent>

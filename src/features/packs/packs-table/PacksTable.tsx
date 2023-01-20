@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactRedux
 import {
   cardPacksTotalCountSelector,
   currentPageSelector,
-  isLoadingSelector,
   packsSelector,
   pageCountSelector,
 } from '../../../common/selectors/packsListSelectors'
@@ -20,7 +19,7 @@ export const PacksTable = () => {
   const page = useAppSelector(currentPageSelector)
   const pageCount = useAppSelector(pageCountSelector)
   const cardPacksTotalCount = useAppSelector(cardPacksTotalCountSelector)
-  const isLoading = useAppSelector(isLoadingSelector)
+  // const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
 

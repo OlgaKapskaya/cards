@@ -12,7 +12,7 @@ import { useFilterPanelLogic } from './useFilterPanelLogic'
 
 export const FilterPanel = () => {
   const {
-    searchUserId,
+    isMy,
     isLoading,
     packName,
     minCardsCount,
@@ -38,7 +38,7 @@ export const FilterPanel = () => {
       <SwitchButton
         disabled={isLoading}
         label="Show packs cards"
-        toggle={!!searchUserId}
+        toggle={isMy}
         setToggle={onChangeTypePacks}
         buttonNames={['my', 'all']}
       />
