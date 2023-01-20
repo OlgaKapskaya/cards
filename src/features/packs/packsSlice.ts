@@ -13,15 +13,6 @@ import {
   UpdatePackPayloadType,
 } from './packsAPI'
 
-type SearchParamsType = {
-  page: number // выбранная страница
-  pageCount: number // количество элементов на странице
-  packName?: string
-  min?: number
-  max?: number
-  sort: string
-  user_id?: string
-}
 export type PackDomainType = {
   user_name: string
   _id: string
@@ -38,13 +29,12 @@ const initialState = {
   cardPacksTotalCount: 0,
   maxCardsCount: 100,
   minCardsCount: 0,
-  isOnlyMy: false,
   isLoading: false,
   searchParams: {
     page: 1,
     pageCount: 7,
     packName: '',
-    sort: '0updated',
+    sortPacks: '0updated',
     user_id: '',
   },
 } as initialStateType
@@ -54,16 +44,14 @@ type initialStateType = {
   cardPacksTotalCount?: number | undefined
   maxCardsCount?: number
   minCardsCount?: number
-  isOnlyMy: boolean
   isLoading: boolean
-  searchParams: SearchParamsType
+  searchParams: GetPacksPayloadType
 }
 
 export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch, getState }) => {
   const state = getState() as AppRootStateType
-  const { page, pageCount, packName, sort, min, max, user_id } = state.packs.searchParams
+  const { page, pageCount, packName, sortPacks, min, max, user_id } = state.packs.searchParams
 
-  console.log(user_id)
   const params: GetPacksPayloadType = {
     packName,
     min,
@@ -71,7 +59,7 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     page,
     pageCount,
     user_id,
-    sortPacks: sort,
+    sortPacks,
   }
 
   dispatch(setAppStatus('loading'))
@@ -94,7 +82,6 @@ export const getPacks = createAsyncThunk('packs/getPacks', async (_, { dispatch,
     dispatch(setMinPacksCount(res.data.minCardsCount))
     dispatch(setMaxPacksCount(res.data.maxCardsCount))
     dispatch(setCardPacksTotalCount(res.data.cardPacksTotalCount))
-    dispatch(setAppMessage(null))
     dispatch(setAppStatus('succeeded'))
   } catch (e) {
     errorNetworkUtil(dispatch, e)
@@ -164,7 +151,7 @@ export const resetFilters = createAsyncThunk('packs/resetFilters', async (_, { d
   dispatch(setMaxPacksCount(0))
   dispatch(setRange([] as number[]))
   dispatch(setPackName(''))
-  dispatch(setTypePacks(false))
+  dispatch(setUserId(''))
   dispatch(setCurrentPage(1))
 })
 
@@ -180,6 +167,7 @@ export const setSearchParams = createAsyncThunk(
       dispatch(setPageCount(+params.pageCount || 4))
       dispatch(setPackName(params.packName || ''))
       dispatch(setSort(params.sortPacks))
+      dispatch(setUserId(params.user_id) || '')
     }
   }
 )
@@ -216,11 +204,8 @@ export const packsSlice = createSlice({
       state.searchParams.min = action.payload[0]
       state.searchParams.max = action.payload[1]
     },
-    setTypePacks(state, action: PayloadAction<boolean>) {
-      state.isOnlyMy = action.payload
-    },
     setSort(state, action: PayloadAction<string>) {
-      state.searchParams.sort = action.payload
+      state.searchParams.sortPacks = action.payload
     },
     setUserId(state, action: PayloadAction<string>) {
       state.searchParams.user_id = action.payload
@@ -239,7 +224,6 @@ export const packsSlice = createSlice({
 })
 export const {
   setPacks,
-  setTypePacks,
   setMinPacksCount,
   setMaxPacksCount,
   setCardPacksTotalCount,

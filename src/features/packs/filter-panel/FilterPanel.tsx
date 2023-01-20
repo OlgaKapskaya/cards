@@ -1,4 +1,4 @@
-import React, { FC } from 'react'
+import React from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
 import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
@@ -10,14 +10,9 @@ import { iconButton } from '../../../common/constants/theme'
 import s from './FilterPanel.module.css'
 import { useFilterPanelLogic } from './useFilterPanelLogic'
 
-type FilterPanelPropsType = {
-  searchParams: any
-  setSearchParams: (param: any) => void
-}
-
-export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchParams }) => {
+export const FilterPanel = () => {
   const {
-    isMy,
+    searchUserId,
     isLoading,
     packName,
     minCardsCount,
@@ -27,7 +22,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchP
     onChangeSearchHandler,
     onResetFiltersHandler,
     resetButtonDisabled,
-  } = useFilterPanelLogic(searchParams, setSearchParams)
+  } = useFilterPanelLogic()
 
   return (
     <div className={s.filterPanelContainer}>
@@ -43,7 +38,7 @@ export const FilterPanel: FC<FilterPanelPropsType> = ({ setSearchParams, searchP
       <SwitchButton
         disabled={isLoading}
         label="Show packs cards"
-        toggle={isMy}
+        toggle={!!searchUserId}
         setToggle={onChangeTypePacks}
         buttonNames={['my', 'all']}
       />

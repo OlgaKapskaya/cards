@@ -9,7 +9,7 @@ import { isLoadingSelector, searchParamsSelector } from '../../common/selectors/
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
-import { createPack, getPacks, setTypePacks, setUserId } from './packsSlice'
+import { createPack, getPacks } from './packsSlice'
 
 export const Packs = () => {
   const [searchParams, setSearchParams] = useSearchParams()
@@ -18,7 +18,6 @@ export const Packs = () => {
   const isLoading = useAppSelector(isLoadingSelector)
 
   const dispatch = useAppDispatch()
-  const user_id = searchParams.get('user_id') || ''
 
   const addNewPackHandler = () => {
     dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
@@ -26,22 +25,16 @@ export const Packs = () => {
 
   useEffect(() => {
     const params = {
-      page: stateSearchParams.page.toString(),
-      pageCount: stateSearchParams.pageCount.toString(),
+      page: stateSearchParams.page?.toString() || '1',
+      pageCount: stateSearchParams.pageCount?.toString() || '4',
       packName: stateSearchParams.packName ?? '',
-      sortPacks: stateSearchParams.sort ?? '0updated',
-      user_id,
+      sortPacks: stateSearchParams.sortPacks ?? '0updated',
+      user_id: stateSearchParams.user_id ?? '',
     }
 
     setSearchParams(params)
     dispatch(getPacks())
   }, [stateSearchParams])
-
-  useEffect(() => {
-    dispatch(setUserId(user_id))
-
-    dispatch(setTypePacks(!!user_id))
-  }, [user_id])
 
   return (
     <div className={s.container}>
@@ -52,7 +45,7 @@ export const Packs = () => {
         </ButtonComponent>
       </div>
 
-      <FilterPanel searchParams={searchParams} setSearchParams={setSearchParams} />
+      <FilterPanel />
       <PacksTable />
     </div>
   )
