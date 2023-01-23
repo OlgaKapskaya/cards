@@ -2,27 +2,21 @@ import React, { useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
 import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../common/selectors/appSelectors'
 import { searchParamsSelector } from '../../common/selectors/packsListSelectors'
 
+import { AddPackModal } from './AddPackModal'
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
-import { createPack, getPacks } from './packsSlice'
+import { getPacks } from './packsSlice'
 
 export const Packs = () => {
   const [, setSearchParams] = useSearchParams()
 
   const stateSearchParams = useAppSelector(searchParamsSelector)
-  const loadingStatus = useAppSelector(appStatusSelector)
 
   const dispatch = useAppDispatch()
-
-  const addNewPackHandler = () => {
-    dispatch(createPack({ cardsPack: { name: 'NEW TEST PACK' } }))
-  }
 
   useEffect(() => {
     const params = {
@@ -41,9 +35,7 @@ export const Packs = () => {
     <div className={s.container}>
       <div className={s.header}>
         <span className={s.title}>Packs list</span>
-        <ButtonComponent onClick={addNewPackHandler} disabled={loadingStatus === 'loading'}>
-          Add New Pack
-        </ButtonComponent>
+        <AddPackModal />
       </div>
 
       <FilterPanel />
