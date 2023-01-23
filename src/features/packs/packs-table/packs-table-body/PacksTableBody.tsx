@@ -5,15 +5,14 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
-import edit from '../../../../assets/img/edit-2.svg'
 import learn from '../../../../assets/img/teacher.svg'
 import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
+import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
-import { DeletePackModal } from '../../DeletePackModal'
-import { updatePack } from '../../packsSlice'
+import { DeletePackModal } from '../../modals/DeletePackModal'
+import { EditPackModal } from '../../modals/EditPackModal'
 
 import s from './PacksTableBody.module.css'
 
@@ -22,12 +21,6 @@ export const PacksTableBody = () => {
   const profileId = useAppSelector(userIDSelector)
   const loadingStatus = useAppSelector(appStatusSelector)
   const navigate = useNavigate()
-
-  const dispatch = useAppDispatch()
-
-  const updatePackHandler = (_id: string) => {
-    dispatch(updatePack({ cardsPack: { _id, name: 'NEW NAME TEST' } }))
-  }
 
   const onClickNavigateHandler = (packId: string) => {
     navigate(`cards/${packId}`)
@@ -67,14 +60,7 @@ export const PacksTableBody = () => {
                 onClick={() => {}}
               />
             )}
-            {profileId === p.user_id && (
-              <ActionButton
-                icon={edit}
-                hint="update pack"
-                disabled={loadingStatus === 'loading'}
-                onClick={() => updatePackHandler(p._id)}
-              />
-            )}
+            {profileId === p.user_id && <EditPackModal id={p._id} name={p.name} />}
 
             {profileId === p.user_id && <DeletePackModal id={p._id} name={p.name} />}
           </TableCell>

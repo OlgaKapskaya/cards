@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
 import { FormControlLabel } from '@mui/material'
@@ -6,58 +6,68 @@ import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
-import { buttonWhite } from '../../common/constants/theme'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../common/selectors/appSelectors'
-import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
+import edit from '../../../assets/img/edit-2.svg'
+import { ActionButton } from '../../../common/components/buttons/action-button/ActionButton'
+import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
+import { buttonWhite } from '../../../common/constants/theme'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../../common/selectors/appSelectors'
+import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import { updatePack } from '../packsSlice'
 
-import s from './addPackModal.module.css'
 import { BasicModal } from './BasicModal'
-import { createPack } from './packsSlice'
+import s from './modal.module.css'
 
-export const AddPackModal = () => {
+type EditPackModalPropsType = {
+  id: string
+  name: string
+}
+
+export const EditPackModal: FC<EditPackModalPropsType> = ({ id, name }) => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const [packStatus, setPackStatus] = useState(false)
   const dispatch = useAppDispatch()
 
   const [open, setOpen] = useState<boolean>(false)
-  const [name, setName] = useState<string>('')
+  const [newName, setNewName] = useState<string>('')
 
-  const addModalHandler = () => {
+  const editModalHandler = () => {
     setOpen(!open)
   }
 
-  const addNewPackHandler = () => {
-    dispatch(createPack({ cardsPack: { name, private: packStatus } }))
+  const editPackHandler = () => {
+    dispatch(updatePack({ cardsPack: { _id: id, name: newName, private: packStatus } }))
     setOpen(!open)
   }
 
   const packNameHandler = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setName(event.currentTarget.value)
+    setNewName(event.currentTarget.value)
   }
 
   return (
     <div>
-      <ButtonComponent onClick={addModalHandler} disabled={loadingStatus === 'loading'}>
-        Add New Pack
-      </ButtonComponent>
+      <ActionButton
+        icon={edit}
+        hint="update pack"
+        disabled={loadingStatus === 'loading'}
+        onClick={editModalHandler}
+      />
 
       <BasicModal isOpen={open} setOpen={setOpen}>
         <div className={s.header}>
           <Typography variant="h6" component="h2">
-            Add New Pack
+            Edit Pack
           </Typography>
 
-          <button type="button" onClick={addModalHandler}>
+          <button type="button" onClick={editModalHandler}>
             <CloseIcon cursor="pointer" fontSize="small" />
           </button>
         </div>
         <div className={s.body}>
           <TextField
-            label="Enter pack name"
+            label="Name pack"
+            defaultValue={name}
             variant="standard"
-            autoFocus
             onChange={packNameHandler}
           />
           <div className={s.checkbox}>
@@ -70,14 +80,14 @@ export const AddPackModal = () => {
           <div className={s.buttons}>
             <ButtonComponent
               sx={sxButtonColorCreator(buttonWhite)}
-              onClick={addModalHandler}
+              onClick={editModalHandler}
               disabled={loadingStatus === 'loading'}
             >
               Cancel
             </ButtonComponent>
             <ButtonComponent
-              sx={sxButtonColorCreator(['#1976d2', 'dark'])}
-              onClick={addNewPackHandler}
+              sx={sxButtonColorCreator(['#1976d2', 'white'])}
+              onClick={editPackHandler}
               disabled={loadingStatus === 'loading'}
             >
               Save

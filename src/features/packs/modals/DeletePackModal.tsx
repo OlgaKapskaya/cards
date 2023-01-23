@@ -3,17 +3,17 @@ import React, { FC, useState } from 'react'
 import CloseIcon from '@mui/icons-material/Close'
 import Typography from '@mui/material/Typography'
 
-import del from '../../assets/img/trash.svg'
-import { ActionButton } from '../../common/components/buttons/action-button/ActionButton'
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
-import { buttonRed, buttonWhite } from '../../common/constants/theme'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../common/selectors/appSelectors'
-import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
+import del from '../../../assets/img/trash.svg'
+import { ActionButton } from '../../../common/components/buttons/action-button/ActionButton'
+import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
+import { buttonRed, buttonWhite } from '../../../common/constants/theme'
+import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
+import { appStatusSelector } from '../../../common/selectors/appSelectors'
+import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import { deletePack } from '../packsSlice'
 
-import s from './addPackModal.module.css'
 import { BasicModal } from './BasicModal'
-import { deletePack } from './packsSlice'
+import s from './modal.module.css'
 
 type DeletePackModalPropsType = {
   id: string
