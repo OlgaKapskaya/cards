@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
@@ -9,7 +9,13 @@ import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import { emptySelector, userCardsPackIdSelector } from '../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import { NewCardModal } from '../cards-modal/NewCardModal'
 import { createCard } from '../cardsSlice'
+
+type NewCardType = {
+  answer: string
+  question: string
+}
 
 export const ActiveCardsButton = () => {
   const dispatch = useAppDispatch()
@@ -19,19 +25,26 @@ export const ActiveCardsButton = () => {
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
 
-  const handleAddNewCard = () => {
-    // убрать заглушку
+  // -- для модалки выенсти в хук
+  const [open, setOpen] = useState(false)
+  const handleOpen = () => setOpen(true)
+  const handleClose = () => setOpen(false)
+  // -----
+
+  const handleAddNewCard = (data: NewCardType) => {
     const payload = {
-      question: 'create new question',
-      answer: 'new answer',
+      question: data.question,
+      answer: data.answer,
       grade: Math.floor(Math.random() * 5),
     }
 
-    dispatch(createCard(payload))
+    dispatch(createCard(payload)).then(() => {
+      handleClose()
+    })
   }
 
   const isMy = userId === profileId
-  let handleOnClick = handleAddNewCard
+  let handleOnClick = handleOpen
   let textButton = 'Add new card'
 
   if (!isMy) {
@@ -40,12 +53,20 @@ export const ActiveCardsButton = () => {
   }
 
   return (
-    <ButtonComponent
-      sx={sxButtonMarginTopWidthCreator('0', '184px')}
-      onClick={handleOnClick}
-      disabled={loadingStatus === 'loading'}
-    >
-      {textButton}
-    </ButtonComponent>
+    <>
+      <ButtonComponent
+        sx={sxButtonMarginTopWidthCreator('0', '184px')}
+        onClick={handleOnClick}
+        disabled={loadingStatus === 'loading'}
+      >
+        {textButton}
+      </ButtonComponent>
+      <NewCardModal
+        open={open}
+        handleClose={handleClose}
+        onSubmitAction={handleAddNewCard}
+        disabled={loadingStatus === 'loading'}
+      />
+    </>
   )
 }
