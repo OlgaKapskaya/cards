@@ -31,7 +31,7 @@ export const Pages = () => {
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
         <Route path={PATH.PACKS + PATH.CARDS + '/:packId'} element={<Cards />} />
-        <Route path={PATH.PACKS + PATH.LEARN} element={<Learn />} />
+        <Route path={PATH.LEARN + '/:packId'} element={<Learn />} />
       </Route>
     </Routes>
   )

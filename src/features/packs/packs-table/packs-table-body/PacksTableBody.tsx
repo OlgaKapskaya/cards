@@ -9,6 +9,7 @@ import edit from '../../../../assets/img/edit-2.svg'
 import learn from '../../../../assets/img/teacher.svg'
 import del from '../../../../assets/img/trash.svg'
 import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
+import { PATH } from '../../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
@@ -38,7 +39,7 @@ export const PacksTableBody = () => {
   }
   const startLearnHandler = (packId: string) => {
     dispatch(setIsShowAnswer(false))
-    navigate(`learn/${packId}`)
+    navigate(`${PATH.LEARN}/${packId}`)
   }
 
   return (

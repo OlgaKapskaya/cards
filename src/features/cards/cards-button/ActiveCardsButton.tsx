@@ -6,9 +6,14 @@ import { ButtonComponent } from '../../../common/components/buttons/button/Butto
 import { PATH } from '../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../common/selectors/appSelectors'
-import { emptySelector, userCardsPackIdSelector } from '../../../common/selectors/cardsSelectors'
+import {
+  cardPackId,
+  emptySelector,
+  userCardsPackIdSelector,
+} from '../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import { setIsShowAnswer } from '../../learn/learnSlice'
 import { createCard } from '../cardsSlice'
 
 export const ActiveCardsButton = () => {
@@ -18,6 +23,7 @@ export const ActiveCardsButton = () => {
   const emptyStatus = useAppSelector(emptySelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
+  const packId = useAppSelector(cardPackId)
 
   const handleAddNewCard = () => {
     // убрать заглушку
@@ -35,7 +41,12 @@ export const ActiveCardsButton = () => {
   let textButton = 'Add new card'
 
   if (!isMy) {
-    handleOnClick = emptyStatus ? () => navigate(PATH.PACKS) : () => alert('learn')
+    handleOnClick = emptyStatus
+      ? () => navigate(PATH.PACKS)
+      : () => {
+          dispatch(setIsShowAnswer(false))
+          navigate(`${PATH.LEARN}/${packId}`)
+        }
     textButton = emptyStatus ? 'Back to packs list' : 'Learn to pack'
   }
 
