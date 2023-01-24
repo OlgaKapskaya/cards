@@ -31,10 +31,10 @@ export const useFilterPanelLogic = () => {
   }, [])
 
   const onChangeTypePacks = useCallback((type: boolean) => {
+    dispatch(setRange([]))
+    dispatch(setCurrentPage(1))
     if (type) {
       dispatch(setUserId(currentUserId))
-      dispatch(setCurrentPage(1))
-      dispatch(setRange([]))
     } else {
       dispatch(setUserId(''))
     }
