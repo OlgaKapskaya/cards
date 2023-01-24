@@ -56,7 +56,7 @@ export const CardsTableBody = () => {
               {row.updated}
             </TableCell>
             <TableCell className={s.cell}>
-              <Rating name="simple-controlled" value={row.grade} />
+              <Rating name="simple-controlled" readOnly value={row.grade} />
             </TableCell>
             {isMy && (
               <TableCell align="right" className={s.cell}>
