@@ -15,6 +15,7 @@
 .line {
     width: 395px;
     height: 100%;
+    margin-bottom: 20px;
 
     border-top: 1px solid #D9D9D9;
 }

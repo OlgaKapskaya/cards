@@ -13,8 +13,8 @@ import {
 } from '../../../common/selectors/cardsSelectors'
 import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
-import { NewCardModal } from '../cards-modal/cards-add-new-modal/NewCardModal'
 import { setIsShowAnswer } from '../../learn/learnSlice'
+import { NewCardModal } from '../cards-modal/cards-add-new-modal/NewCardModal'
 
 export const ActiveCardsButton = () => {
   const dispatch = useAppDispatch()
