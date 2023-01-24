@@ -58,8 +58,8 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
           response.data.cards.map(elem => {
             return {
               ...elem,
-              created: dayjs(elem.created).format('DD.MM.YYYY'),
-              updated: dayjs(elem.updated).format('DD.MM.YYYY'),
+              created: dayjs(elem.created).format('DD.MM.YYYY HH:mm:ss'),
+              updated: dayjs(elem.updated).format('DD.MM.YYYY HH:mm:ss'),
             }
           })
         )
