@@ -43,6 +43,7 @@ export type PackType = {
   cardsCount: number
   created: string
   updated: string
+  private: boolean
 }
 
 export type CreatePackPayloadType = {

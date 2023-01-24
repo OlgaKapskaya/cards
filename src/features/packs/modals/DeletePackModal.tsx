@@ -9,20 +9,24 @@ import { ButtonComponent } from '../../../common/components/buttons/button/Butto
 import { buttonRed, buttonWhite } from '../../../common/constants/theme'
 import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../common/selectors/appSelectors'
+import { userIDSelector } from '../../../common/selectors/profileSelectors'
 import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
 import { deletePack } from '../packsSlice'
 
 import { BasicModal } from './BasicModal'
-import s from './modal.module.css'
+import s from './modals.module.css'
 
 type DeletePackModalPropsType = {
-  id: string
+  pack_id: string
   name: string
+  user_id: string
 }
 
-export const DeletePackModal: FC<DeletePackModalPropsType> = ({ id, name }) => {
+export const DeletePackModal: FC<DeletePackModalPropsType> = ({ pack_id, name, user_id }) => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const dispatch = useAppDispatch()
+  const profile_id = useAppSelector(userIDSelector)
+  const isButtonDisabled = profile_id !== user_id
 
   const [open, setOpen] = useState<boolean>(false)
 
@@ -31,16 +35,16 @@ export const DeletePackModal: FC<DeletePackModalPropsType> = ({ id, name }) => {
   }
 
   const deletePackHandler = () => {
-    dispatch(deletePack({ id }))
+    dispatch(deletePack({ id: pack_id }))
     setOpen(!open)
   }
 
   return (
-    <div>
+    <div className={isButtonDisabled ? s.disabled : ''}>
       <ActionButton
         icon={del}
         hint="delete pack"
-        disabled={loadingStatus === 'loading'}
+        disabled={isButtonDisabled}
         onClick={deleteModalHandler}
       />
 
@@ -54,7 +58,7 @@ export const DeletePackModal: FC<DeletePackModalPropsType> = ({ id, name }) => {
             <CloseIcon cursor="pointer" fontSize="small" />
           </button>
         </div>
-        <div className={s.body}>
+        <div className={s.input}>
           <Typography>
             Do you really want to remove <span style={{ fontWeight: 'bold' }}>{name}</span>? All
             cards will be deleted.

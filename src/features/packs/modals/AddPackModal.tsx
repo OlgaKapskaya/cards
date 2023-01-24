@@ -1,10 +1,11 @@
-import React, { ChangeEvent, useState } from 'react'
+import React, { useState } from 'react'
 
 import CloseIcon from '@mui/icons-material/Close'
 import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
+import { SubmitHandler, useForm } from 'react-hook-form'
 
 import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
 import { buttonWhite } from '../../../common/constants/theme'
@@ -14,27 +15,28 @@ import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButto
 import { createPack } from '../packsSlice'
 
 import { BasicModal } from './BasicModal'
-import s from './modal.module.css'
+import s from './modals.module.css'
+
+type IFormInput = {
+  name: string
+  private: boolean
+}
 
 export const AddPackModal = () => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const [packStatus, setPackStatus] = useState(false)
   const dispatch = useAppDispatch()
-
   const [open, setOpen] = useState<boolean>(false)
-  const [name, setName] = useState<string>('')
+  const { register, handleSubmit, reset } = useForm<IFormInput>()
+
+  const onSubmit: SubmitHandler<IFormInput> = data => {
+    dispatch(createPack({ cardsPack: { name: data.name, private: data.private } }))
+    setOpen(!open)
+    reset()
+  }
 
   const addModalHandler = () => {
     setOpen(!open)
-  }
-
-  const addNewPackHandler = () => {
-    dispatch(createPack({ cardsPack: { name, private: packStatus } }))
-    setOpen(!open)
-  }
-
-  const packNameHandler = (event: ChangeEvent<HTMLTextAreaElement | HTMLInputElement>) => {
-    setName(event.currentTarget.value)
   }
 
   return (
@@ -53,37 +55,29 @@ export const AddPackModal = () => {
             <CloseIcon cursor="pointer" fontSize="small" />
           </button>
         </div>
-        <div className={s.body}>
-          <TextField
-            label="Enter pack name"
-            variant="standard"
-            autoFocus
-            onChange={packNameHandler}
-          />
-          <div className={s.checkbox}>
-            <FormControlLabel
-              control={<Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />}
-              label="Private pack"
-            />
-          </div>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className={s.input}>
+            <TextField label="Enter pack name" variant="standard" autoFocus {...register('name')} />
+            <div className={s.checkbox}>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />
+                }
+                label={'Private pack'}
+                {...register('private')}
+              />
+            </div>
 
-          <div className={s.buttons}>
-            <ButtonComponent
-              sx={sxButtonColorCreator(buttonWhite)}
-              onClick={addModalHandler}
-              disabled={loadingStatus === 'loading'}
-            >
-              Cancel
-            </ButtonComponent>
-            <ButtonComponent
-              sx={sxButtonColorCreator(['#1976d2', 'white'])}
-              onClick={addNewPackHandler}
-              disabled={loadingStatus === 'loading'}
-            >
-              Save
-            </ButtonComponent>
+            <div className={s.buttons}>
+              <ButtonComponent sx={sxButtonColorCreator(buttonWhite)} onClick={addModalHandler}>
+                Cancel
+              </ButtonComponent>
+              <ButtonComponent type="submit" sx={sxButtonColorCreator(['#1976d2', 'white'])}>
+                Save
+              </ButtonComponent>
+            </div>
           </div>
-        </div>
+        </form>
       </BasicModal>
     </div>
   )

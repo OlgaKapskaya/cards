@@ -13,7 +13,7 @@
 .header button:hover {
     transform: scale(1.3);
 }
-.body {
+.input {
     display: flex;
     flex-direction: column;
 
@@ -29,4 +29,10 @@
 
 .checkbox {
     margin-top: 25px;
+}
+
+.disabled {
+    cursor: not-allowed;
+
+    opacity: .2;
 }

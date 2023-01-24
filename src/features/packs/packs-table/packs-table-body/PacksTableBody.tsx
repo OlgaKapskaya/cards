@@ -5,18 +5,12 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
-import edit from '../../../../assets/img/edit-2.svg'
 import learn from '../../../../assets/img/teacher.svg'
-import del from '../../../../assets/img/trash.svg'
 import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
 import { PATH } from '../../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
-import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
-import { deletePack, updatePack } from '../../packsSlice'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { EditPackModal } from '../../modals/EditPackModal'
 
@@ -24,9 +18,9 @@ import s from './PacksTableBody.module.css'
 
 export const PacksTableBody = () => {
   const packs = useAppSelector(packsSelector)
-  const profileId = useAppSelector(userIDSelector)
-  const loadingStatus = useAppSelector(appStatusSelector)
   const navigate = useNavigate()
+
+  const dispatch = useAppDispatch()
 
   const onClickNavigateHandler = (packId: string) => {
     navigate(`cards/${packId}`)
@@ -62,17 +56,23 @@ export const PacksTableBody = () => {
             {p.user_name}
           </TableCell>
           <TableCell align="left" style={{ display: 'flex' }}>
-            {p.cardsCount !== 0 && (
+            <div className={p.cardsCount === 0 ? s.disabled : ''}>
               <ActionButton
                 icon={learn}
                 hint="start learning"
-                disabled={loadingStatus === 'loading'}
+                disabled={p.cardsCount === 0}
                 onClick={() => startLearnHandler(p._id)}
               />
-            )}
-            {profileId === p.user_id && <EditPackModal id={p._id} name={p.name} />}
+            </div>
 
-            {profileId === p.user_id && <DeletePackModal id={p._id} name={p.name} />}
+            <EditPackModal
+              pack_id={p._id}
+              name={p.name}
+              privateStatus={p.private}
+              user_id={p.user_id}
+            />
+
+            <DeletePackModal pack_id={p._id} name={p.name} user_id={p.user_id} />
           </TableCell>
         </TableRow>
       ))}
