@@ -56,7 +56,7 @@ export const Learn = () => {
     <div>
       <BackPackLink />
       <div className={s.questionContainer}>
-        <span className={s.title}>Learn {packName}</span>
+        <span className={s.title}>Learn &quot;{packName}&quot;</span>
         <Paper elevation={3}>
           <Question />
           {isShowAnswer && <Answer />}
