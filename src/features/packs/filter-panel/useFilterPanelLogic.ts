@@ -34,6 +34,7 @@ export const useFilterPanelLogic = () => {
     if (type) {
       dispatch(setUserId(currentUserId))
       dispatch(setCurrentPage(1))
+      dispatch(setRange([]))
     } else {
       dispatch(setUserId(''))
     }
