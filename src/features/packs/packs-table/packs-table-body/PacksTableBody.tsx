@@ -13,6 +13,7 @@ import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactRe
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
+import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { deletePack, updatePack } from '../../packsSlice'
 
 import s from './PacksTableBody.module.css'
@@ -34,6 +35,10 @@ export const PacksTableBody = () => {
 
   const onClickNavigateHandler = (packId: string) => {
     navigate(`cards/${packId}`)
+  }
+  const startLearnHandler = (packId: string) => {
+    dispatch(setIsShowAnswer(false))
+    navigate(`learn/${packId}`)
   }
 
   return (
@@ -67,7 +72,7 @@ export const PacksTableBody = () => {
                 icon={learn}
                 hint="start learning"
                 disabled={loadingStatus === 'loading'}
-                onClick={() => {}}
+                onClick={() => startLearnHandler(p._id)}
               />
             )}
             {profileId === p.user_id && (
