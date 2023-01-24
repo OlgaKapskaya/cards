@@ -5,12 +5,18 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
+import edit from '../../../../assets/img/edit-2.svg'
 import learn from '../../../../assets/img/teacher.svg'
+import del from '../../../../assets/img/trash.svg'
 import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
+import { PATH } from '../../../../common/constants/path'
+import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { appStatusSelector } from '../../../../common/selectors/appSelectors'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
 import { userIDSelector } from '../../../../common/selectors/profileSelectors'
+import { setIsShowAnswer } from '../../../learn/learnSlice'
+import { deletePack, updatePack } from '../../packsSlice'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { EditPackModal } from '../../modals/EditPackModal'
 
@@ -24,6 +30,10 @@ export const PacksTableBody = () => {
 
   const onClickNavigateHandler = (packId: string) => {
     navigate(`cards/${packId}`)
+  }
+  const startLearnHandler = (packId: string) => {
+    dispatch(setIsShowAnswer(false))
+    navigate(`${PATH.LEARN}/${packId}`)
   }
 
   return (
@@ -57,7 +67,7 @@ export const PacksTableBody = () => {
                 icon={learn}
                 hint="start learning"
                 disabled={loadingStatus === 'loading'}
-                onClick={() => {}}
+                onClick={() => startLearnHandler(p._id)}
               />
             )}
             {profileId === p.user_id && <EditPackModal id={p._id} name={p.name} />}

@@ -6,6 +6,7 @@ import learnIcon from '../../../../assets/img/learn.svg'
 import { MenuItemType } from '../../../../common/components/menu/MenuItemComponent/MenuItemComponent'
 import { PATH } from '../../../../common/constants/path'
 import { useAppDispatch } from '../../../../common/hooks/reactReduxHooks'
+import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { deleteCardPack, updateCardPack } from '../../cardsSlice'
 
 export const useCardsMenuItems = () => {
@@ -24,7 +25,10 @@ export const useCardsMenuItems = () => {
     setTimeout(() => navigate(PATH.PACKS), 700)
     // navigate(PATH.PACKS)
   }
-  const learnPack = () => alert('learn')
+  const learnPack = () => {
+    dispatch(setIsShowAnswer(false))
+    navigate(`${PATH.LEARN}/${packId}`)
+  }
   const menuItems: MenuItemType[] = [
     { id: 1, title: 'Edit', image: editIcon, onClick: editPack },
     { id: 2, title: 'Delete', image: deleteIcon, onClick: deletePack },

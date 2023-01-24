@@ -39,13 +39,17 @@ export const TableHeadComponent = <D extends unknown>({
       <TableRow sx={{ backgroundColor: '#EFEFEF' }}>
         {headers.map(headCell => (
           <TableCell key={headCell.id as string}>
-            <TableSortLabel
-              active={orderBy === headCell.id}
-              direction={orderBy === headCell.id ? order : 'asc'}
-              onClick={() => requestSortHandler(headCell.id)}
-            >
-              {headCell.label}
-            </TableSortLabel>
+            {headCell.id === 'empty' ? (
+              headCell.label
+            ) : (
+              <TableSortLabel
+                active={orderBy === headCell.id}
+                direction={orderBy === headCell.id ? order : 'asc'}
+                onClick={() => requestSortHandler(headCell.id)}
+              >
+                {headCell.label}
+              </TableSortLabel>
+            )}
           </TableCell>
         ))}
         {children}

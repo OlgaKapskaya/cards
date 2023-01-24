@@ -10,6 +10,7 @@ import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHoo
 import {
   emptySelector,
   foundSelector,
+  isCardLoadedSelector,
   searchParamsSelector,
   userCardsPackIdSelector,
 } from '../../common/selectors/cardsSelectors'
@@ -28,7 +29,7 @@ export const Cards = () => {
   const searchParams = useAppSelector(searchParamsSelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
-  const isCardsLoaded = useAppSelector(state => state.cards.isCardsLoaded)
+  const isCardsLoaded = useAppSelector(isCardLoadedSelector)
 
   const isMy = userId === profileId
   const emptyMessage = isMy

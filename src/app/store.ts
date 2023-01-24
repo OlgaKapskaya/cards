@@ -3,6 +3,7 @@ import { ThunkDispatch } from 'redux-thunk'
 
 import { authReducer } from '../features/auth/authSlice'
 import { cardsReducer } from '../features/cards/cardsSlice'
+import { learnReducer } from '../features/learn/learnSlice'
 import { packsReducer } from '../features/packs/packsSlice'
 import { profileReducer } from '../features/profile/profileSlice'
 
@@ -15,6 +16,7 @@ export const store = configureStore({
     auth: authReducer,
     packs: packsReducer,
     cards: cardsReducer,
+    learn: learnReducer,
   },
 })
 

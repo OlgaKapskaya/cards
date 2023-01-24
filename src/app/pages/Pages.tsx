@@ -8,6 +8,7 @@ import { PasswordRecovery } from '../../features/auth/forgot-password/password-r
 import { Login } from '../../features/auth/login/Login'
 import { Registration } from '../../features/auth/registration/Registration'
 import { Cards } from '../../features/cards/Cards'
+import { Learn } from '../../features/learn/Learn'
 import { Packs } from '../../features/packs/Packs'
 import { Profile } from '../../features/profile/Profile'
 import { Test } from '../../features/test/Test'
@@ -30,6 +31,7 @@ export const Pages = () => {
         <Route path={PATH.PROFILE} element={<Profile />} />
         <Route path={PATH.PACKS} element={<Packs />} />
         <Route path={PATH.PACKS + PATH.CARDS + '/:packId'} element={<Cards />} />
+        <Route path={PATH.LEARN + '/:packId'} element={<Learn />} />
       </Route>
     </Routes>
   )
