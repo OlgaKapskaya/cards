@@ -153,6 +153,7 @@ export const setSearchParams = createAsyncThunk(
       dispatch(setPackName(params.packName || ''))
       dispatch(setSort(params.sortPacks))
       dispatch(setUserId(params.user_id) || '')
+      dispatch(setRange([]))
     }
   }
 )
