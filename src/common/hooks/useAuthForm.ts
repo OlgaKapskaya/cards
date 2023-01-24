@@ -24,6 +24,7 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
 
   const {
     register,
+    reset,
     handleSubmit,
     formState: { errors },
   } = useForm<T>({
@@ -42,5 +43,6 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
     handleSubmit,
     errors,
     appStatus,
+    reset,
   }
 }
