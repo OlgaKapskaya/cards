@@ -3,6 +3,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
 import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { getRandomCard } from '../../common/utils/getRandomCard'
 import { CardType } from '../cards/cardsAPI'
 import { setCards } from '../cards/cardsSlice'
 
@@ -19,7 +20,6 @@ export const upgradeGrade = createAsyncThunk(
       const cards = state.cards.cards
 
       const payload: SetGradePayloadType = { card_id, grade }
-
       const response = await learnAPI.setGrade(payload)
 
       dispatch(
@@ -37,6 +37,9 @@ export const upgradeGrade = createAsyncThunk(
       )
       dispatch(setIsShowAnswer(false))
       dispatch(setAppStatus('succeeded'))
+      if (cards.length > 0) {
+        dispatch(setCurrentCard(getRandomCard(cards)))
+      }
     } catch (e) {
       errorNetworkUtil(dispatch, e)
     }
