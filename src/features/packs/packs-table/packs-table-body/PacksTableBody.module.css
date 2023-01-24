@@ -3,23 +3,27 @@
 }
 
 .nameCell {
+  cursor: pointer;
+
   width: 30%;
 
   word-break: break-word;
 }
 
 .countCell {
+  cursor: pointer;
+
   width: 10%;
 }
 
 .cell {
+  cursor: pointer;
+
   width: 20%;
 }
 
 .disabled {
   cursor: not-allowed;
 
-  opacity: .2;
+  opacity: 0.2;
 }
-
-
