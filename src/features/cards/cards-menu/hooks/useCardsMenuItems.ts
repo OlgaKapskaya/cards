@@ -10,7 +10,6 @@ import { deleteCardPack, updateCardPack } from '../../cardsSlice'
 
 export const useCardsMenuItems = () => {
   const dispatch = useAppDispatch()
-  // const packId = useAppSelector(cardPackId)
   const navigate = useNavigate()
 
   let { packId } = useParams<{ packId: string }>()
@@ -18,10 +17,12 @@ export const useCardsMenuItems = () => {
   const editPack = () =>
     dispatch(updateCardPack({ cardsPack: { _id: packId as string, name: 'yooop cards' } }))
   const deletePack = () => {
-    dispatch(deleteCardPack({ id: packId as string }))
+    dispatch(deleteCardPack({ id: packId as string })).then(() => {
+      navigate(PATH.PACKS)
+    })
     // можно ли тут перенаправлять? а если запрос не прошел?
     // без сет таймаут двойной запрос
-    setTimeout(() => navigate(PATH.PACKS), 700)
+    // setTimeout(() => navigate(PATH.PACKS), 700)
     // navigate(PATH.PACKS)
   }
   const learnPack = () => alert('learn')
