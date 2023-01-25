@@ -14,18 +14,18 @@ export type PackData = {
   empty: string
 }
 
+const headersPacksArray: readonly HeaderType<PackData>[] = [
+  { id: 'name', label: 'Name' },
+  { id: 'cardsCount', label: 'Cards' },
+  { id: 'updated', label: 'Last updated' },
+  { id: 'user_name', label: 'Created by' },
+  { id: 'empty', label: 'Actions' },
+]
+
 export const PacksTableHead = () => {
   const sort = useAppSelector(sortPackSelector)
   const sortBy = sort ? sort.substring(1) : 'update'
   const sortOrder = sort ? sort[0] : '0'
-
-  const headersPacksArray: readonly HeaderType<PackData>[] = [
-    { id: 'name', label: 'Name' },
-    { id: 'cardsCount', label: 'Cards' },
-    { id: 'updated', label: 'Last updated' },
-    { id: 'user_name', label: 'Created by' },
-    { id: 'empty', label: 'Actions' },
-  ]
 
   return (
     <TableHeadComponent

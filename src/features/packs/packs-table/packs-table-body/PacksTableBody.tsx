@@ -10,6 +10,7 @@ import { ActionButton } from '../../../../common/components/buttons/action-butto
 import { PATH } from '../../../../common/constants/path'
 import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
 import { packsSelector } from '../../../../common/selectors/packsListSelectors'
+import { setCardsPageCount } from '../../../cards/cardsSlice'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { EditPackModal } from '../../modals/EditPackModal'
@@ -23,6 +24,7 @@ export const PacksTableBody = () => {
   const dispatch = useAppDispatch()
 
   const onClickNavigateHandler = (packId: string) => {
+    dispatch(setCardsPageCount(4))
     navigate(`cards/${packId}`)
   }
   const startLearnHandler = (packId: string) => {

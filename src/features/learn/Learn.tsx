@@ -12,8 +12,9 @@ import {
   isCardLoadedSelector,
 } from '../../common/selectors/cardsSelectors'
 import { isFirstSelector, isShowAnswerSelector } from '../../common/selectors/learnSelectors'
+import { maxCardsCountSelector } from '../../common/selectors/packsListSelectors'
 import { getRandomCard } from '../../common/utils/getRandomCard'
-import { getCards, setCardsPackId, setIsCardsLoaded } from '../cards/cardsSlice'
+import { getCards, setCardsPackId, setCardsPageCount, setIsCardsLoaded } from '../cards/cardsSlice'
 
 import { Answer } from './answer/Answer'
 import s from './Learn.module.css'
@@ -26,6 +27,7 @@ export const Learn = () => {
   const isFirst = useAppSelector(isFirstSelector)
   const isShowAnswer = useAppSelector(isShowAnswerSelector)
   const isCardsLoaded = useAppSelector(isCardLoadedSelector)
+  const maxCardsCount = useAppSelector(maxCardsCountSelector)
 
   const { packId } = useParams<{ packId: string }>()
 
@@ -40,6 +42,7 @@ export const Learn = () => {
   }, [packId])
 
   useEffect(() => {
+    dispatch(setCardsPageCount(maxCardsCount ?? 100))
     dispatch(getCards())
   }, [])
 
@@ -47,10 +50,7 @@ export const Learn = () => {
     if (isFirst) {
       dispatch(setIsFirst(false))
     }
-
-    if (cards.length > 0) {
-      dispatch(setCurrentCard(getRandomCard(cards)))
-    }
+    dispatch(setCurrentCard(getRandomCard(cards)))
   }, [dispatch, packId, cards, isFirst])
 
   if (!isCardsLoaded) {

@@ -20,19 +20,19 @@ export type CardData = {
   empty: string
 }
 
+const headersCardArray: readonly HeaderType<CardData>[] = [
+  { id: 'question', label: 'Question' },
+  { id: 'answer', label: 'Answer' },
+  { id: 'updated', label: 'Last Updated' },
+  { id: 'grade', label: 'Grade' },
+]
+
 export const CardsTableHead = () => {
   const sort = useAppSelector(sortCardSelector)
   const sortOrder = sort ? sort[0] : '0'
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const isMy = userId === profileId
-
-  const headersCardArray: readonly HeaderType<CardData>[] = [
-    { id: 'question', label: 'Question' },
-    { id: 'answer', label: 'Answer' },
-    { id: 'updated', label: 'Last Updated' },
-    { id: 'grade', label: 'Grade' },
-  ]
 
   return (
     <>
