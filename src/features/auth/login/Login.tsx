@@ -29,8 +29,6 @@ export const Login: FC = () => {
   }
 
   if (isLoggedIn) {
-    // dispatch(setRange([]))
-
     return <Navigate to={PATH.PACKS} />
   }
 
