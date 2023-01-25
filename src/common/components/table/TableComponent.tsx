@@ -28,7 +28,7 @@ export const TableComponent: FC<TableComponentPropsType> = ({
     <Box sx={{ width: '100%' }}>
       <Paper sx={{ width: '100%', mb: 2 }}>
         <TableContainer {...restProps}>
-          <Table sx={{ minWidth: 750 }} aria-labelledby="tableTitle">
+          <Table sx={{ minWidth: 750, whiteSpace: 'nowrap' }} aria-labelledby="tableTitle">
             {children}
           </Table>
           <PaginationComponent
