@@ -3,16 +3,11 @@ import React, { FC, useState } from 'react'
 import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler } from 'react-hook-form'
 
-import {
-  appStatusSelector,
-  ButtonComponent,
-  buttonWhite,
-  sxButtonColorCreator,
-  useAppDispatch,
-  useAppSelector,
-} from '../../../common'
+import { ButtonComponent, buttonWhite, sxButtonColorCreator } from '../../../common'
+import { updatePackSchema } from '../../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../../common/hooks/useAuthForm'
 import s from '../modals/modals.module.css'
 import { updatePack } from '../packsSlice'
 
@@ -26,18 +21,18 @@ type UpdatePackFormPropsType = {
 
 export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({ pack_id, name, closeModal }) => {
   const [packStatus, setPackStatus] = useState(false)
-  const dispatch = useAppDispatch()
 
-  const loadingStatus = useAppSelector(appStatusSelector)
-
-  const { register, handleSubmit, reset } = useForm<AddFormType>()
+  const { register, handleSubmit, reset, appStatus, dispatch, errors, setCustomError } =
+    useAuthForm<AddFormType>(updatePackSchema)
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
     if (name !== data.name) {
       dispatch(updatePack({ cardsPack: { _id: pack_id, name: data.name, private: data.private } }))
+      closeModal()
+      reset()
+    } else {
+      setCustomError('name', 'Please, enter the different name')
     }
-    closeModal()
-    reset()
   }
 
   const cancelHandler = () => {
@@ -48,6 +43,7 @@ export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({ pack_id, name, clo
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.input}>
         <TextField label="Name pack" defaultValue={name} variant="standard" {...register('name')} />
+        <p style={{ color: 'red' }}>{errors.name?.message}</p>
         <div className={s.checkbox}>
           <FormControlLabel
             control={<Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />}
@@ -60,14 +56,14 @@ export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({ pack_id, name, clo
           <ButtonComponent
             sx={sxButtonColorCreator(buttonWhite)}
             onClick={cancelHandler}
-            disabled={loadingStatus === 'loading'}
+            disabled={appStatus === 'loading'}
           >
             Cancel
           </ButtonComponent>
           <ButtonComponent
             type="submit"
             sx={sxButtonColorCreator(['#1976d2', 'white'])}
-            disabled={loadingStatus === 'loading'}
+            disabled={appStatus === 'loading'}
           >
             Save
           </ButtonComponent>

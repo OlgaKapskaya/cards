@@ -3,9 +3,11 @@ import React, { FC, useState } from 'react'
 import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { SubmitHandler } from 'react-hook-form'
 
-import { ButtonComponent, buttonWhite, sxButtonColorCreator, useAppDispatch } from '../../../common'
+import { ButtonComponent, buttonWhite, sxButtonColorCreator } from '../../../common'
+import { addPackSchema } from '../../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../../common/hooks/useAuthForm'
 import s from '../modals/modals.module.css'
 import { createPack } from '../packsSlice'
 
@@ -18,10 +20,10 @@ type AddPackFormPropsType = {
 }
 
 export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
-  const { register, handleSubmit, reset } = useForm<AddFormType>()
+  const { register, handleSubmit, reset, dispatch, errors } =
+    useAuthForm<AddFormType>(addPackSchema)
 
   const [packStatus, setPackStatus] = useState(false)
-  const dispatch = useAppDispatch()
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
     dispatch(createPack({ cardsPack: { name: data.name, private: data.private } }))
@@ -37,6 +39,7 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.input}>
         <TextField label="Enter pack name" variant="standard" autoFocus {...register('name')} />
+        <p style={{ color: 'red' }}>{errors.name?.message}</p>
         <div className={s.checkbox}>
           <FormControlLabel
             control={<Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />}
