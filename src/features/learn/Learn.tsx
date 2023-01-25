@@ -52,7 +52,9 @@ export const Learn = () => {
     if (isFirst) {
       dispatch(setIsFirst(false))
     }
-    dispatch(setCurrentCard(getRandomCard(cards)))
+    if (cards.length > 0) {
+      dispatch(setCurrentCard(getRandomCard(cards)))
+    }
   }, [dispatch, packId, cards, isFirst])
 
   if (!isCardsLoaded) {

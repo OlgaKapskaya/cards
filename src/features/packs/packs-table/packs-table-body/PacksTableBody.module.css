@@ -1,25 +1,21 @@
-.tableRow {
-  /*cursor: pointer;*/
-}
-
 .nameCell {
-  cursor: pointer;
-
   width: 30%;
-
-  word-break: break-word;
 }
 
 .countCell {
-  cursor: pointer;
-
   width: 10%;
 }
 
 .cell {
+  width: 20%;
+}
+
+.cell,
+.countCell,
+.nameCell {
   cursor: pointer;
 
-  width: 20%;
+  word-break: break-word;
 }
 
 .disabled {
