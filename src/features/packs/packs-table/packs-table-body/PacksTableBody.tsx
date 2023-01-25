@@ -5,23 +5,17 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
-import {
-  ActionButton,
-  useAppDispatch,
-  useAppSelector,
-  packsSelector,
-  userIDSelector,
-} from '../../../../common'
 import { setCardsPageCount } from '../../../cards/cardsSlice'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
-import { DeletePackForm } from '../../forms/DeletePackForm'
-import { UpdatePackForm } from '../../forms/UpdatePackForm'
+import { DeletePackForm } from '../../pack-forms/DeletePackForm'
+import { UpdatePackForm } from '../../pack-forms/UpdatePackForm'
 
 import s from './PacksTableBody.module.css'
 
 import edit from 'assets/img/edit.svg'
 import learn from 'assets/img/teacher.svg'
 import del from 'assets/img/trash.svg'
+import { ActionButton, useAppDispatch, useAppSelector, packsSelector, userIDSelector } from 'common'
 import { ModalComponent } from 'common/components/modal-component/ModalComponent'
 import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 import { PATH } from 'common/constants/path'
@@ -100,8 +94,6 @@ export const PacksTableBody = () => {
                 disabled={p.cardsCount === 0}
                 onClick={() => startLearnHandler(p._id)}
               />
-
-              {/*test*/}
               {profile_id === p.user_id && (
                 <>
                   <ActionButton
@@ -116,13 +108,6 @@ export const PacksTableBody = () => {
                   />
                 </>
               )}
-              {/*<EditPackModal*/}
-              {/*  pack_id={p._id}*/}
-              {/*  name={p.name}*/}
-              {/*  privateStatus={p.private}*/}
-              {/*  user_id={p.user_id}*/}
-              {/*/>*/}
-              {/*<DeletePackModal pack_id={p._id} name={p.name} user_id={p.user_id} />*/}
             </TableCell>
           </TableRow>
         ))}
