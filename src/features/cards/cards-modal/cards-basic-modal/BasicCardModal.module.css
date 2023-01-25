@@ -1,60 +1,62 @@
 .contentBox {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .title {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-    width: 347px;
+  width: 347px;
 }
 
 .line {
-    width: 395px;
-    height: 100%;
-    margin-bottom: 20px;
+  width: 395px;
+  height: 100%;
+  margin-bottom: 20px;
 
-    border-top: 1px solid #D9D9D9;
+  border-top: 1px solid #d9d9d9;
 }
 
 .cross {
-    cursor: pointer;
+  cursor: pointer;
 
-    transform: rotate(45deg);
+  transform: rotate(45deg);
 
-    font-size: 40px;
+  font-size: 40px;
 
-    opacity: .8;
+  opacity: 0.8;
 
-    transition: all 400ms;
+  transition: all 400ms;
 }
 
 .cross:hover {
-    transform: rotate(225deg);
+  transform: rotate(225deg);
 }
 
 .formSelect {
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
 .selectName {
-    margin-bottom: 8px;
+  margin-bottom: 8px;
 
-    font-size: 14px;
-    line-height: 17px;
+  font-size: 14px;
+  line-height: 17px;
 
-    opacity: 0.5;
+  opacity: 0.5;
 }
 
 .formInput {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 
-    margin-top: 20px;
+  margin-top: 20px;
 }
 
-.modal-backdrop{opacity: 0 !important;}
+.modal-backdrop {
+  opacity: 0 !important;
+}

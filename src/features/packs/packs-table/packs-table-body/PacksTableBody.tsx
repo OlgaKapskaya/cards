@@ -55,7 +55,7 @@ export const PacksTableBody = () => {
           <TableCell onClick={() => onClickNavigateHandler(p._id)} align="left" className={s.cell}>
             {p.user_name}
           </TableCell>
-          <TableCell align="left" className={s.cellActions}>
+          <TableCell align="left" sx={{ display: 'flex', wordBreak: 'break-word' }}>
             <div className={p.cardsCount === 0 ? s.disabled : ''}>
               <ActionButton
                 icon={learn}

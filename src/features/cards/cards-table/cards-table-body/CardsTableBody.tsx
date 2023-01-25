@@ -12,9 +12,10 @@ import {
   userCardsPackIdSelector,
   userIDSelector,
 } from '../../../../common'
+import { EditCardModal } from '../../cards-modal/cards-edit-modal/EditCardModal'
 
 import s from './CardsTableBody.module.css'
-import { EditCardModal } from 'features/cards/cards-modal/cards-edit-modal/EditCardModal'
+
 import { DeleteCardModal } from 'features/cards/cards-modal/cards-delete-modal/DeleteCardModal'
 
 export const CardsTableBody = () => {
