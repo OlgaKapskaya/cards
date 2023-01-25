@@ -2,9 +2,9 @@ import { useNavigate } from 'react-router-dom'
 
 import logoutImg from '../../../../assets/img/logout.svg'
 import user from '../../../../assets/img/user.svg'
+import { useAppDispatch } from '../../../../common'
 import { MenuItemType } from '../../../../common/components/menu/MenuItemComponent/MenuItemComponent'
 import { PATH } from '../../../../common/constants/path'
-import { useAppDispatch } from '../../../../common/hooks/reactReduxHooks'
 import { logout } from '../../../../features/auth/authSlice'
 
 export const useProfileMenuItems = () => {

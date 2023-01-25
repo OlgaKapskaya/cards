@@ -4,8 +4,7 @@ import CameraAltOutlined from '@mui/icons-material/CameraAltOutlined'
 import Avatar from '@mui/material/Avatar/Avatar'
 import IconButton from '@mui/material/IconButton'
 
-import { useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { userAvatarSelector } from '../../../common/selectors/profileSelectors'
+import { useAppSelector, userAvatarSelector } from '../../../common'
 
 import s from './ProfileAvatar.module.css'
 

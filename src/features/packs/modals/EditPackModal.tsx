@@ -8,13 +8,16 @@ import Typography from '@mui/material/Typography'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
 import edit from '../../../assets/img/edit-2.svg'
-import { ActionButton } from '../../../common/components/buttons/action-button/ActionButton'
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { buttonWhite } from '../../../common/constants/theme'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../common/selectors/appSelectors'
-import { userIDSelector } from '../../../common/selectors/profileSelectors'
-import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import {
+  ActionButton,
+  ButtonComponent,
+  buttonWhite,
+  useAppDispatch,
+  useAppSelector,
+  appStatusSelector,
+  userIDSelector,
+  sxButtonColorCreator,
+} from '../../../common'
 import { updatePack } from '../packsSlice'
 
 import { BasicModal } from './BasicModal'

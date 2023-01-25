@@ -1,12 +1,13 @@
 import React from 'react'
 
-import { TableComponent } from '../../../common/components/table/TableComponent'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  TableComponent,
+  useAppDispatch,
+  useAppSelector,
   cardsCurrentPageSelector,
   cardsPageCountSelector,
   cardsTotalCountSelector,
-} from '../../../common/selectors/cardsSelectors'
+} from '../../../common'
 import { setCardsCurrentPage, setCardsPageCount } from '../cardsSlice'
 
 import { CardsTableBody } from './cards-table-body/CardsTableBody'

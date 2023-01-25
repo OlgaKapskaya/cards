@@ -1,11 +1,13 @@
 import React from 'react'
 
 import filter from '../../../assets/img/filter-remove.svg'
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { SwitchButton } from '../../../common/components/buttons/switch-button/SwitchButton'
-import { InputSlider } from '../../../common/components/inputs/input-slider/InputSlider'
-import { SearchInput } from '../../../common/components/inputs/search-input/SearchInput'
-import { iconButton } from '../../../common/constants/theme'
+import {
+  ButtonComponent,
+  InputSlider,
+  SearchInput,
+  SwitchButton,
+  iconButton,
+} from '../../../common'
 
 import s from './FilterPanel.module.css'
 import { useFilterPanelLogic } from './useFilterPanelLogic'

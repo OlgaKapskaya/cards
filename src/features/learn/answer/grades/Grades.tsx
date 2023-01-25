@@ -3,8 +3,7 @@ import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { gradesSelector } from '../../../../common/selectors/learnSelectors'
+import { useAppDispatch, useAppSelector, gradesSelector } from '../../../../common'
 import { setGrade } from '../../learnSlice'
 
 export const Grades = () => {

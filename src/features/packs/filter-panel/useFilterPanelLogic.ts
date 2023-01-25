@@ -1,7 +1,8 @@
 import { useCallback } from 'react'
 
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  useAppDispatch,
+  useAppSelector,
   isLoadingSelector,
   maxCardsCountSelector,
   maxRangeSelector,
@@ -9,8 +10,8 @@ import {
   minRangeSelector,
   packNameSelector,
   searchUserIdSelector,
-} from '../../../common/selectors/packsListSelectors'
-import { userIDSelector } from '../../../common/selectors/profileSelectors'
+  userIDSelector,
+} from '../../../common'
 import { resetFilters, setCurrentPage, setPackName, setRange, setUserId } from '../packsSlice'
 
 export const useFilterPanelLogic = () => {
@@ -31,10 +32,10 @@ export const useFilterPanelLogic = () => {
   }, [])
 
   const onChangeTypePacks = useCallback((type: boolean) => {
+    dispatch(setRange([]))
+    dispatch(setCurrentPage(1))
     if (type) {
       dispatch(setUserId(currentUserId))
-      dispatch(setCurrentPage(1))
-      dispatch(setRange([]))
     } else {
       dispatch(setUserId(''))
     }

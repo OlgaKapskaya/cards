@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
-import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { errorNetworkUtil } from '../../common'
 
 import {
   CreatePackPayloadType,

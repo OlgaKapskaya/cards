@@ -1,10 +1,8 @@
 import React from 'react'
 
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
+import { ButtonComponent, buttonRed, buttonWhite, sxButtonColorCreator } from '../../common'
 import EditableSpanComponent from '../../common/components/inputs/editable-span/EditableSpanComponent'
 import { SliderComponent } from '../../common/components/slider/SliderComponent'
-import { buttonRed, buttonWhite } from '../../common/constants/theme'
-import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
 
 import s from './Test.module.css'
 

@@ -5,14 +5,17 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../../common/selectors/appSelectors'
-import { cardsSelector, userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../../common/selectors/profileSelectors'
-import { DeleteCardModal } from '../../cards-modal/cards-delete-modal/DeleteCardModal'
-import { EditCardModal } from '../../cards-modal/cards-edit-modal/EditCardModal'
+import {
+  appStatusSelector,
+  cardsSelector,
+  useAppSelector,
+  userCardsPackIdSelector,
+  userIDSelector,
+} from '../../../../common'
 
 import s from './CardsTableBody.module.css'
+import { EditCardModal } from 'features/cards/cards-modal/cards-edit-modal/EditCardModal'
+import { DeleteCardModal } from 'features/cards/cards-modal/cards-delete-modal/DeleteCardModal'
 
 export const CardsTableBody = () => {
   const cards = useAppSelector(cardsSelector)

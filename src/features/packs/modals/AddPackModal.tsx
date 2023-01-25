@@ -7,11 +7,14 @@ import TextField from '@mui/material/TextField'
 import Typography from '@mui/material/Typography'
 import { SubmitHandler, useForm } from 'react-hook-form'
 
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { buttonWhite } from '../../../common/constants/theme'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../common/selectors/appSelectors'
-import { sxButtonColorCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import {
+  ButtonComponent,
+  buttonWhite,
+  useAppDispatch,
+  useAppSelector,
+  appStatusSelector,
+  sxButtonColorCreator,
+} from '../../../common'
 import { createPack } from '../packsSlice'
 
 import { BasicModal } from './BasicModal'

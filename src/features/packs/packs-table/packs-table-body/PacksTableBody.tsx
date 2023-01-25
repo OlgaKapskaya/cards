@@ -6,10 +6,9 @@ import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
 import learn from '../../../../assets/img/teacher.svg'
-import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
+import { ActionButton, useAppDispatch, useAppSelector, packsSelector } from '../../../../common'
 import { PATH } from '../../../../common/constants/path'
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { packsSelector } from '../../../../common/selectors/packsListSelectors'
+import { setCardsPageCount } from '../../../cards/cardsSlice'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { DeletePackModal } from '../../modals/DeletePackModal'
 import { EditPackModal } from '../../modals/EditPackModal'
@@ -23,6 +22,7 @@ export const PacksTableBody = () => {
   const dispatch = useAppDispatch()
 
   const onClickNavigateHandler = (packId: string) => {
+    dispatch(setCardsPageCount(4))
     navigate(`cards/${packId}`)
   }
   const startLearnHandler = (packId: string) => {
@@ -55,7 +55,7 @@ export const PacksTableBody = () => {
           <TableCell onClick={() => onClickNavigateHandler(p._id)} align="left" className={s.cell}>
             {p.user_name}
           </TableCell>
-          <TableCell align="left" style={{ display: 'flex' }}>
+          <TableCell align="left" className={s.cellActions}>
             <div className={p.cardsCount === 0 ? s.disabled : ''}>
               <ActionButton
                 icon={learn}

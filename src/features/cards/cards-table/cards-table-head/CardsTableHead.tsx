@@ -1,15 +1,15 @@
 import TableCell from '@mui/material/TableCell'
 
 import {
+  useAppSelector,
+  sortCardSelector,
+  userCardsPackIdSelector,
+  userIDSelector,
+} from '../../../../common'
+import {
   HeaderType,
   TableHeadComponent,
 } from '../../../../common/components/table/TableHeadComponent'
-import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import {
-  sortCardSelector,
-  userCardsPackIdSelector,
-} from '../../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { setCardsSort } from '../../cardsSlice'
 
 export type CardData = {
@@ -20,19 +20,19 @@ export type CardData = {
   empty: string
 }
 
+const headersCardArray: readonly HeaderType<CardData>[] = [
+  { id: 'question', label: 'Question' },
+  { id: 'answer', label: 'Answer' },
+  { id: 'updated', label: 'Last Updated' },
+  { id: 'grade', label: 'Grade' },
+]
+
 export const CardsTableHead = () => {
   const sort = useAppSelector(sortCardSelector)
   const sortOrder = sort ? sort[0] : '0'
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const isMy = userId === profileId
-
-  const headersCardArray: readonly HeaderType<CardData>[] = [
-    { id: 'question', label: 'Question' },
-    { id: 'answer', label: 'Answer' },
-    { id: 'updated', label: 'Last Updated' },
-    { id: 'grade', label: 'Grade' },
-  ]
 
   return (
     <>

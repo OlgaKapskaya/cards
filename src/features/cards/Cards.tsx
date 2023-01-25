@@ -2,19 +2,20 @@ import React, { useEffect } from 'react'
 
 import { useParams } from 'react-router-dom'
 
-import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { SearchInput } from '../../common/components/inputs/search-input/SearchInput'
-import { IsEmptyMessage } from '../../common/components/is-empty-message/IsEmptyMessage'
-import { Loader } from '../../common/components/loader/Loader'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
+  BackPackLink,
+  SearchInput,
+  IsEmptyMessage,
+  Loader,
+  useAppDispatch,
+  useAppSelector,
   emptySelector,
   foundSelector,
   isCardLoadedSelector,
-  searchParamsSelector,
+  cardsSearchParamsSelector,
   userCardsPackIdSelector,
-} from '../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../common/selectors/profileSelectors'
+  userIDSelector,
+} from '../../common'
 
 import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
@@ -26,7 +27,7 @@ export const Cards = () => {
   const dispatch = useAppDispatch()
   const foundStatus = useAppSelector(foundSelector)
   const emptyStatus = useAppSelector(emptySelector)
-  const searchParams = useAppSelector(searchParamsSelector)
+  const searchParams = useAppSelector(cardsSearchParamsSelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const isCardsLoaded = useAppSelector(isCardLoadedSelector)

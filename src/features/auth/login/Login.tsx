@@ -6,13 +6,15 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { Navigate, NavLink } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { PasswordInput } from '../../../common/components/inputs/password-input/PasswordInput'
+import {
+  ButtonComponent,
+  PasswordInput,
+  loginValidationSchema,
+  sxBoxCreator,
+  sxButtonMarginTopWidthCreator,
+} from '../../../common'
 import { PATH } from '../../../common/constants/path'
-import { loginValidationSchema } from '../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../common/utils/styles-utils/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
 import { LoginRequestType } from '../authAPI'
 import { login } from '../authSlice'
 

@@ -1,14 +1,14 @@
 import { FC } from 'react'
 
 import pointsMenu from '../../../assets/img/pointsMenu.svg'
-import { MenuComponent } from '../../../common/components/menu/MenuComponent'
-import { useMenuComponent } from '../../../common/components/menu/useMenuComponent'
-import { useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  MenuComponent,
+  useAppSelector,
   cardPackNameSelector,
   userCardsPackIdSelector,
-} from '../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../common/selectors/profileSelectors'
+  userIDSelector,
+} from '../../../common'
+import { useMenuComponent } from '../../../common/components/menu/useMenuComponent'
 
 import s from './CardsMenu.module.css'
 import { useCardsMenuItems } from './hooks/useCardsMenuItems'

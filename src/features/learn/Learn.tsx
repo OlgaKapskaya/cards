@@ -3,17 +3,20 @@ import React, { useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import { useParams } from 'react-router-dom'
 
-import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { Loader } from '../../common/components/loader/Loader'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
+  BackPackLink,
+  Loader,
+  useAppDispatch,
+  useAppSelector,
   cardPackNameSelector,
   cardsSelector,
   isCardLoadedSelector,
-} from '../../common/selectors/cardsSelectors'
-import { isFirstSelector, isShowAnswerSelector } from '../../common/selectors/learnSelectors'
-import { getRandomCard } from '../../common/utils/getRandomCard'
-import { getCards, setCardsPackId, setIsCardsLoaded } from '../cards/cardsSlice'
+  isFirstSelector,
+  isShowAnswerSelector,
+  maxCardsCountSelector,
+  getRandomCard,
+} from '../../common'
+import { getCards, setCardsPackId, setCardsPageCount, setIsCardsLoaded } from '../cards/cardsSlice'
 
 import { Answer } from './answer/Answer'
 import s from './Learn.module.css'
@@ -26,6 +29,7 @@ export const Learn = () => {
   const isFirst = useAppSelector(isFirstSelector)
   const isShowAnswer = useAppSelector(isShowAnswerSelector)
   const isCardsLoaded = useAppSelector(isCardLoadedSelector)
+  const maxCardsCount = useAppSelector(maxCardsCountSelector)
 
   const { packId } = useParams<{ packId: string }>()
 
@@ -40,6 +44,7 @@ export const Learn = () => {
   }, [packId])
 
   useEffect(() => {
+    dispatch(setCardsPageCount(maxCardsCount ?? 100))
     dispatch(getCards())
   }, [])
 
@@ -47,10 +52,7 @@ export const Learn = () => {
     if (isFirst) {
       dispatch(setIsFirst(false))
     }
-
-    if (cards.length > 0) {
-      dispatch(setCurrentCard(getRandomCard(cards)))
-    }
+    dispatch(setCurrentCard(getRandomCard(cards)))
   }, [dispatch, packId, cards, isFirst])
 
   if (!isCardsLoaded) {

@@ -2,8 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppStatus } from '../../app/appSlice'
 import { AppRootStateType } from '../../app/store'
-import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
-import { getRandomCard } from '../../common/utils/getRandomCard'
+import { errorNetworkUtil, getRandomCard } from '../../common'
 import { CardType } from '../cards/cardsAPI'
 import { setCards } from '../cards/cardsSlice'
 
