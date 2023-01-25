@@ -21,6 +21,8 @@ const initialState = {
   minCardsCount: 0,
   isLoading: false,
   searchParams: {
+    min: 0,
+    max: 0,
     page: 1,
     pageCount: 7,
     packName: '',
@@ -153,7 +155,7 @@ export const setSearchParams = createAsyncThunk(
       dispatch(setPackName(params.packName || ''))
       dispatch(setSort(params.sortPacks))
       dispatch(setUserId(params.user_id) || '')
-      dispatch(setRange([]))
+      dispatch(setRange([0, 0]))
     }
   }
 )

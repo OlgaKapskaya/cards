@@ -28,7 +28,11 @@ export const Login: FC = () => {
     dispatch(login(data))
   }
 
-  if (isLoggedIn) return <Navigate to={PATH.PACKS} />
+  if (isLoggedIn) {
+    // dispatch(setRange([]))
+
+    return <Navigate to={PATH.PACKS} />
+  }
 
   return (
     <Box sx={sxBoxCreator(552)}>
