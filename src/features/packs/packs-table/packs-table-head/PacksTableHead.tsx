@@ -1,9 +1,8 @@
+import { useAppSelector, sortPackSelector } from '../../../../common'
 import {
   HeaderType,
   TableHeadComponent,
 } from '../../../../common/components/table/TableHeadComponent'
-import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { sortPackSelector } from '../../../../common/selectors/packsListSelectors'
 import { setSort } from '../../packsSlice'
 
 export type PackData = {

@@ -1,4 +1,4 @@
-import { instance } from '../../common/constants/instance'
+import { instance } from '../../common'
 import { CardType } from '../cards/cardsAPI'
 
 export const learnAPI = {

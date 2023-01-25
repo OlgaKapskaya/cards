@@ -1,7 +1,11 @@
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { currentCardSelector, isShowAnswerSelector } from '../../../common/selectors/learnSelectors'
-import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+import {
+  ButtonComponent,
+  useAppDispatch,
+  useAppSelector,
+  currentCardSelector,
+  isShowAnswerSelector,
+  sxButtonMarginTopWidthCreator,
+} from '../../../common'
 import { setIsShowAnswer } from '../learnSlice'
 
 import s from './Question.module.css'

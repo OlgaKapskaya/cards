@@ -1,14 +1,15 @@
 import React from 'react'
 
-import { IsEmptyMessage } from '../../../common/components/is-empty-message/IsEmptyMessage'
-import { TableComponent } from '../../../common/components/table/TableComponent'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
 import {
+  IsEmptyMessage,
+  TableComponent,
+  useAppDispatch,
+  useAppSelector,
   cardPacksTotalCountSelector,
   currentPageSelector,
   packsSelector,
   pageCountSelector,
-} from '../../../common/selectors/packsListSelectors'
+} from '../../../common'
 import { setCurrentPage, setPageCount } from '../packsSlice'
 
 import { PacksTableBody } from './packs-table-body/PacksTableBody'

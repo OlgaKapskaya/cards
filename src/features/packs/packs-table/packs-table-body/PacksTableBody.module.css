@@ -22,6 +22,12 @@
   width: 20%;
 }
 
+.cellActions {
+  display: flex;
+
+  word-break: break-word;
+}
+
 .disabled {
   cursor: not-allowed;
 

@@ -3,9 +3,13 @@ import React, { useEffect } from 'react'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useSearchParams } from 'react-router-dom'
 
-import { Loader } from '../common/components/loader/Loader'
-import { useAppDispatch, useAppSelector } from '../common/hooks/reactReduxHooks'
-import { appIsInitializedSelector, appStatusSelector } from '../common/selectors/appSelectors'
+import {
+  Loader,
+  useAppDispatch,
+  useAppSelector,
+  appIsInitializedSelector,
+  appStatusSelector,
+} from '../common'
 import { setSearchParams } from '../features/packs/packsSlice'
 
 import s from './App.module.css'

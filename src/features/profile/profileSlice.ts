@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { setAppMessage, setAppStatus } from '../../app/appSlice'
-import { errorNetworkUtil } from '../../common/utils/errorNetworkUtil'
+import { errorNetworkUtil } from '../../common'
 
 import { ChangeUserDataPayload, profileAPI } from './profileAPI'
 

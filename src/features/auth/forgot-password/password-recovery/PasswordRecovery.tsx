@@ -6,13 +6,15 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
-import { emailRecoveryMessage } from '../../../../common/constants/emailMessage'
+import {
+  ButtonComponent,
+  emailRecoveryMessage,
+  forgotValidationSchema,
+  sxBoxCreator,
+  sxButtonMarginTopWidthCreator,
+} from '../../../../common'
 import { PATH } from '../../../../common/constants/path'
-import { forgotValidationSchema } from '../../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../../common/utils/styles-utils/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 import { forgotPass, isSentRecoveryEmailStatus } from '../../authSlice'
 
 import s from './PasswordRecovery.module.css'

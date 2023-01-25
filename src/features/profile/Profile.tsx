@@ -4,12 +4,14 @@ import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 
 import logoutImg from '../../assets/img/logout.svg'
-import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
-import { buttonWhite } from '../../common/constants/theme'
-import { useAppDispatch } from '../../common/hooks/reactReduxHooks'
-import { sxBoxCreator } from '../../common/utils/styles-utils/sxBoxCreator'
-import { sxButtonColorCreator } from '../../common/utils/styles-utils/sxButtonCreators'
+import {
+  BackPackLink,
+  ButtonComponent,
+  buttonWhite,
+  useAppDispatch,
+  sxBoxCreator,
+  sxButtonColorCreator,
+} from '../../common'
 import { logout } from '../auth/authSlice'
 
 import { ProfileAvatar } from './profile-avatar/ProfileAvatar'

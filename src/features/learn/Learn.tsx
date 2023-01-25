@@ -3,17 +3,19 @@ import React, { useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import { useParams } from 'react-router-dom'
 
-import { BackPackLink } from '../../common/components/back-pack-link/BackPackLink'
-import { Loader } from '../../common/components/loader/Loader'
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
 import {
+  BackPackLink,
+  Loader,
+  useAppDispatch,
+  useAppSelector,
   cardPackNameSelector,
   cardsSelector,
   isCardLoadedSelector,
-} from '../../common/selectors/cardsSelectors'
-import { isFirstSelector, isShowAnswerSelector } from '../../common/selectors/learnSelectors'
-import { maxCardsCountSelector } from '../../common/selectors/packsListSelectors'
-import { getRandomCard } from '../../common/utils/getRandomCard'
+  isFirstSelector,
+  isShowAnswerSelector,
+  maxCardsCountSelector,
+  getRandomCard,
+} from '../../common'
 import { getCards, setCardsPackId, setCardsPageCount, setIsCardsLoaded } from '../cards/cardsSlice'
 
 import { Answer } from './answer/Answer'

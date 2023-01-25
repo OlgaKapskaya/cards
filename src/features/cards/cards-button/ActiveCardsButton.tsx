@@ -2,17 +2,18 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../common/components/buttons/button/ButtonComponent'
-import { PATH } from '../../../common/constants/path'
-import { useAppDispatch, useAppSelector } from '../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../common/selectors/appSelectors'
 import {
+  ButtonComponent,
+  useAppDispatch,
+  useAppSelector,
+  appStatusSelector,
   cardPackId,
   emptySelector,
   userCardsPackIdSelector,
-} from '../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../common/selectors/profileSelectors'
-import { sxButtonMarginTopWidthCreator } from '../../../common/utils/styles-utils/sxButtonCreators'
+  userIDSelector,
+  sxButtonMarginTopWidthCreator,
+} from '../../../common'
+import { PATH } from '../../../common/constants/path'
 import { setIsShowAnswer } from '../../learn/learnSlice'
 import { createCard } from '../cardsSlice'
 

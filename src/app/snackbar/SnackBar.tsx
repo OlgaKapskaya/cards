@@ -3,8 +3,7 @@ import React from 'react'
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { appMessageSelector, appStatusSelector } from '../../common/selectors/appSelectors'
+import { useAppDispatch, useAppSelector, appMessageSelector, appStatusSelector } from '../../common'
 import { setAppMessage } from '../appSlice'
 
 export const SnackBar = () => {

@@ -5,10 +5,8 @@ import Paper from '@mui/material/Paper'
 import { useNavigate, useParams } from 'react-router-dom'
 
 import emailImg from '../../../../assets/img/emailImg.svg'
-import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
+import { ButtonComponent, sxBoxCreator, sxButtonMarginTopWidthCreator } from '../../../../common'
 import { PATH } from '../../../../common/constants/path'
-import { sxBoxCreator } from '../../../../common/utils/styles-utils/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 
 import s from './CheckEmail.module.css'
 

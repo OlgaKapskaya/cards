@@ -8,7 +8,7 @@ import { HashRouter } from 'react-router-dom'
 
 import App from './app/App'
 import { store } from './app/store'
-import { theme } from './common/constants/theme'
+import { theme } from './common'
 
 const root = createRoot(document.getElementById('root') as HTMLElement)
 

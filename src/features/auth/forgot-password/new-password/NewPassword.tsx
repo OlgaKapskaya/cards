@@ -5,13 +5,15 @@ import Paper from '@mui/material/Paper'
 import { SubmitHandler } from 'react-hook-form'
 import { Navigate, useParams } from 'react-router-dom'
 
-import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
-import { PasswordInput } from '../../../../common/components/inputs/password-input/PasswordInput'
+import {
+  ButtonComponent,
+  PasswordInput,
+  newPasswordValidationScheme,
+  sxBoxCreator,
+  sxButtonMarginTopWidthCreator,
+} from '../../../../common'
 import { PATH } from '../../../../common/constants/path'
-import { newPasswordValidationScheme } from '../../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../../common/hooks/useAuthForm'
-import { sxBoxCreator } from '../../../../common/utils/styles-utils/sxBoxCreator'
-import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 import { createNewPassword, recoveredPasswordStatus } from '../../authSlice'
 
 import s from './NewPassword.module.css'

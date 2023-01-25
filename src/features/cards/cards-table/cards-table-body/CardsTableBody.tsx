@@ -7,11 +7,15 @@ import TableRow from '@mui/material/TableRow'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
 import editIcon from '../../../../assets/img/edit.svg'
-import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
-import { useAppDispatch, useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import { appStatusSelector } from '../../../../common/selectors/appSelectors'
-import { cardsSelector, userCardsPackIdSelector } from '../../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../../common/selectors/profileSelectors'
+import {
+  ActionButton,
+  useAppDispatch,
+  useAppSelector,
+  appStatusSelector,
+  cardsSelector,
+  userCardsPackIdSelector,
+  userIDSelector,
+} from '../../../../common'
 import { deleteCard, updateCard } from '../../cardsSlice'
 
 import s from './CardsTableBody.module.css'

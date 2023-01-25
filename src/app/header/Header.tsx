@@ -3,10 +3,8 @@ import React, { useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import logo from '../../assets/img/incubator-logo.svg'
-import { ButtonComponent } from '../../common/components/buttons/button/ButtonComponent'
+import { ButtonComponent, useAppSelector, isLoggedInSelector } from '../../common'
 import { PATH } from '../../common/constants/path'
-import { useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { isLoggedInSelector } from '../../common/selectors/authSelectors'
 
 import s from './Header.module.css'
 import { ProfileMenu } from './profile-menu/ProfileMenu'

@@ -1,15 +1,15 @@
 import TableCell from '@mui/material/TableCell'
 
 import {
+  useAppSelector,
+  sortCardSelector,
+  userCardsPackIdSelector,
+  userIDSelector,
+} from '../../../../common'
+import {
   HeaderType,
   TableHeadComponent,
 } from '../../../../common/components/table/TableHeadComponent'
-import { useAppSelector } from '../../../../common/hooks/reactReduxHooks'
-import {
-  sortCardSelector,
-  userCardsPackIdSelector,
-} from '../../../../common/selectors/cardsSelectors'
-import { userIDSelector } from '../../../../common/selectors/profileSelectors'
 import { setCardsSort } from '../../cardsSlice'
 
 export type CardData = {
