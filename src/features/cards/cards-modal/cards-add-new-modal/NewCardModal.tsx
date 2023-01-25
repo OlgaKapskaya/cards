@@ -1,6 +1,8 @@
 import React, { FC } from 'react'
 
 import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
+import { createCardSchema } from '../../../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../../../common/hooks/useAuthForm'
 import { sxButtonMarginTopWidthCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
 import { createCard } from '../../cardsSlice'
 import { BasicCardModal, NewCardType } from '../cards-basic-modal/BasicCardModal'
@@ -12,6 +14,7 @@ type NewCardModalType = {
 
 export const NewCardModal: FC<NewCardModalType> = ({ disabled }) => {
   const { open, handleOpen, handleClose, dispatch } = useCardModal()
+  const { register, handleSubmit, errors, reset } = useAuthForm<NewCardType>(createCardSchema)
 
   const handleAddNewCard = (data: NewCardType) => {
     const payload = {
@@ -22,6 +25,7 @@ export const NewCardModal: FC<NewCardModalType> = ({ disabled }) => {
 
     dispatch(createCard(payload)).then(() => {
       handleClose()
+      reset()
     })
   }
 
@@ -41,6 +45,10 @@ export const NewCardModal: FC<NewCardModalType> = ({ disabled }) => {
         handleClose={handleClose}
         onSubmitAction={handleAddNewCard}
         disabled={disabled}
+        handleSubmit={handleSubmit}
+        register={register}
+        errors={errors}
+        reset={reset}
       />
     </>
   )

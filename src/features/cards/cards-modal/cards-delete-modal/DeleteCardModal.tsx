@@ -1,10 +1,13 @@
 import React, { FC } from 'react'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
-import { ActionButton } from '../../../../common/components/buttons/action-button/ActionButton'
-import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
-import { buttonRed, buttonWhite } from '../../../../common/constants/theme'
-import { sxButtonColorCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
+import {
+  buttonRed,
+  buttonWhite,
+  sxButtonColorCreator,
+  ActionButton,
+  ButtonComponent,
+} from '../../../../common'
 import { deleteCard } from '../../cardsSlice'
 import { BoxCardModal } from '../cards-basic-modal/BoxCardModal'
 import { useCardModal } from '../hooks/useCardModal'
@@ -24,7 +27,9 @@ export const DeleteCardModal: FC<DeleteModalPropsType> = ({ id, disabled, name }
     handleClose()
   }
   const handleDeleteCard = () => {
-    dispatch(deleteCard({ id }))
+    dispatch(deleteCard({ id })).then(() => {
+      handleClose()
+    })
   }
 
   return (

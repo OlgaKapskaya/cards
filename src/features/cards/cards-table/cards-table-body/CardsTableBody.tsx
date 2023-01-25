@@ -29,32 +29,35 @@ export const CardsTableBody = () => {
     <TableBody>
       {cards.map(row => {
         return (
-          <>
-            <TableRow hover key={row._id} className={s.tableRow}>
-              <TableCell className={s.cellQuestion} onClick={() => alert('open card')}>
-                {row.question}
+          <TableRow hover key={row._id} className={s.tableRow}>
+            <TableCell className={s.cellQuestion} onClick={() => alert('open card')}>
+              {row.question}
+            </TableCell>
+            <TableCell className={s.cellAnswer} onClick={() => alert('open card')}>
+              {row.answer}
+            </TableCell>
+            <TableCell className={s.cell} onClick={() => alert('open card')}>
+              {row.updated}
+            </TableCell>
+            <TableCell className={s.cell}>
+              <Rating name="simple-controlled" readOnly value={row.grade} />
+            </TableCell>
+            {isMy && (
+              <TableCell align="right" className={s.cell}>
+                <EditCardModal
+                  id={row._id}
+                  disabled={loadingStatus === 'loading'}
+                  question={row.question}
+                  answer={row.answer}
+                />
+                <DeleteCardModal
+                  id={row._id}
+                  name={row.question}
+                  disabled={loadingStatus === 'loading'}
+                />
               </TableCell>
-              <TableCell className={s.cellAnswer} onClick={() => alert('open card')}>
-                {row.answer}
-              </TableCell>
-              <TableCell className={s.cell} onClick={() => alert('open card')}>
-                {row.updated}
-              </TableCell>
-              <TableCell className={s.cell}>
-                <Rating name="simple-controlled" readOnly value={row.grade} />
-              </TableCell>
-              {isMy && (
-                <TableCell align="right" className={s.cell}>
-                  <EditCardModal id={row._id} disabled={loadingStatus === 'loading'} />
-                  <DeleteCardModal
-                    id={row._id}
-                    name={row.question}
-                    disabled={loadingStatus === 'loading'}
-                  />
-                </TableCell>
-              )}
-            </TableRow>
-          </>
+            )}
+          </TableRow>
         )
       })}
     </TableBody>

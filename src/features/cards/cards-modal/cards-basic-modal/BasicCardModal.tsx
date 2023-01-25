@@ -4,12 +4,14 @@ import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
 import TextField from '@mui/material/TextField'
+import {
+  FieldErrorsImpl,
+  UseFormHandleSubmit,
+  UseFormRegister,
+  UseFormReset,
+} from 'react-hook-form'
 
-import { ButtonComponent } from '../../../../common/components/buttons/button/ButtonComponent'
-import { buttonWhite } from '../../../../common/constants/theme'
-import { createCardSchema } from '../../../../common/constants/validators/validationSchemes'
-import { useAuthForm } from '../../../../common/hooks/useAuthForm'
-import { sxButtonColorCreator } from '../../../../common/utils/styles-utils/sxButtonCreators'
+import { sxButtonColorCreator, buttonWhite, ButtonComponent } from '../../../../common'
 
 import s from './BasicCardModal.module.css'
 import { BoxCardModal } from './BoxCardModal'
@@ -23,9 +25,15 @@ type BasicCardModalPropsType = {
   title: string
   buttonText: string
   open: boolean
-  handleClose: (open: boolean) => void
+  handleClose: () => void
   onSubmitAction: (data: NewCardType) => void
   disabled: boolean
+  question?: string
+  answer?: string
+  handleSubmit: UseFormHandleSubmit<NewCardType>
+  register: UseFormRegister<NewCardType>
+  errors: Partial<FieldErrorsImpl<{ answer: string; question: string }>>
+  reset: UseFormReset<NewCardType>
 }
 export const BasicCardModal: FC<BasicCardModalPropsType> = ({
   open,
@@ -34,21 +42,17 @@ export const BasicCardModal: FC<BasicCardModalPropsType> = ({
   disabled,
   title,
   buttonText,
+  question,
+  answer,
+  handleSubmit,
+  register,
+  errors,
+  reset,
 }) => {
   // -- для селекта
   const [select, setSelect] = useState('text')
   const handleChange = (event: SelectChangeEvent) => {
     setSelect(event.target.value)
-  }
-  // -----
-
-  // -- для полей ввода
-  const { register, handleSubmit, errors, reset } = useAuthForm<NewCardType>(createCardSchema)
-
-  const onSubmit = (data: NewCardType) => {
-    onSubmitAction(data)
-    // если неудачный запрос, то не логично сбрасывать
-    reset()
   }
 
   return (
@@ -61,7 +65,7 @@ export const BasicCardModal: FC<BasicCardModalPropsType> = ({
             <MenuItem value={'image'}>Image</MenuItem>
           </Select>
         </FormControl>
-        <form onSubmit={handleSubmit(onSubmit)} className={s.formInput}>
+        <form onSubmit={handleSubmit(onSubmitAction)} className={s.formInput}>
           <TextField
             sx={{ m: 1, width: '347px' }}
             id="question"
@@ -70,6 +74,7 @@ export const BasicCardModal: FC<BasicCardModalPropsType> = ({
             {...register('question')}
             error={!!errors.question}
             helperText={errors.question?.message}
+            defaultValue={question}
           />
           <TextField
             sx={{ m: 1, width: '347px' }}
@@ -79,6 +84,7 @@ export const BasicCardModal: FC<BasicCardModalPropsType> = ({
             {...register('answer')}
             error={!!errors.answer}
             helperText={errors.answer?.message}
+            defaultValue={answer}
           />
           <ButtonComponent
             type="submit"
