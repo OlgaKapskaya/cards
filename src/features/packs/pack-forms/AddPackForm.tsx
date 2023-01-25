@@ -14,10 +14,10 @@ export type AddFormType = {
   private: boolean
 }
 type AddPackFormPropsType = {
-  setOpen: (open: boolean) => void
+  closeModal: () => void
 }
 
-export const AddPackForm: FC<AddPackFormPropsType> = ({ setOpen }) => {
+export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
   const { register, handleSubmit, reset } = useForm<AddFormType>()
 
   const [packStatus, setPackStatus] = useState(false)
@@ -25,12 +25,12 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ setOpen }) => {
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
     dispatch(createPack({ cardsPack: { name: data.name, private: data.private } }))
-    setOpen(!open)
+    closeModal()
     reset()
   }
 
   const addModalHandler = () => {
-    setOpen(!open)
+    closeModal()
   }
 
   return (
@@ -49,7 +49,7 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ setOpen }) => {
           <ButtonComponent sx={sxButtonColorCreator(buttonWhite)} onClick={addModalHandler}>
             Cancel
           </ButtonComponent>
-          <ButtonComponent type="submit" sx={sxButtonColorCreator(buttonWhite)}>
+          <ButtonComponent type="submit" sx={sxButtonColorCreator(['#1976d2', 'white'])}>
             Save
           </ButtonComponent>
         </div>
