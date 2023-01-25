@@ -2,8 +2,7 @@ import React, { useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { searchParamsSelector } from '../../common/selectors/packsListSelectors'
+import { useAppDispatch, useAppSelector, searchParamsSelector } from '../../common'
 
 import { FilterPanel } from './filter-panel/FilterPanel'
 import { AddPackModal } from './modals/AddPackModal'
