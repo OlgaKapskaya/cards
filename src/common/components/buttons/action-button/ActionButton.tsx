@@ -1,7 +1,7 @@
-import React, { FC, memo } from 'react'
+import { FC, memo } from 'react'
 
-import { Tooltip } from '@mui/material'
 import IconButton, { IconButtonProps } from '@mui/material/IconButton'
+import Tooltip from '@mui/material/Tooltip'
 
 import s from './ActionButton.module.css'
 

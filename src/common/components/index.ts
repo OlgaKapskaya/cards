@@ -9,6 +9,8 @@ import { SearchInput } from './inputs/search-input/SearchInput'
 import { IsEmptyMessage } from './is-empty-message/IsEmptyMessage'
 import { Loader } from './loader/Loader'
 import { MenuComponent } from './menu/MenuComponent'
+import { ModalComponent } from './modal-component/ModalComponent'
+import { useModalComponent } from './modal-component/useModalComponent'
 import { TableComponent } from './table/TableComponent'
 import { TableHeadComponent } from './table/TableHeadComponent'
 
@@ -26,4 +28,6 @@ export {
   MenuComponent,
   TableComponent,
   TableHeadComponent,
+  ModalComponent,
+  useModalComponent,
 }

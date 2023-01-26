@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
@@ -17,22 +17,24 @@ type UpdatePackFormPropsType = {
   pack_id: string
   name: string
   closeModal: () => void
+  onPrivate: boolean
 }
 
-export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({ pack_id, name, closeModal }) => {
-  const [packStatus, setPackStatus] = useState(false)
-
-  const { register, handleSubmit, reset, appStatus, dispatch, errors, setCustomError } =
+export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({
+  pack_id,
+  name,
+  onPrivate,
+  closeModal,
+}) => {
+  const { register, handleSubmit, reset, appStatus, dispatch, errors } =
     useAuthForm<AddFormType>(updatePackSchema)
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
-    if (name !== data.name) {
+    if (name !== data.name || onPrivate !== data.private) {
       dispatch(updatePack({ cardsPack: { _id: pack_id, name: data.name, private: data.private } }))
-      closeModal()
-      reset()
-    } else {
-      setCustomError('name', 'Please, enter the different name')
     }
+    closeModal()
+    reset()
   }
 
   const cancelHandler = () => {
@@ -42,13 +44,18 @@ export const UpdatePackForm: FC<UpdatePackFormPropsType> = ({ pack_id, name, clo
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.input}>
-        <TextField label="Name pack" defaultValue={name} variant="standard" {...register('name')} />
-        <p style={{ color: 'red' }}>{errors.name?.message}</p>
+        <TextField
+          label="Name pack"
+          defaultValue={name}
+          variant="standard"
+          {...register('name')}
+          helperText={errors.name && errors.name?.message}
+          error={!!errors.name}
+        />
         <div className={s.checkbox}>
           <FormControlLabel
-            control={<Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />}
+            control={<Checkbox defaultChecked={onPrivate} {...register('private')} />}
             label="Private pack"
-            {...register('private')}
           />
         </div>
 

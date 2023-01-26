@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react'
+import React, { FC, memo, ReactNode } from 'react'
 
 import Box from '@mui/material/Box'
 import Modal from '@mui/material/Modal'
@@ -23,32 +23,28 @@ type BoxCardModalPropsType = {
   reset?: () => void
   children: ReactNode
 }
-export const ModalComponent: FC<BoxCardModalPropsType> = ({
-  title,
-  open,
-  handleClose,
-  reset,
-  children,
-}) => {
-  const handleCloseReset = () => {
-    reset && reset()
-    handleClose(false)
-  }
+export const ModalComponent: FC<BoxCardModalPropsType> = memo(
+  ({ title, open, handleClose, reset, children }) => {
+    const handleCloseReset = () => {
+      reset && reset()
+      handleClose(false)
+    }
 
-  return (
-    <Modal open={open} onClose={handleCloseReset}>
-      <Box sx={style}>
-        <div className={s.contentBox}>
-          <div className={s.title}>
-            <div>{title}</div>
-            <div className={s.cross} onClick={handleCloseReset}>
-              +
+    return (
+      <Modal open={open} onClose={handleCloseReset}>
+        <Box sx={style}>
+          <div className={s.contentBox}>
+            <div className={s.title}>
+              <div>{title}</div>
+              <div className={s.cross} onClick={handleCloseReset}>
+                +
+              </div>
             </div>
+            <div className={s.line}></div>
+            <div className={s.form}> {children} </div>
           </div>
-          <div className={s.line}></div>
-          <div className={s.form}> {children} </div>
-        </div>
-      </Box>
-    </Modal>
-  )
-}
+        </Box>
+      </Modal>
+    )
+  }
+)

@@ -14,17 +14,17 @@ import {
   searchParamsSelector,
   ButtonComponent,
   appStatusSelector,
+  ModalComponent,
+  useModalComponent,
 } from 'common'
-import { ModalComponent } from 'common/components/modal-component/ModalComponent'
-import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 
 export const Packs = () => {
   const [, setSearchParams] = useSearchParams()
+
   const loadingStatus = useAppSelector(appStatusSelector)
+  const stateSearchParams = useAppSelector(searchParamsSelector)
 
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
-
-  const stateSearchParams = useAppSelector(searchParamsSelector)
 
   const dispatch = useAppDispatch()
 

@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react'
+import { FC } from 'react'
 
 import { FormControlLabel } from '@mui/material'
 import Checkbox from '@mui/material/Checkbox'
@@ -23,8 +23,6 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
   const { register, handleSubmit, reset, dispatch, errors } =
     useAuthForm<AddFormType>(addPackSchema)
 
-  const [packStatus, setPackStatus] = useState(false)
-
   const onSubmit: SubmitHandler<AddFormType> = data => {
     dispatch(createPack({ cardsPack: { name: data.name, private: data.private } }))
     closeModal()
@@ -38,14 +36,16 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <div className={s.input}>
-        <TextField label="Enter pack name" variant="standard" autoFocus {...register('name')} />
-        <p style={{ color: 'red' }}>{errors.name?.message}</p>
+        <TextField
+          label="Enter pack name"
+          variant="standard"
+          autoFocus
+          {...register('name')}
+          helperText={errors.name && errors.name?.message}
+          error={!!errors.name}
+        />
         <div className={s.checkbox}>
-          <FormControlLabel
-            control={<Checkbox checked={packStatus} onClick={() => setPackStatus(!packStatus)} />}
-            label={'Private pack'}
-            {...register('private')}
-          />
+          <FormControlLabel control={<Checkbox {...register('private')} />} label="Private pack" />
         </div>
 
         <div className={s.buttons}>

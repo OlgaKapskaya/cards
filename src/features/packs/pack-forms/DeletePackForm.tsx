@@ -35,9 +35,10 @@ export const DeletePackForm: FC<DeletePackFormPropsType> = ({ pack_id, name, clo
 
   return (
     <div className={s.input}>
-      <Typography>
-        Do you really want to remove <span style={{ fontWeight: 'bold' }}>{name}</span>? All cards
-        will be deleted.
+      <Typography sx={{ wordBreak: 'break-word' }}>
+        Do you really want to remove <b>{name}</b>?
+        <br />
+        All cards will be deleted.
       </Typography>
 
       <div className={s.buttons}>

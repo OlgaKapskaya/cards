@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react'
+import { ReactNode, useCallback, useState } from 'react'
 
 export const useModalComponent = () => {
   const [open, setOpen] = useState<boolean>(false)
@@ -11,9 +11,9 @@ export const useModalComponent = () => {
     setOpen(true)
   }
 
-  const closeModal = () => {
+  const closeModal = useCallback(() => {
     setOpen(false)
-  }
+  }, [])
 
   return { open, modalTitle, modalChildren, closeModal, createModal }
 }
