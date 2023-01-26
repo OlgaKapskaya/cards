@@ -4,51 +4,51 @@ import { useNavigate } from 'react-router-dom'
 
 import {
   ButtonComponent,
-  useAppDispatch,
   useAppSelector,
-  appStatusSelector,
-  cardPackId,
-  emptySelector,
-  userCardsPackIdSelector,
   userIDSelector,
   sxButtonMarginTopWidthCreator,
+  appStatusSelector,
+  emptySelector,
+  userCardsPackIdSelector,
 } from '../../../common'
+import { ModalComponent } from '../../../common/components/modal-component/ModalComponent'
+import { useModalComponent } from '../../../common/components/modal-component/useModalComponent'
 import { PATH } from '../../../common/constants/path'
-import { setIsShowAnswer } from '../../learn/learnSlice'
-import { NewCardModal } from '../cards-modal/cards-add-new-modal/NewCardModal'
+import { NewCardForm } from '../cards-modal-form/NewCardForm'
 
 export const ActiveCardsButton = () => {
-  const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const loadingStatus = useAppSelector(appStatusSelector)
   const emptyStatus = useAppSelector(emptySelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
-  const packId = useAppSelector(cardPackId)
+
+  const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
+
+  const handleAddNewCard = () =>
+    createModal('Add new card', <NewCardForm closeModal={closeModal} />)
 
   const isMy = userId === profileId
+  let handleOnClick = handleAddNewCard
+  let textButton = 'Add new card'
 
-  let handleOnClick = emptyStatus
-    ? () => navigate(PATH.PACKS)
-    : () => {
-        dispatch(setIsShowAnswer(false))
-        navigate(`${PATH.LEARN}/${packId}`)
-      }
-  let textButton = emptyStatus ? 'Back to packs list' : 'Learn to pack'
+  if (!isMy) {
+    handleOnClick = emptyStatus ? () => navigate(PATH.PACKS) : () => alert('learn')
+    textButton = emptyStatus ? 'Back to packs list' : 'Learn to pack'
+  }
 
   return (
     <>
-      {isMy ? (
-        <NewCardModal disabled={loadingStatus === 'loading'} />
-      ) : (
-        <ButtonComponent
-          sx={sxButtonMarginTopWidthCreator('0', '184px')}
-          onClick={handleOnClick}
-          disabled={loadingStatus === 'loading'}
-        >
-          {textButton}
-        </ButtonComponent>
-      )}
+      <ButtonComponent
+        sx={sxButtonMarginTopWidthCreator('0', '184px')}
+        onClick={handleOnClick}
+        disabled={loadingStatus === 'loading'}
+      >
+        {textButton}
+      </ButtonComponent>
+      <ModalComponent title={modalTitle} open={open} handleClose={closeModal}>
+        {modalChildren}
+      </ModalComponent>
     </>
   )
 }
