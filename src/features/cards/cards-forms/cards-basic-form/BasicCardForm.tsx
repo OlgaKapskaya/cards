@@ -11,7 +11,8 @@ import {
   UseFormReset,
 } from 'react-hook-form'
 
-import { ButtonComponent, buttonWhite, sxButtonColorCreator } from '../../../../common'
+import { ButtonComponent, sxButtonColorCreator } from '../../../../common'
+import { buttonBlue } from '../../../../common/constants/theme'
 
 import s from './BasicCardForm.module.css'
 
@@ -78,7 +79,7 @@ export const BasicCardForm: FC<BasicCardModalPropsType> = ({
         />
         <ButtonComponent
           type="submit"
-          sx={sxButtonColorCreator(buttonWhite, '113px', '30px', '30px')}
+          sx={sxButtonColorCreator(buttonBlue, '113px', '30px', '30px')}
           disabled={disabled}
         >
           {buttonText}

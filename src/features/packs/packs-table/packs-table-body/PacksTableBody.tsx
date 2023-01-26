@@ -5,17 +5,25 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
+import { DeleteForm } from '../../../../common/components/forms/DeleteForm'
 import { setCardsPageCount } from '../../../cards/cardsSlice'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
-import { DeletePackForm } from '../../pack-forms/DeletePackForm'
-import { UpdatePackForm } from '../../pack-forms/UpdatePackForm'
+import { EditPackForm } from '../../pack-forms/EditPackForm'
+import { deletePack } from '../../packsSlice'
 
 import s from './PacksTableBody.module.css'
 
 import edit from 'assets/img/edit.svg'
 import learn from 'assets/img/teacher.svg'
 import del from 'assets/img/trash.svg'
-import { ActionButton, useAppDispatch, useAppSelector, packsSelector, userIDSelector } from 'common'
+import {
+  ActionButton,
+  appStatusSelector,
+  packsSelector,
+  useAppDispatch,
+  useAppSelector,
+  userIDSelector,
+} from 'common'
 import { ModalComponent } from 'common/components/modal-component/ModalComponent'
 import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 import { PATH } from 'common/constants/path'
@@ -23,7 +31,7 @@ import { PATH } from 'common/constants/path'
 export const PacksTableBody = () => {
   const packs = useAppSelector(packsSelector)
   const profile_id = useAppSelector(userIDSelector)
-
+  const loadingStatus = useAppSelector(appStatusSelector)
   const navigate = useNavigate()
 
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
@@ -40,16 +48,23 @@ export const PacksTableBody = () => {
   }
 
   const onClickUpdateHandler = (pack_id: string, name: string) => {
-    createModal(
-      'Edit pack',
-      <UpdatePackForm pack_id={pack_id} name={name} closeModal={closeModal} />
-    )
+    createModal('Edit pack', <EditPackForm pack_id={pack_id} name={name} closeModal={closeModal} />)
   }
 
   const onDeletePackTestHandler = (pack_id: string, name: string) => {
+    const closeDeleteModal = () => {
+      dispatch(deletePack({ id: pack_id })).then(() => {
+        closeModal()
+      })
+    }
+
     createModal(
       'Delete pack',
-      <DeletePackForm pack_id={pack_id} name={name} closeModal={closeModal} />
+      <DeleteForm
+        name={name}
+        disabled={loadingStatus === 'loading'}
+        closeModal={closeDeleteModal}
+      />
     )
   }
 

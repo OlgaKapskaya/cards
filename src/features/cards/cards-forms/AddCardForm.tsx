@@ -10,7 +10,7 @@ type NewCardModalType = {
   closeModal: () => void
 }
 
-export const NewCardForm: FC<NewCardModalType> = ({ closeModal }) => {
+export const AddCardForm: FC<NewCardModalType> = ({ closeModal }) => {
   const { register, handleSubmit, errors, reset, dispatch, appStatus } =
     useAuthForm<NewCardType>(createCardSchema)
 
@@ -30,7 +30,7 @@ export const NewCardForm: FC<NewCardModalType> = ({ closeModal }) => {
   return (
     <>
       <BasicCardForm
-        buttonText={'Add'}
+        buttonText={'Save'}
         onSubmit={onSubmit}
         disabled={appStatus === 'loading'}
         handleSubmit={handleSubmit}

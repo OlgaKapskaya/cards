@@ -14,7 +14,7 @@ import {
 import { ModalComponent } from '../../../common/components/modal-component/ModalComponent'
 import { useModalComponent } from '../../../common/components/modal-component/useModalComponent'
 import { PATH } from '../../../common/constants/path'
-import { NewCardForm } from '../cards-modal-form/NewCardForm'
+import { AddCardForm } from '../cards-forms/AddCardForm'
 
 export const ActiveCardsButton = () => {
   const navigate = useNavigate()
@@ -26,7 +26,7 @@ export const ActiveCardsButton = () => {
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
 
   const handleAddNewCard = () =>
-    createModal('Add new card', <NewCardForm closeModal={closeModal} />)
+    createModal('Add new card', <AddCardForm closeModal={closeModal} />)
 
   const isMy = userId === profileId
   let handleOnClick = handleAddNewCard

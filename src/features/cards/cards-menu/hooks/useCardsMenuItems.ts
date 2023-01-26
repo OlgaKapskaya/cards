@@ -7,25 +7,13 @@ import { useAppDispatch } from '../../../../common'
 import { MenuItemType } from '../../../../common/components/menu/MenuItemComponent/MenuItemComponent'
 import { PATH } from '../../../../common/constants/path'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
-import { deleteCardPack, updateCardPack } from '../../cardsSlice'
 
-export const useCardsMenuItems = () => {
+export const useCardsMenuItems = (editPack: () => void, deletePack: () => void) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
   let { packId } = useParams<{ packId: string }>()
 
-  const editPack = () =>
-    dispatch(updateCardPack({ cardsPack: { _id: packId as string, name: 'yooop cards' } }))
-  const deletePack = () => {
-    dispatch(deleteCardPack({ id: packId as string })).then(() => {
-      navigate(PATH.PACKS)
-    })
-    // можно ли тут перенаправлять? а если запрос не прошел?
-    // без сет таймаут двойной запрос
-    // setTimeout(() => navigate(PATH.PACKS), 700)
-    // navigate(PATH.PACKS)
-  }
   const learnPack = () => {
     dispatch(setIsShowAnswer(false))
     navigate(`${PATH.LEARN}/${packId}`)

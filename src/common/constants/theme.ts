@@ -2,6 +2,7 @@ import { createTheme } from '@mui/material'
 
 export const buttonWhite = ['#FCFCFC', '#000']
 export const buttonRed = ['#FF3636', '#FCFCFC']
+export const buttonBlue = ['#1976d2', '#FFF']
 export const iconButton = {
   borderRadius: '2px',
   minWidth: '0px',

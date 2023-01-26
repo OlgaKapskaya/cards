@@ -1,7 +1,3 @@
-.tableRow {
-  cursor: pointer;
-}
-
 .cellQuestion,
 .cellAnswer {
   width: 25%;

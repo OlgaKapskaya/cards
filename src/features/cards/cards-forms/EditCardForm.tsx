@@ -16,7 +16,7 @@ export const EditCardForm: FC<EditCardModalPropsType> = ({ id, question, answer,
   const { register, handleSubmit, errors, reset, dispatch, appStatus } =
     useAuthForm<NewCardType>(createCardSchema)
 
-  const handleUpdateCard = (data: NewCardType) => {
+  const handleEditCard = (data: NewCardType) => {
     const payload = {
       card: {
         _id: id,
@@ -33,7 +33,7 @@ export const EditCardForm: FC<EditCardModalPropsType> = ({ id, question, answer,
   return (
     <BasicCardForm
       buttonText={'Save'}
-      onSubmit={handleUpdateCard}
+      onSubmit={handleEditCard}
       disabled={appStatus === 'loading'}
       question={question}
       answer={answer}

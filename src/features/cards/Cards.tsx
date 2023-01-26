@@ -52,7 +52,6 @@ export const Cards = () => {
   }, [])
 
   useEffect(() => {
-    // убрать заглушку
     dispatch(getCards())
   }, [searchParams])
 

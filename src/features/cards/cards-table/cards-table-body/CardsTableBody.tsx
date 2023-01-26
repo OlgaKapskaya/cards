@@ -11,14 +11,16 @@ import {
   ActionButton,
   appStatusSelector,
   cardsSelector,
+  useAppDispatch,
   useAppSelector,
   userCardsPackIdSelector,
   userIDSelector,
 } from '../../../../common'
+import { DeleteForm } from '../../../../common/components/forms/DeleteForm'
 import { ModalComponent } from '../../../../common/components/modal-component/ModalComponent'
 import { useModalComponent } from '../../../../common/components/modal-component/useModalComponent'
-import { DeleteCardForm } from '../../cards-modal-form/DeleteCardForm'
-import { EditCardForm } from '../../cards-modal-form/EditCardForm'
+import { EditCardForm } from '../../cards-forms/EditCardForm'
+import { deleteCard } from '../../cardsSlice'
 
 import s from './CardsTableBody.module.css'
 
@@ -27,6 +29,7 @@ export const CardsTableBody = () => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
+  const dispatch = useAppDispatch()
   const isMy = userId === profileId
   const disabled = loadingStatus === 'loading'
 
@@ -39,9 +42,15 @@ export const CardsTableBody = () => {
     )
   }
   const handleDeleteCard = (id: string, name: string) => {
+    const closeDeleteModal = () => {
+      dispatch(deleteCard({ id })).then(() => {
+        closeModal()
+      })
+    }
+
     createModal(
       'Delete card',
-      <DeleteCardForm id={id} name={name} disabled={disabled} closeModal={closeModal} />
+      <DeleteForm name={name} disabled={disabled} closeModal={closeDeleteModal} />
     )
   }
 
@@ -50,16 +59,10 @@ export const CardsTableBody = () => {
       <TableBody>
         {cards.map(row => {
           return (
-            <TableRow hover key={row._id} className={s.tableRow}>
-              <TableCell className={s.cellQuestion} onClick={() => alert('open card')}>
-                {row.question}
-              </TableCell>
-              <TableCell className={s.cellAnswer} onClick={() => alert('open card')}>
-                {row.answer}
-              </TableCell>
-              <TableCell className={s.cell} onClick={() => alert('open card')}>
-                {row.updated}
-              </TableCell>
+            <TableRow key={row._id} className={s.tableRow}>
+              <TableCell className={s.cellQuestion}>{row.question}</TableCell>
+              <TableCell className={s.cellAnswer}>{row.answer}</TableCell>
+              <TableCell className={s.cell}>{row.updated}</TableCell>
               <TableCell className={s.cell}>
                 <Rating name="simple-controlled" readOnly value={row.grade} />
               </TableCell>

@@ -42,7 +42,7 @@ export const Packs = () => {
   }, [stateSearchParams])
 
   const addPackHandler = () => {
-    createModal('Add pack', <AddPackForm closeModal={closeModal} />)
+    createModal('Add new pack', <AddPackForm closeModal={closeModal} />)
   }
 
   return (
