@@ -32,7 +32,7 @@ export const useFilterPanelLogic = () => {
   }, [])
 
   const onChangeTypePacks = useCallback((type: boolean) => {
-    dispatch(setRange([]))
+    dispatch(setRange([0, 0]))
     dispatch(setCurrentPage(1))
     if (type) {
       dispatch(setUserId(currentUserId))

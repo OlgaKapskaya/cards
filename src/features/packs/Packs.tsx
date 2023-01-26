@@ -2,17 +2,27 @@ import React, { useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../common/hooks/reactReduxHooks'
-import { searchParamsSelector } from '../../common/selectors/packsListSelectors'
-
 import { FilterPanel } from './filter-panel/FilterPanel'
-import { AddPackModal } from './modals/AddPackModal'
+import { AddPackForm } from './pack-forms/AddPackForm'
 import { PacksTable } from './packs-table/PacksTable'
 import s from './Packs.module.css'
 import { getPacks } from './packsSlice'
 
+import {
+  useAppDispatch,
+  useAppSelector,
+  searchParamsSelector,
+  ButtonComponent,
+  appStatusSelector,
+} from 'common'
+import { ModalComponent } from 'common/components/modal-component/ModalComponent'
+import { useModalComponent } from 'common/components/modal-component/useModalComponent'
+
 export const Packs = () => {
   const [, setSearchParams] = useSearchParams()
+  const loadingStatus = useAppSelector(appStatusSelector)
+
+  const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
 
   const stateSearchParams = useAppSelector(searchParamsSelector)
 
@@ -31,15 +41,25 @@ export const Packs = () => {
     dispatch(getPacks())
   }, [stateSearchParams])
 
+  const addPackHandler = () => {
+    createModal('Add pack', <AddPackForm closeModal={closeModal} />)
+  }
+
   return (
     <div className={s.container}>
       <div className={s.header}>
         <span className={s.title}>Packs list</span>
-        <AddPackModal />
+        <ButtonComponent onClick={addPackHandler} disabled={loadingStatus === 'loading'}>
+          Add New Pack
+        </ButtonComponent>
       </div>
 
       <FilterPanel />
       <PacksTable />
+
+      <ModalComponent title={modalTitle} open={open} handleClose={closeModal}>
+        {modalChildren}
+      </ModalComponent>
     </div>
   )
 }

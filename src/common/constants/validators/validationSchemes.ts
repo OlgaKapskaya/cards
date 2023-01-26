@@ -31,3 +31,11 @@ export const createCardSchema = yup.object({
   question: basicTextFieldValidation,
   answer: basicTextFieldValidation,
 })
+
+export const updatePackSchema = yup.object({
+  name: basicTextFieldValidation,
+})
+
+export const addPackSchema = yup.object({
+  name: basicTextFieldValidation,
+})

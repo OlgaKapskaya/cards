@@ -27,10 +27,18 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
     reset,
     handleSubmit,
     formState: { errors },
+    setError,
   } = useForm<T>({
     mode: 'onTouched',
     resolver: yupResolver(schema),
   })
+
+  const setCustomError = (name: any, message: string) => {
+    return setError(name, {
+      type: 'custom',
+      message: message,
+    })
+  }
 
   return {
     isLoggedIn,
@@ -44,5 +52,6 @@ export const useAuthForm = <T extends FieldValues>(schema: any) => {
     errors,
     appStatus,
     reset,
+    setCustomError,
   }
 }
