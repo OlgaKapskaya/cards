@@ -47,8 +47,11 @@ export const PacksTableBody = () => {
     navigate(`${PATH.LEARN}/${packId}`)
   }
 
-  const onClickUpdateHandler = (pack_id: string, name: string) => {
-    createModal('Edit pack', <EditPackForm pack_id={pack_id} name={name} closeModal={closeModal} />)
+  const onClickUpdateHandler = (pack_id: string, name: string, onPrivate: boolean) => {
+    createModal(
+      'Edit pack',
+      <EditPackForm pack_id={pack_id} name={name} onPrivate={onPrivate} closeModal={closeModal} />
+    )
   }
 
   const onDeletePackTestHandler = (pack_id: string, name: string) => {
@@ -114,7 +117,7 @@ export const PacksTableBody = () => {
                   <ActionButton
                     icon={edit}
                     hint="update pack"
-                    onClick={() => onClickUpdateHandler(p._id, p.name)}
+                    onClick={() => onClickUpdateHandler(p._id, p.name, p.private)}
                   />
                   <ActionButton
                     icon={del}

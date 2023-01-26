@@ -1,8 +1,11 @@
-import React, { FC } from 'react'
-
 import { useNavigate } from 'react-router-dom'
 
-import pointsMenu from '../../../assets/img/pointsMenu.svg'
+import { deleteCardPack, getCards } from '../cardsSlice'
+
+import s from './CardsMenu.module.css'
+import { useCardsMenuItems } from './hooks/useCardsMenuItems'
+
+import pointsMenu from 'assets/img/pointsMenu.svg'
 import {
   appStatusSelector,
   cardPackId,
@@ -12,19 +15,15 @@ import {
   useAppSelector,
   userCardsPackIdSelector,
   userIDSelector,
-} from '../../../common'
-import { DeleteForm } from '../../../common/components/forms/DeleteForm'
-import { useMenuComponent } from '../../../common/components/menu/useMenuComponent'
-import { ModalComponent } from '../../../common/components/modal-component/ModalComponent'
-import { useModalComponent } from '../../../common/components/modal-component/useModalComponent'
-import { PATH } from '../../../common/constants/path'
-import { EditPackForm } from '../../packs/pack-forms/EditPackForm'
-import { deleteCardPack, getCards } from '../cardsSlice'
+} from 'common'
+import { DeleteForm } from 'common/components/forms/DeleteForm'
+import { useMenuComponent } from 'common/components/menu/useMenuComponent'
+import { ModalComponent } from 'common/components/modal-component/ModalComponent'
+import { useModalComponent } from 'common/components/modal-component/useModalComponent'
+import { PATH } from 'common/constants/path'
+import { EditPackForm } from 'features/packs/pack-forms/EditPackForm'
 
-import s from './CardsMenu.module.css'
-import { useCardsMenuItems } from './hooks/useCardsMenuItems'
-
-export const CardsMenu: FC = () => {
+export const CardsMenu = () => {
   const userId = useAppSelector(userCardsPackIdSelector)
   const profileId = useAppSelector(userIDSelector)
   const loadingStatus = useAppSelector(appStatusSelector)
@@ -84,7 +83,7 @@ export const CardsMenu: FC = () => {
     <>
       <div className={s.menuContainer} onClick={handleMenuOpen}>
         <span className={s.titleSpan}>{packName}</span>
-        <img src={pointsMenu} alt={'points-menu'} />
+        <img src={pointsMenu} alt="points-menu" />
       </div>
       <MenuComponent
         anchorEl={anchorEl}

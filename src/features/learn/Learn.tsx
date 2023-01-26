@@ -3,6 +3,13 @@ import React, { useEffect } from 'react'
 import Paper from '@mui/material/Paper'
 import { useParams } from 'react-router-dom'
 
+import { getCards, setCardsPackId, setCardsPageCount, setIsCardsLoaded } from '../cards/cardsSlice'
+
+import { Answer } from './answer/Answer'
+import s from './Learn.module.css'
+import { setCurrentCard, setIsFirst } from './learnSlice'
+import { Question } from './question/Question'
+
 import {
   BackPackLink,
   Loader,
@@ -15,13 +22,7 @@ import {
   isShowAnswerSelector,
   maxCardsCountSelector,
   getRandomCard,
-} from '../../common'
-import { getCards, setCardsPackId, setCardsPageCount, setIsCardsLoaded } from '../cards/cardsSlice'
-
-import { Answer } from './answer/Answer'
-import s from './Learn.module.css'
-import { setCurrentCard, setIsFirst } from './learnSlice'
-import { Question } from './question/Question'
+} from 'common'
 
 export const Learn = () => {
   const cards = useAppSelector(cardsSelector)
