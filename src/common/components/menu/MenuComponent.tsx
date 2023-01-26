@@ -4,6 +4,7 @@ import { FC } from 'react'
 import Menu from '@mui/material/Menu'
 
 import { MenuItemComponent, MenuItemType } from './MenuItemComponent/MenuItemComponent'
+import { TestMenu } from './TestMeny'
 
 type MenuComponentProps = {
   anchorEl: null | HTMLElement
@@ -53,7 +54,10 @@ export const MenuComponent: FC<MenuComponentProps> = ({ handleClose, anchorEl, o
       transformOrigin={{ horizontal: 'right', vertical: 'top' }}
       anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
     >
-      {menuItems}
+      {/*{menuItems}*/}
+      <TestMenu />
+      <TestMenu />
+      <TestMenu />
     </Menu>
   )
 }

@@ -18,5 +18,6 @@ export const MenuItemComponent: FC<MenuItemType> = ({ title, image, onClick, id 
       </ListItemIcon>
       {title}
     </MenuItem>
+    // <MenuItem>Edit</MenuItem>
   )
 }

@@ -18,6 +18,9 @@ import {
   userIDSelector,
   sxButtonColorCreator,
 } from '../../../common'
+import { createCardSchema } from '../../../common/constants/validators/validationSchemes'
+import { useAuthForm } from '../../../common/hooks/useAuthForm'
+import { NewCardType } from '../../cards/cards-modal/cards-basic-modal/BasicCardModal'
 import { updatePack } from '../packsSlice'
 
 import { BasicModal } from './BasicModal'
@@ -49,7 +52,8 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
 
   const [open, setOpen] = useState<boolean>(false)
 
-  const { register, handleSubmit, reset } = useForm<IFormInput>()
+  // const { register, handleSubmit, reset } = useForm<IFormInput>()
+  const { register, handleSubmit, errors, reset } = useAuthForm<NewCardType>(createCardSchema)
 
   const onSubmit: SubmitHandler<IFormInput> = data => {
     dispatch(
@@ -89,6 +93,8 @@ export const EditPackModal: FC<EditPackModalPropsType> = ({
               defaultValue={name}
               variant="standard"
               {...register('name')}
+              error={!!errors.name}
+              helperText={errors.question?.name}
             />
             <div className={s.checkbox}>
               <FormControlLabel
