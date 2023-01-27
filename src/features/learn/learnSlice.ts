@@ -64,7 +64,7 @@ export const learnSlice = createSlice({
       state.isShowAnswer = action.payload
     },
     setGrade: (state, action: PayloadAction<number>) => {
-      state.grade = action.payload + 1
+      state.grade = action.payload
     },
   },
 })
