@@ -11,7 +11,9 @@ import {
   appStatusSelector,
   cardPackId,
   cardPackNameSelector,
+  cardsTotalCountSelector,
   MenuComponent,
+  privatePackSelector,
   useAppDispatch,
   useAppSelector,
   userCardsPackIdSelector,
@@ -30,8 +32,8 @@ export const CardsMenu = () => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const packName = useAppSelector(cardPackNameSelector)
   const packId = useAppSelector(cardPackId)
-  const packPrivate = useAppSelector(state => state.cards.packPrivate)
-  const cardsCount = useAppSelector(state => state.cards.cardsTotalCount)
+  const packPrivate = useAppSelector(privatePackSelector)
+  const cardsCount = useAppSelector(cardsTotalCountSelector)
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()

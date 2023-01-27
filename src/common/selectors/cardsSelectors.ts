@@ -13,3 +13,4 @@ export const cardPackNameSelector = (state: AppRootStateType) => state.cards.pac
 export const cardPackId = (state: AppRootStateType) => state.cards.cardsPack_id
 export const sortCardSelector = (state: AppRootStateType) => state.cards.searchParams.sort
 export const isCardLoadedSelector = (state: AppRootStateType) => state.cards.isCardsLoaded
+export const privatePackSelector = (state: AppRootStateType) => state.cards.packPrivate
