@@ -39,9 +39,9 @@ export const PacksTableBody = () => {
 
   const dispatch = useAppDispatch()
 
-  const navigateToCardsHandler = (packId: string) => {
+  const navigateToCardsHandler = (packId: string, packPrivate: boolean) => {
     dispatch(setCardsPageCount(4))
-    navigate(`${PATH.PACKS}${PATH.CARDS}/${packId}`)
+    navigate(`${PATH.PACKS}${PATH.CARDS}/?packId=${packId}&packPrivate=${packPrivate}`)
   }
   const startLearnHandler = (packId: string) => {
     dispatch(setIsShowAnswer(false))
@@ -89,7 +89,7 @@ export const PacksTableBody = () => {
         {packs.map(p => (
           <TableRow hover key={p._id} className={s.tableRow}>
             <TableCell
-              onClick={() => navigateToCardsHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id, p.private)}
               className={s.nameCell}
               component="th"
               scope="row"
@@ -97,21 +97,21 @@ export const PacksTableBody = () => {
               {p.name}
             </TableCell>
             <TableCell
-              onClick={() => navigateToCardsHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.countCell}
             >
               {p.cardsCount}
             </TableCell>
             <TableCell
-              onClick={() => navigateToCardsHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.cell}
             >
               {p.updated}
             </TableCell>
             <TableCell
-              onClick={() => navigateToCardsHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.cell}
             >

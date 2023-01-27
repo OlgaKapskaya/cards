@@ -25,7 +25,6 @@ export const Packs = () => {
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
 
   const stateSearchParams = useAppSelector(searchParamsSelector)
-
   const dispatch = useAppDispatch()
 
   useEffect(() => {

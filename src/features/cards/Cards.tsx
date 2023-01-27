@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import { useParams } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 import {
   BackPackLink,
@@ -21,7 +21,7 @@ import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
 import { CardsMenu } from './cards-menu/CardsMenu'
 import { CardsTable } from './cards-table/CardsTable'
 import s from './Cards.module.css'
-import { getCards, setCardsPackId, setIsCardsLoaded, setSearchWord } from './cardsSlice'
+import { getCards, setIsCardsLoaded, setSearchWord, setUrlPackParams } from './cardsSlice'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()
@@ -41,15 +41,21 @@ export const Cards = () => {
     dispatch(setSearchWord(value))
   }
 
-  const { packId } = useParams<{ packId: string }>()
+  const [urlParams] = useSearchParams()
+  const { packId, packPrivate } = Object.fromEntries(urlParams)
 
   useEffect(() => {
-    dispatch(setCardsPackId(packId ? packId : ''))
+    const payload = {
+      packId: packId ? packId : '',
+      packPrivate: packPrivate === 'true',
+    }
+
+    dispatch(setUrlPackParams(payload))
 
     return () => {
       dispatch(setIsCardsLoaded(false))
     }
-  }, [])
+  }, [urlParams])
 
   useEffect(() => {
     dispatch(getCards())

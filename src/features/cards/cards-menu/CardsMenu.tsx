@@ -1,4 +1,4 @@
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { UpdatePackPayloadType } from '../../packs/packsAPI'
 import { deleteCardPack, updateCardPack } from '../cardsSlice'
@@ -30,8 +30,12 @@ export const CardsMenu = () => {
   const loadingStatus = useAppSelector(appStatusSelector)
   const packName = useAppSelector(cardPackNameSelector)
   const packId = useAppSelector(cardPackId)
+  const packPrivate = useAppSelector(state => state.cards.packPrivate)
+
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
+
+  const [, setUrlParams] = useSearchParams()
 
   const { open: openMenu, anchorEl, handleMenuOpen, handleMenuClose } = useMenuComponent()
 
@@ -46,17 +50,22 @@ export const CardsMenu = () => {
   const editPackHandler = () => {
     const closeEditModal = (data: UpdatePackPayloadType) => {
       dispatch(updateCardPack(data)).then(() => {
+        setUrlParams({
+          packId: data.cardsPack._id?.toString(),
+          packPrivate: data.cardsPack.private?.toString() || 'false',
+        })
         closeModal()
       })
-
-      // dispatch(getCards()).then(() => {
-      //   closeModal()
-      // })
     }
 
     createModal(
       'Edit pack',
-      <EditPackForm pack_id={packId} name={packName} closeModal={closeEditModal} />
+      <EditPackForm
+        pack_id={packId}
+        name={packName}
+        closeModal={closeEditModal}
+        onPrivate={packPrivate}
+      />
     )
   }
 
