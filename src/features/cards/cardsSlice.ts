@@ -131,7 +131,6 @@ export const updateCardPack = createAsyncThunk(
       await packsAPI.updatePack(data)
       dispatch(getCards())
       dispatch(setAppMessage('Pack updated'))
-      dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
       errorNetworkUtil(dispatch, e)
     }
