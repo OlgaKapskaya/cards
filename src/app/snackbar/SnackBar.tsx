@@ -22,7 +22,7 @@ export const SnackBar = () => {
   const alertSeverity = status === 'failed' ? 'error' : 'success'
 
   return (
-    <Snackbar open={message !== null} autoHideDuration={6000} onClose={handleClose}>
+    <Snackbar open={message !== null} autoHideDuration={2000} onClose={handleClose}>
       <Alert onClose={handleClose} severity={alertSeverity} sx={{ width: '100%' }} variant="filled">
         {message}
       </Alert>
