@@ -38,6 +38,7 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
       <div className={s.input}>
         <TextField
           label="Enter pack name"
+          multiline
           variant="standard"
           autoFocus
           {...register('name')}

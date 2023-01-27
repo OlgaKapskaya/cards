@@ -39,6 +39,7 @@ export const EditPackForm: FC<UpdatePackFormPropsType> = ({
         <TextField
           label="Name pack"
           defaultValue={name}
+          multiline
           variant="standard"
           {...register('name')}
           error={!!errors.name}

@@ -61,6 +61,7 @@ export const BasicCardForm: FC<BasicCardModalPropsType> = ({
           sx={{ m: 1, width: '347px' }}
           id="question"
           label="Question"
+          multiline
           variant="standard"
           {...register('question')}
           error={!!errors.question}
@@ -71,6 +72,7 @@ export const BasicCardForm: FC<BasicCardModalPropsType> = ({
           sx={{ m: 1, width: '347px' }}
           id="answer"
           label="Answer"
+          multiline
           variant="standard"
           {...register('answer')}
           error={!!errors.answer}

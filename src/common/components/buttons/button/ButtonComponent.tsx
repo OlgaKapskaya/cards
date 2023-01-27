@@ -10,6 +10,7 @@ export const ButtonComponent: FC<ButtonProps> = memo(
         sx={{
           borderRadius: '30px',
           textTransform: 'none',
+          height: '35px',
           ...sx,
         }}
         variant={variant ? variant : 'contained'}
