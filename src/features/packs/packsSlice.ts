@@ -119,12 +119,7 @@ export const updatePack = createAsyncThunk(
     dispatch(setAppStatus('loading'))
     try {
       await packsAPI.updatePack(payload)
-
       dispatch(getPacks())
-      // для обновления имени pack в карточках при edit
-      // можем ли мы использовать setTimeout в thunk и как его чистить
-      // setTimeout(() => dispatch(getCards()), 700)
-
       dispatch(setAppMessage(`Pack updated`))
       dispatch(setAppStatus('succeeded'))
     } catch (e) {

@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'
 
-import { deleteCardPack, getCards } from '../cardsSlice'
+import { UpdatePackPayloadType } from '../../packs/packsAPI'
+import { deleteCardPack, updateCardPack } from '../cardsSlice'
 
 import s from './CardsMenu.module.css'
 import { useCardsMenuItems } from './hooks/useCardsMenuItems'
@@ -42,20 +43,24 @@ export const CardsMenu = () => {
     createModal,
   } = useModalComponent()
 
-  const onClickUpdateHandler = () => {
-    const closeUpdateModal = () => {
-      dispatch(getCards()).then(() => {
+  const editPackHandler = () => {
+    const closeEditModal = (data: UpdatePackPayloadType) => {
+      dispatch(updateCardPack(data)).then(() => {
         closeModal()
       })
+
+      // dispatch(getCards()).then(() => {
+      //   closeModal()
+      // })
     }
 
     createModal(
       'Edit pack',
-      <EditPackForm pack_id={packId} name={packName} closeModal={closeUpdateModal} />
+      <EditPackForm pack_id={packId} name={packName} closeModal={closeEditModal} />
     )
   }
 
-  const onDeletePackTestHandler = () => {
+  const deletePackHandler = () => {
     const closeDeleteModal = () => {
       closeModal()
       dispatch(deleteCardPack({ id: packId })).then(() => {
@@ -73,7 +78,7 @@ export const CardsMenu = () => {
     )
   }
 
-  const profileMenuItems = useCardsMenuItems(onClickUpdateHandler, onDeletePackTestHandler)
+  const profileMenuItems = useCardsMenuItems(editPackHandler, deletePackHandler)
 
   const isMy = userId === profileId
 

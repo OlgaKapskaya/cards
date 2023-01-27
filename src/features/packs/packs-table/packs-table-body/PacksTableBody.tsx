@@ -9,7 +9,8 @@ import { DeleteForm } from '../../../../common/components/forms/DeleteForm'
 import { setCardsPageCount } from '../../../cards/cardsSlice'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { EditPackForm } from '../../pack-forms/EditPackForm'
-import { deletePack } from '../../packsSlice'
+import { UpdatePackPayloadType } from '../../packsAPI'
+import { deletePack, updatePack } from '../../packsSlice'
 
 import s from './PacksTableBody.module.css'
 
@@ -38,23 +39,34 @@ export const PacksTableBody = () => {
 
   const dispatch = useAppDispatch()
 
-  const onClickNavigateHandler = (packId: string) => {
+  const navigateToCardsHandler = (packId: string) => {
     dispatch(setCardsPageCount(4))
-    navigate(`cards/${packId}`)
+    navigate(`${PATH.PACKS}${PATH.CARDS}/${packId}`)
   }
   const startLearnHandler = (packId: string) => {
     dispatch(setIsShowAnswer(false))
     navigate(`${PATH.LEARN}/${packId}`)
   }
 
-  const onClickUpdateHandler = (pack_id: string, name: string, onPrivate: boolean) => {
+  const editPackHandler = (pack_id: string, name: string, onPrivate: boolean) => {
+    const closeEditModal = (data: UpdatePackPayloadType) => {
+      dispatch(updatePack(data)).then(() => {
+        closeModal()
+      })
+    }
+
     createModal(
       'Edit pack',
-      <EditPackForm pack_id={pack_id} name={name} onPrivate={onPrivate} closeModal={closeModal} />
+      <EditPackForm
+        pack_id={pack_id}
+        name={name}
+        onPrivate={onPrivate}
+        closeModal={closeEditModal}
+      />
     )
   }
 
-  const onDeletePackTestHandler = (pack_id: string, name: string) => {
+  const deletePackHandler = (pack_id: string, name: string) => {
     const closeDeleteModal = () => {
       dispatch(deletePack({ id: pack_id })).then(() => {
         closeModal()
@@ -77,7 +89,7 @@ export const PacksTableBody = () => {
         {packs.map(p => (
           <TableRow hover key={p._id} className={s.tableRow}>
             <TableCell
-              onClick={() => onClickNavigateHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id)}
               className={s.nameCell}
               component="th"
               scope="row"
@@ -85,21 +97,21 @@ export const PacksTableBody = () => {
               {p.name}
             </TableCell>
             <TableCell
-              onClick={() => onClickNavigateHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id)}
               align="left"
               className={s.countCell}
             >
               {p.cardsCount}
             </TableCell>
             <TableCell
-              onClick={() => onClickNavigateHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id)}
               align="left"
               className={s.cell}
             >
               {p.updated}
             </TableCell>
             <TableCell
-              onClick={() => onClickNavigateHandler(p._id)}
+              onClick={() => navigateToCardsHandler(p._id)}
               align="left"
               className={s.cell}
             >
@@ -117,12 +129,12 @@ export const PacksTableBody = () => {
                   <ActionButton
                     icon={edit}
                     hint="update pack"
-                    onClick={() => onClickUpdateHandler(p._id, p.name, p.private)}
+                    onClick={() => editPackHandler(p._id, p.name, p.private)}
                   />
                   <ActionButton
                     icon={del}
                     hint="delete pack"
-                    onClick={() => onDeletePackTestHandler(p._id, p.name)}
+                    onClick={() => deletePackHandler(p._id, p.name)}
                   />
                 </>
               )}

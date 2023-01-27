@@ -9,7 +9,7 @@ import { ButtonComponent, sxButtonColorCreator } from '../../../common'
 import { buttonBlue } from '../../../common/constants/theme'
 import { updatePackSchema } from '../../../common/constants/validators/validationSchemes'
 import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { updatePack } from '../packsSlice'
+import { UpdatePackPayloadType } from '../packsAPI'
 
 import { AddFormType } from './AddPackForm'
 import s from './PaksFoms.module.css'
@@ -17,7 +17,7 @@ import s from './PaksFoms.module.css'
 type UpdatePackFormPropsType = {
   pack_id: string
   name: string
-  closeModal: () => void
+  closeModal: (data: UpdatePackPayloadType) => void
   onPrivate?: boolean
 }
 
@@ -27,14 +27,10 @@ export const EditPackForm: FC<UpdatePackFormPropsType> = ({
   closeModal,
   onPrivate,
 }) => {
-  const { register, handleSubmit, appStatus, dispatch, errors } =
-    useAuthForm<AddFormType>(updatePackSchema)
+  const { register, handleSubmit, appStatus, errors } = useAuthForm<AddFormType>(updatePackSchema)
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
-    if (name !== data.name || onPrivate !== data.private) {
-      dispatch(updatePack({ cardsPack: { _id: pack_id, name: data.name, private: data.private } }))
-    }
-    closeModal()
+    closeModal({ cardsPack: { _id: pack_id, name: data.name, private: data.private } })
   }
 
   return (
