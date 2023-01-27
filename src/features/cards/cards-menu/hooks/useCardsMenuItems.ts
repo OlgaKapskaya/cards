@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import deleteIcon from '../../../../assets/img/delete.svg'
 import editIcon from '../../../../assets/img/edit.svg'
@@ -12,7 +12,8 @@ export const useCardsMenuItems = (editPack: () => void, deletePack: () => void) 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
-  let { packId } = useParams<{ packId: string }>()
+  const [urlParams] = useSearchParams()
+  const { packId } = Object.fromEntries(urlParams)
 
   const learnPack = () => {
     dispatch(setIsShowAnswer(false))

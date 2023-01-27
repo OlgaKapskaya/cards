@@ -18,7 +18,7 @@ export const AddCardForm: FC<NewCardModalType> = ({ closeModal }) => {
     const payload = {
       question: data.question,
       answer: data.answer,
-      grade: Math.floor(Math.random() * 5),
+      grade: 0,
     }
 
     dispatch(createCard(payload)).then(() => {

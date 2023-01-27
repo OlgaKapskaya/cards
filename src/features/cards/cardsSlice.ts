@@ -19,8 +19,6 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
   const { page, pageCount, searchWord, sort } = state.cards.searchParams
   const cardsPack_id = state.cards.cardsPack_id
 
-  // в thunk можжно return использовать?
-  // if (cardsPack_id.length === 0) return
   if (cardsPack_id.length !== 0) {
     const params = {
       cardsPack_id,
@@ -32,7 +30,6 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
 
     dispatch(setAppStatus('loading'))
     try {
-      // убрать загулшку (количество страниц и карточек)
       const response = await cardsAPI.getCards(params)
 
       if (response.data.cards.length === 0 && params.page === 1) {
@@ -159,6 +156,7 @@ export const deleteCardPack = createAsyncThunk(
 const initialState = {
   cards: [] as CardType[],
   cardsPack_id: '',
+  packPrivate: false,
   userPack_id: '',
   packName: '',
   cardsTotalCount: 0,
@@ -213,6 +211,10 @@ export const cardsSlice = createSlice({
     setIsCardsLoaded: (state, action: PayloadAction<boolean>) => {
       state.isCardsLoaded = action.payload
     },
+    setUrlPackParams: (state, action: PayloadAction<{ packId: string; packPrivate: boolean }>) => {
+      state.cardsPack_id = action.payload.packId
+      state.packPrivate = action.payload.packPrivate
+    },
   },
 })
 
@@ -229,5 +231,6 @@ export const {
   setCardsSort,
   setCardsPackName,
   setIsCardsLoaded,
+  setUrlPackParams,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

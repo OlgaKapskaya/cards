@@ -28,7 +28,9 @@ const App = () => {
 
   useEffect(() => {
     dispatch(me())
-    searchParams.toString().length > 0 && dispatch(setSearchParams(searchParams))
+    // проверяем параметры из url
+    // чтобы были для packs
+    Object.fromEntries(searchParams).page && dispatch(setSearchParams(searchParams))
   }, [dispatch])
 
   if (!isInitialized) {
