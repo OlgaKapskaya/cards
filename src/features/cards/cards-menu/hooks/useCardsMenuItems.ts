@@ -8,7 +8,11 @@ import { MenuItemType } from '../../../../common/components/menu/MenuItemCompone
 import { PATH } from '../../../../common/constants/path'
 import { setIsShowAnswer } from '../../../learn/learnSlice'
 
-export const useCardsMenuItems = (editPack: () => void, deletePack: () => void) => {
+export const useCardsMenuItems = (
+  editPack: () => void,
+  deletePack: () => void,
+  cardsCount: number
+) => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
 
@@ -22,8 +26,10 @@ export const useCardsMenuItems = (editPack: () => void, deletePack: () => void) 
   const menuItems: MenuItemType[] = [
     { id: 1, title: 'Edit', image: editIcon, onClick: editPack },
     { id: 2, title: 'Delete', image: deleteIcon, onClick: deletePack },
-    { id: 3, title: 'Learn', image: learnIcon, onClick: learnPack },
   ]
+
+  if (cardsCount > 0)
+    menuItems.push({ id: 3, title: 'Learn', image: learnIcon, onClick: learnPack })
 
   return menuItems
 }

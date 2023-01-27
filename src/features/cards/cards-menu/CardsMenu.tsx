@@ -31,6 +31,7 @@ export const CardsMenu = () => {
   const packName = useAppSelector(cardPackNameSelector)
   const packId = useAppSelector(cardPackId)
   const packPrivate = useAppSelector(state => state.cards.packPrivate)
+  const cardsCount = useAppSelector(state => state.cards.cardsTotalCount)
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -87,7 +88,7 @@ export const CardsMenu = () => {
     )
   }
 
-  const profileMenuItems = useCardsMenuItems(editPackHandler, deletePackHandler)
+  const cardsMenuItems = useCardsMenuItems(editPackHandler, deletePackHandler, cardsCount)
 
   const isMy = userId === profileId
 
@@ -103,7 +104,7 @@ export const CardsMenu = () => {
         anchorEl={anchorEl}
         open={openMenu}
         handleClose={handleMenuClose}
-        items={profileMenuItems}
+        items={cardsMenuItems}
       />
       <ModalComponent title={modalTitle} open={openModal} handleClose={closeModal}>
         {modalChildren}
