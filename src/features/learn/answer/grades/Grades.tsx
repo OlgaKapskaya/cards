@@ -1,17 +1,24 @@
+import { useEffect } from 'react'
+
 import FormControl from '@mui/material/FormControl'
 import FormControlLabel from '@mui/material/FormControlLabel'
 import Radio from '@mui/material/Radio'
 import RadioGroup from '@mui/material/RadioGroup'
 
-import { useAppDispatch, useAppSelector, gradesSelector } from '../../../../common'
 import { setGrade } from '../../learnSlice'
+
+import { useAppDispatch, useAppSelector, gradesSelector } from 'common'
 
 export const Grades = () => {
   const grades = useAppSelector(gradesSelector)
   const dispatch = useAppDispatch()
 
+  useEffect(() => {
+    dispatch(setGrade(1))
+  }, [])
+
   const onChangeGrade = (grade: number) => {
-    dispatch(setGrade(grade))
+    dispatch(setGrade(grade + 1))
   }
 
   return (
