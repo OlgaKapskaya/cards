@@ -21,10 +21,10 @@ export const Question = () => {
   }
 
   return (
-    <div className={s.question}>
-      <span>
+    <div className={s.questionContainer}>
+      <div className={s.question}>
         <b>Question: </b> {question}
-      </span>
+      </div>
       <span className={s.numberOfAnswers}>
         Number of answers to the question: <b>{shots}</b>
       </span>

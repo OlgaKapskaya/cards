@@ -1,10 +1,14 @@
-.question {
+.questionContainer {
   display: flex;
   flex-direction: column;
   gap: 13px;
   align-items: flex-start;
 
   padding: 30px 33px;
+}
+
+.question {
+  word-break: break-word;
 }
 
 .numberOfAnswers {
