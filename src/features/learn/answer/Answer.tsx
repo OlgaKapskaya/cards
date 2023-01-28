@@ -1,14 +1,15 @@
+import { upgradeGrade } from '../learnSlice'
+
+import s from './Answer.module.css'
+import { Grades } from './grades/Grades'
+
 import {
   ButtonComponent,
   useAppDispatch,
   useAppSelector,
   currentCardSelector,
   sxButtonMarginTopWidthCreator,
-} from '../../../common'
-import { upgradeGrade } from '../learnSlice'
-
-import s from './Answer.module.css'
-import { Grades } from './grades/Grades'
+} from 'common'
 
 export const Answer = () => {
   const { answer } = useAppSelector(currentCardSelector)

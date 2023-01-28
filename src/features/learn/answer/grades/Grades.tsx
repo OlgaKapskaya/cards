@@ -7,10 +7,10 @@ import RadioGroup from '@mui/material/RadioGroup'
 
 import { setGrade } from '../../learnSlice'
 
-import { useAppDispatch, useAppSelector, gradesSelector } from 'common'
+import { useAppDispatch } from 'common'
 
 export const Grades = () => {
-  const grades = useAppSelector(gradesSelector)
+  const grades = ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer']
   const dispatch = useAppDispatch()
 
   useEffect(() => {

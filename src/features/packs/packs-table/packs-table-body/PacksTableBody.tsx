@@ -5,9 +5,6 @@ import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 import { useNavigate } from 'react-router-dom'
 
-import { DeleteForm } from '../../../../common/components/forms/DeleteForm'
-import { setCardsPageCount } from '../../../cards/cardsSlice'
-import { setIsShowAnswer } from '../../../learn/learnSlice'
 import { EditPackForm } from '../../pack-forms/EditPackForm'
 import { UpdatePackPayloadType } from '../../packsAPI'
 import { deletePack, updatePack } from '../../packsSlice'
@@ -24,10 +21,13 @@ import {
   useAppDispatch,
   useAppSelector,
   userIDSelector,
+  ModalComponent,
+  useModalComponent,
+  DeleteForm,
 } from 'common'
-import { ModalComponent } from 'common/components/modal-component/ModalComponent'
-import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 import { PATH } from 'common/constants/path'
+import { setCardsPageCount } from 'features/cards/cardsSlice'
+import { setIsShowAnswer } from 'features/learn/learnSlice'
 
 export const PacksTableBody = () => {
   const packs = useAppSelector(packsSelector)
@@ -94,7 +94,7 @@ export const PacksTableBody = () => {
               component="th"
               scope="row"
             >
-              {p.name}
+              <div className={s.name}>{p.name}</div>
             </TableCell>
             <TableCell
               onClick={() => navigateToCardsHandler(p._id, p.private)}

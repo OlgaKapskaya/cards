@@ -1,9 +1,7 @@
-import { useAppSelector, sortPackSelector } from '../../../../common'
-import {
-  HeaderType,
-  TableHeadComponent,
-} from '../../../../common/components/table/TableHeadComponent'
 import { setSort } from '../../packsSlice'
+
+import { useAppSelector, sortPackSelector } from 'common'
+import { HeaderType, TableHeadComponent } from 'common/components/table/TableHeadComponent'
 
 export type PackData = {
   name: string

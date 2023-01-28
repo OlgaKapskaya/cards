@@ -1,3 +1,7 @@
+import { setIsShowAnswer } from '../learnSlice'
+
+import s from './Question.module.css'
+
 import {
   ButtonComponent,
   useAppDispatch,
@@ -5,10 +9,7 @@ import {
   currentCardSelector,
   isShowAnswerSelector,
   sxButtonMarginTopWidthCreator,
-} from '../../../common'
-import { setIsShowAnswer } from '../learnSlice'
-
-import s from './Question.module.css'
+} from 'common'
 
 export const Question = () => {
   const { question, shots } = useAppSelector(currentCardSelector)

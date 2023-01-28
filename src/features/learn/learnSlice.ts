@@ -44,7 +44,6 @@ export const upgradeGrade = createAsyncThunk(
 
 const initialState = {
   currentCard: {} as CardType,
-  grades: ['Did not know', 'Forgot', 'A lot of thought', 'Confused', 'Knew the answer'],
   isFirst: true,
   isShowAnswer: false,
   grade: 1,
