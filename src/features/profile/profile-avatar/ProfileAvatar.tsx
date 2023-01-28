@@ -9,8 +9,7 @@ import { useUserAvatar } from './useUserAvatar'
 
 import { setAppMessage, setAppStatus } from 'app/appSlice'
 import { ReactComponent as Camera } from 'assets/img/photo.svg'
-import { useAppDispatch } from 'common'
-import { convertToBase64 } from 'common/utils/convertToBase64'
+import { useAppDispatch, convertToBase64 } from 'common'
 
 type ProfileAvatarProps = {
   withButton?: boolean

@@ -3,20 +3,20 @@ import React, { useEffect } from 'react'
 import LinearProgress from '@mui/material/LinearProgress'
 import { useSearchParams } from 'react-router-dom'
 
+import s from './App.module.css'
+import { me } from './appSlice'
+import { Header } from './header/Header'
+import { Pages } from './pages/Pages'
+import { SnackBar } from './snackbar/SnackBar'
+
 import {
   Loader,
   useAppDispatch,
   useAppSelector,
   appIsInitializedSelector,
   appStatusSelector,
-} from '../common'
-import { setSearchParams } from '../features/packs/packsSlice'
-
-import s from './App.module.css'
-import { me } from './appSlice'
-import { Header } from './header/Header'
-import { Pages } from './pages/Pages'
-import { SnackBar } from './snackbar/SnackBar'
+} from 'common'
+import { setSearchParams } from 'features/packs/packsSlice'
 
 const App = () => {
   const status = useAppSelector(appStatusSelector)

@@ -2,13 +2,11 @@ import React from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import { ModalComponent } from '../../../common/components/modal-component/ModalComponent'
-import { useModalComponent } from '../../../common/components/modal-component/useModalComponent'
-import { PATH } from '../../../common/constants/path'
-import { setIsShowAnswer } from '../../learn/learnSlice'
 import { AddCardForm } from '../cards-forms/AddCardForm'
 
 import {
+  ModalComponent,
+  useModalComponent,
   ButtonComponent,
   useAppSelector,
   userIDSelector,
@@ -19,6 +17,8 @@ import {
   useAppDispatch,
   cardPackId,
 } from 'common'
+import { PATH } from 'common/constants/path'
+import { setIsShowAnswer } from 'features/learn/learnSlice'
 
 export const ActiveCardsButton = () => {
   const dispatch = useAppDispatch()

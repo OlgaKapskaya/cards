@@ -5,8 +5,13 @@ import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
 
-import deleteIcon from '../../../../assets/img/delete.svg'
-import editIcon from '../../../../assets/img/edit.svg'
+import { EditCardForm } from '../../cards-forms/EditCardForm'
+import { deleteCard } from '../../cardsSlice'
+
+import s from './CardsTableBody.module.css'
+
+import deleteIcon from 'assets/img/delete.svg'
+import editIcon from 'assets/img/edit.svg'
 import {
   ActionButton,
   appStatusSelector,
@@ -15,14 +20,10 @@ import {
   useAppSelector,
   userCardsPackIdSelector,
   userIDSelector,
-} from '../../../../common'
-import { DeleteForm } from '../../../../common/components/forms/DeleteForm'
-import { ModalComponent } from '../../../../common/components/modal-component/ModalComponent'
-import { useModalComponent } from '../../../../common/components/modal-component/useModalComponent'
-import { EditCardForm } from '../../cards-forms/EditCardForm'
-import { deleteCard } from '../../cardsSlice'
-
-import s from './CardsTableBody.module.css'
+  DeleteForm,
+  ModalComponent,
+  useModalComponent,
+} from 'common'
 
 export const CardsTableBody = () => {
   const cards = useAppSelector(cardsSelector)

@@ -5,14 +5,15 @@ import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 
-import { ButtonComponent, sxButtonColorCreator } from '../../../common'
-import { buttonBlue } from '../../../common/constants/theme'
-import { updatePackSchema } from '../../../common/constants/validators/validationSchemes'
-import { useAuthForm } from '../../../common/hooks/useAuthForm'
 import { UpdatePackPayloadType } from '../packsAPI'
 
 import { AddFormType } from './AddPackForm'
 import s from './PaksFoms.module.css'
+
+import { ButtonComponent, sxButtonColorCreator } from 'common'
+import { buttonBlue } from 'common/constants/theme'
+import { updatePackSchema } from 'common/constants/validators/validationSchemes'
+import { useAuthForm } from 'common/hooks/useAuthForm'
 
 type UpdatePackFormPropsType = {
   pack_id: string

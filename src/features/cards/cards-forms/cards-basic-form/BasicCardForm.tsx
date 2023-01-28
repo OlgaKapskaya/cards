@@ -11,10 +11,10 @@ import {
   UseFormReset,
 } from 'react-hook-form'
 
-import { ButtonComponent, sxButtonColorCreator } from '../../../../common'
-import { buttonBlue } from '../../../../common/constants/theme'
-
 import s from './BasicCardForm.module.css'
+
+import { ButtonComponent, sxButtonColorCreator } from 'common'
+import { buttonBlue } from 'common/constants/theme'
 
 export type NewCardType = {
   answer: string

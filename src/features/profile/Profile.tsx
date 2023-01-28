@@ -3,7 +3,11 @@ import React from 'react'
 import Box from '@mui/material/Box'
 import Paper from '@mui/material/Paper'
 
-import logoutImg from '../../assets/img/logout.svg'
+import { ProfileAvatar } from './profile-avatar/ProfileAvatar'
+import { ProfilePersonalInfo } from './profile-personal-info/ProfilePersonalInfo'
+import s from './Profile.module.css'
+
+import logoutImg from 'assets/img/logout.svg'
 import {
   BackPackLink,
   ButtonComponent,
@@ -11,12 +15,8 @@ import {
   useAppDispatch,
   sxBoxCreator,
   sxButtonColorCreator,
-} from '../../common'
-import { logout } from '../auth/authSlice'
-
-import { ProfileAvatar } from './profile-avatar/ProfileAvatar'
-import { ProfilePersonalInfo } from './profile-personal-info/ProfilePersonalInfo'
-import s from './Profile.module.css'
+} from 'common'
+import { logout } from 'features/auth/authSlice'
 
 export const Profile = () => {
   const dispatch = useAppDispatch()

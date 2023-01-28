@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppMessage, setAppStatus } from '../../app/appSlice'
-import { errorNetworkUtil } from '../../common'
-
 import { ChangeUserDataPayload, profileAPI } from './profileAPI'
+
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { errorNetworkUtil } from 'common'
 
 export type UserType = {
   _id: string

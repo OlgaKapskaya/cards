@@ -1,16 +1,10 @@
 import React from 'react'
 
-import filter from '../../../assets/img/filter-remove.svg'
-import {
-  ButtonComponent,
-  InputSlider,
-  SearchInput,
-  SwitchButton,
-  iconButton,
-} from '../../../common'
-
 import s from './FilterPanel.module.css'
 import { useFilterPanelLogic } from './useFilterPanelLogic'
+
+import filter from 'assets/img/filter-remove.svg'
+import { ButtonComponent, InputSlider, SearchInput, SwitchButton, iconButton } from 'common'
 
 export const FilterPanel = () => {
   const {

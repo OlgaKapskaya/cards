@@ -1,5 +1,6 @@
-import { instance, instanceHeroku } from '../../common/constants/instance'
 import { UserType } from '../profile/profileSlice'
+
+import { instance, instanceHeroku } from 'common/constants/instance'
 
 export type LoginRequestType = {
   email: string

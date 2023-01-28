@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setLoggedIn } from '../features/auth/authSlice'
-import { setUserData } from '../features/profile/profileSlice'
-
 import { appAPI } from './appAPI'
+
+import { setLoggedIn } from 'features/auth/authSlice'
+import { setUserData } from 'features/profile/profileSlice'
 
 export type RequestStatusType = 'idle' | 'loading' | 'succeeded' | 'failed'
 

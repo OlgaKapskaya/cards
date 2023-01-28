@@ -6,18 +6,19 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
+import { signUp, signUpStatusCreator } from '../authSlice'
+
+import s from './Registration.module.css'
+
 import {
   ButtonComponent,
   PasswordInput,
   registrationValidationSchema,
   sxBoxCreator,
   sxButtonMarginTopWidthCreator,
-} from '../../../common'
-import { PATH } from '../../../common/constants/path'
-import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { signUp, signUpStatusCreator } from '../authSlice'
-
-import s from './Registration.module.css'
+} from 'common'
+import { PATH } from 'common/constants/path'
+import { useAuthForm } from 'common/hooks/useAuthForm'
 
 type IFormInput = {
   email: string

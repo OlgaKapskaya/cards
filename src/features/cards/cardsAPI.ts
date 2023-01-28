@@ -1,4 +1,4 @@
-import { instance } from '../../common'
+import { instance } from 'common'
 
 export const cardsAPI = {
   getCards(payload: GetCardsPayloadType) {

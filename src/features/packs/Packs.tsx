@@ -14,9 +14,9 @@ import {
   searchParamsSelector,
   ButtonComponent,
   appStatusSelector,
+  ModalComponent,
+  useModalComponent,
 } from 'common'
-import { ModalComponent } from 'common/components/modal-component/ModalComponent'
-import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 
 export const Packs = () => {
   const [, setSearchParams] = useSearchParams()

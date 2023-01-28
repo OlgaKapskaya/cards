@@ -1,5 +1,7 @@
 import { useCallback } from 'react'
 
+import { resetFilters, setCurrentPage, setPackName, setRange, setUserId } from '../packsSlice'
+
 import {
   useAppDispatch,
   useAppSelector,
@@ -11,8 +13,7 @@ import {
   packNameSelector,
   searchUserIdSelector,
   userIDSelector,
-} from '../../../common'
-import { resetFilters, setCurrentPage, setPackName, setRange, setUserId } from '../packsSlice'
+} from 'common'
 
 export const useFilterPanelLogic = () => {
   const maxCardsCount = useAppSelector(maxCardsCountSelector)

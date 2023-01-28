@@ -1,16 +1,12 @@
 import { FC, useEffect, useState } from 'react'
 
-import { setAppMessage, setAppStatus } from '../../../app/appSlice'
-import {
-  useAppDispatch,
-  useAppSelector,
-  userEmailSelector,
-  userNameSelector,
-} from '../../../common'
-import EditableSpanComponent from '../../../common/components/inputs/editable-span/EditableSpanComponent'
 import { changeUserDataTC } from '../profileSlice'
 
 import s from './ProfilePersonalInfo.module.css'
+
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { useAppDispatch, useAppSelector, userEmailSelector, userNameSelector } from 'common'
+import EditableSpanComponent from 'common/components/inputs/editable-span/EditableSpanComponent'
 
 export const ProfilePersonalInfo: FC = () => {
   const dispatch = useAppDispatch()

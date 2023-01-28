@@ -18,11 +18,11 @@ import {
   useAppSelector,
   userCardsPackIdSelector,
   userIDSelector,
+  ModalComponent,
+  useModalComponent,
 } from 'common'
 import { DeleteForm } from 'common/components/forms/DeleteForm'
 import { useMenuComponent } from 'common/components/menu/useMenuComponent'
-import { ModalComponent } from 'common/components/modal-component/ModalComponent'
-import { useModalComponent } from 'common/components/modal-component/useModalComponent'
 import { PATH } from 'common/constants/path'
 import { EditPackForm } from 'features/packs/pack-forms/EditPackForm'
 

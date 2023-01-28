@@ -1,7 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-import { setAppMessage, setAppStatus } from '../../app/appSlice'
-import { errorNetworkUtil } from '../../common'
 import { setUserData, UserType } from '../profile/profileSlice'
 
 import {
@@ -11,6 +9,9 @@ import {
   NewPasswordRequestType,
   SignUpPayloadType,
 } from './authAPI'
+
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { errorNetworkUtil } from 'common'
 
 const initialState = {
   isLoggedIn: false,

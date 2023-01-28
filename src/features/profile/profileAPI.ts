@@ -1,6 +1,6 @@
-import { instance } from '../../common'
-
 import { UserType } from './profileSlice'
+
+import { instance } from 'common'
 
 export type ProfileResponseType = {
   updatedUser: UserType

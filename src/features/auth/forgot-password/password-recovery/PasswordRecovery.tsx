@@ -6,18 +6,19 @@ import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 import { NavLink } from 'react-router-dom'
 
+import { forgotPass, isSentRecoveryEmailStatus } from '../../authSlice'
+
+import s from './PasswordRecovery.module.css'
+
 import {
   ButtonComponent,
   emailRecoveryMessage,
   forgotValidationSchema,
   sxBoxCreator,
   sxButtonMarginTopWidthCreator,
-} from '../../../../common'
-import { PATH } from '../../../../common/constants/path'
-import { useAuthForm } from '../../../../common/hooks/useAuthForm'
-import { forgotPass, isSentRecoveryEmailStatus } from '../../authSlice'
-
-import s from './PasswordRecovery.module.css'
+} from 'common'
+import { PATH } from 'common/constants/path'
+import { useAuthForm } from 'common/hooks/useAuthForm'
 
 type IFormInput = {
   email: string

@@ -2,6 +2,12 @@ import React, { useEffect } from 'react'
 
 import { useSearchParams } from 'react-router-dom'
 
+import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
+import { CardsMenu } from './cards-menu/CardsMenu'
+import { CardsTable } from './cards-table/CardsTable'
+import s from './Cards.module.css'
+import { getCards, setIsCardsLoaded, setSearchWord, setUrlPackParams } from './cardsSlice'
+
 import {
   BackPackLink,
   cardsSearchParamsSelector,
@@ -15,13 +21,7 @@ import {
   useAppSelector,
   userCardsPackIdSelector,
   userIDSelector,
-} from '../../common'
-
-import { ActiveCardsButton } from './cards-button/ActiveCardsButton'
-import { CardsMenu } from './cards-menu/CardsMenu'
-import { CardsTable } from './cards-table/CardsTable'
-import s from './Cards.module.css'
-import { getCards, setIsCardsLoaded, setSearchWord, setUrlPackParams } from './cardsSlice'
+} from 'common'
 
 export const Cards = () => {
   const dispatch = useAppDispatch()

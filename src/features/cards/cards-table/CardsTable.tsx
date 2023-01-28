@@ -1,5 +1,10 @@
 import React from 'react'
 
+import { setCardsCurrentPage, setCardsPageCount } from '../cardsSlice'
+
+import { CardsTableBody } from './cards-table-body/CardsTableBody'
+import { CardsTableHead } from './cards-table-head/CardsTableHead'
+
 import {
   TableComponent,
   useAppDispatch,
@@ -7,11 +12,7 @@ import {
   cardsCurrentPageSelector,
   cardsPageCountSelector,
   cardsTotalCountSelector,
-} from '../../../common'
-import { setCardsCurrentPage, setCardsPageCount } from '../cardsSlice'
-
-import { CardsTableBody } from './cards-table-body/CardsTableBody'
-import { CardsTableHead } from './cards-table-head/CardsTableHead'
+} from 'common'
 
 export const CardsTable = () => {
   const currentPage = useAppSelector(cardsCurrentPageSelector)

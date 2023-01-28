@@ -1,10 +1,6 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import dayjs from 'dayjs'
 
-import { setAppMessage, setAppStatus } from '../../app/appSlice'
-import { AppRootStateType } from '../../app/store'
-import { errorNetworkUtil } from '../../common'
-
 import {
   CreatePackPayloadType,
   DeletePackPayloadType,
@@ -13,6 +9,10 @@ import {
   PackType,
   UpdatePackPayloadType,
 } from './packsAPI'
+
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { AppRootStateType } from 'app/store'
+import { errorNetworkUtil } from 'common'
 
 const initialState = {
   packs: [],

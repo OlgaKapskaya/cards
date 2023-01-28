@@ -6,19 +6,20 @@ import Paper from '@mui/material/Paper'
 import TextField from '@mui/material/TextField'
 import { Navigate, NavLink } from 'react-router-dom'
 
+import { LoginRequestType } from '../authAPI'
+import { login } from '../authSlice'
+
+import s from './Login.module.css'
+
 import {
   ButtonComponent,
   PasswordInput,
   loginValidationSchema,
   sxBoxCreator,
   sxButtonMarginTopWidthCreator,
-} from '../../../common'
-import { PATH } from '../../../common/constants/path'
-import { useAuthForm } from '../../../common/hooks/useAuthForm'
-import { LoginRequestType } from '../authAPI'
-import { login } from '../authSlice'
-
-import s from './Login.module.css'
+} from 'common'
+import { PATH } from 'common/constants/path'
+import { useAuthForm } from 'common/hooks/useAuthForm'
 
 export const Login: FC = () => {
   const { isLoggedIn, dispatch, register, handleSubmit, errors, appStatus } =

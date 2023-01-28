@@ -3,8 +3,9 @@ import React from 'react'
 import Alert from '@mui/material/Alert'
 import Snackbar from '@mui/material/Snackbar'
 
-import { useAppDispatch, useAppSelector, appMessageSelector, appStatusSelector } from '../../common'
 import { setAppMessage } from '../appSlice'
+
+import { useAppDispatch, useAppSelector, appMessageSelector, appStatusSelector } from 'common'
 
 export const SnackBar = () => {
   const message = useAppSelector(appMessageSelector)

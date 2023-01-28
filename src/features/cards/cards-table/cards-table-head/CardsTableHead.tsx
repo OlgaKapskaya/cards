@@ -1,16 +1,9 @@
 import TableCell from '@mui/material/TableCell'
 
-import {
-  useAppSelector,
-  sortCardSelector,
-  userCardsPackIdSelector,
-  userIDSelector,
-} from '../../../../common'
-import {
-  HeaderType,
-  TableHeadComponent,
-} from '../../../../common/components/table/TableHeadComponent'
 import { setCardsSort } from '../../cardsSlice'
+
+import { useAppSelector, sortCardSelector, userCardsPackIdSelector, userIDSelector } from 'common'
+import { HeaderType, TableHeadComponent } from 'common/components/table/TableHeadComponent'
 
 export type CardData = {
   question: string

@@ -1,10 +1,11 @@
 import React, { FC } from 'react'
 
-import { createCardSchema } from '../../../common/constants/validators/validationSchemes'
-import { useAuthForm } from '../../../common/hooks/useAuthForm'
 import { updateCard } from '../cardsSlice'
 
 import { BasicCardForm, NewCardType } from './cards-basic-form/BasicCardForm'
+
+import { createCardSchema } from 'common/constants/validators/validationSchemes'
+import { useAuthForm } from 'common/hooks/useAuthForm'
 
 type EditCardModalPropsType = {
   id: string

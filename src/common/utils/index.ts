@@ -1,3 +1,4 @@
+import { convertToBase64 } from './convertToBase64'
 import { errorNetworkUtil } from './errorNetworkUtil'
 import { getRandomCard } from './getRandomCard'
 import { sxBoxCreator } from './styles-utils/sxBoxCreator'
@@ -12,4 +13,5 @@ export {
   sxBoxCreator,
   sxButtonColorCreator,
   sxButtonMarginTopWidthCreator,
+  convertToBase64,
 }

@@ -2,12 +2,12 @@ import React, { useMemo } from 'react'
 
 import { useNavigate } from 'react-router-dom'
 
-import logo from '../../assets/img/incubator-logo.svg'
-import { ButtonComponent, useAppSelector, isLoggedInSelector } from '../../common'
-import { PATH } from '../../common/constants/path'
-
 import s from './Header.module.css'
 import { ProfileMenu } from './profile-menu/ProfileMenu'
+
+import logo from 'assets/img/incubator-logo.svg'
+import { ButtonComponent, useAppSelector, isLoggedInSelector } from 'common'
+import { PATH } from 'common/constants/path'
 
 export const Header = () => {
   const isLoggedIn = useAppSelector(isLoggedInSelector)

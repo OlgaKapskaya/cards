@@ -1,12 +1,12 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import deleteIcon from '../../../../assets/img/delete.svg'
-import editIcon from '../../../../assets/img/edit.svg'
-import learnIcon from '../../../../assets/img/learn.svg'
-import { useAppDispatch } from '../../../../common'
-import { MenuItemType } from '../../../../common/components/menu/MenuItemComponent/MenuItemComponent'
-import { PATH } from '../../../../common/constants/path'
-import { setIsShowAnswer } from '../../../learn/learnSlice'
+import deleteIcon from 'assets/img/delete.svg'
+import editIcon from 'assets/img/edit.svg'
+import learnIcon from 'assets/img/learn.svg'
+import { useAppDispatch } from 'common'
+import { MenuItemType } from 'common/components/menu/MenuItemComponent/MenuItemComponent'
+import { PATH } from 'common/constants/path'
+import { setIsShowAnswer } from 'features/learn/learnSlice'
 
 export const useCardsMenuItems = (
   editPack: () => void,
