@@ -32,7 +32,7 @@ export const changeUserDataTC = createAsyncThunk(
     try {
       const response = await profileAPI.changeUserData(data)
 
-      dispatch(setAppMessage('New name saved'))
+      dispatch(setAppMessage('New profile data saved'))
       dispatch(setUserData(response.data.updatedUser))
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {

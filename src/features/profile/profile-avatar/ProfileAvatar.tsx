@@ -1,12 +1,16 @@
-import { FC, memo } from 'react'
+import { ChangeEvent, FC, memo } from 'react'
 
-import CameraAltOutlined from '@mui/icons-material/CameraAltOutlined'
-import Avatar from '@mui/material/Avatar/Avatar'
 import IconButton from '@mui/material/IconButton'
 
-import { useAppSelector, userAvatarSelector } from '../../../common'
+import { changeUserDataTC } from '../profileSlice'
 
 import s from './ProfileAvatar.module.css'
+import { useUserAvatar } from './useUserAvatar'
+
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { ReactComponent as Camera } from 'assets/img/photo.svg'
+import { useAppDispatch } from 'common'
+import { convertToBase64 } from 'common/utils/convertToBase64'
 
 type ProfileAvatarProps = {
   withButton?: boolean
@@ -14,18 +18,38 @@ type ProfileAvatarProps = {
 }
 
 export const ProfileAvatar: FC<ProfileAvatarProps> = memo(({ withButton, size }) => {
-  const userAvatar = useAppSelector(userAvatarSelector)
+  const dispatch = useAppDispatch()
+  const avatar = useUserAvatar(size)
+
+  const onChangeAvatarHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      const file = event.target.files[0]
+      //преобразуем размер в MB
+      const fileSizeMB = file.size / 1024 ** 2
+
+      if (fileSizeMB < 1) {
+        convertToBase64(file, (file64: string) => {
+          dispatch(changeUserDataTC({ avatar: file64 }))
+        })
+      } else {
+        dispatch(setAppMessage('The file is too large'))
+        dispatch(setAppStatus('failed'))
+      }
+    }
+  }
 
   return (
     <div className={s.avatarContainer}>
-      <Avatar
-        alt="profileAvatar"
-        src={userAvatar ? userAvatar : ''}
-        sx={{ width: `${size}px`, height: `${size}px` }}
-      />
+      {avatar}
       {withButton && (
-        <IconButton className={s.addPhotoBtn}>
-          <CameraAltOutlined />
+        <IconButton component="label">
+          <Camera />
+          <input
+            type="file"
+            hidden
+            onChange={onChangeAvatarHandler}
+            accept="image/png, image/jpeg"
+          />
         </IconButton>
       )}
     </div>

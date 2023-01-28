@@ -6,7 +6,7 @@
   justify-content: flex-end;
 }
 
-.avatarContainer > button {
+.avatarContainer > label {
   position: absolute;
 
   color: #ffffff;
@@ -15,11 +15,7 @@
   border: 1px solid #ffffff;
 }
 
-.avatarContainer > button:hover {
-  background-color: #808080;
+.avatarContainer > label:hover {
+  background-color: darkgray;
   border: 1px solid #ffffff;
-}
-.addPhotoBtn {
-  width: 32px;
-  height: 32px;
 }
