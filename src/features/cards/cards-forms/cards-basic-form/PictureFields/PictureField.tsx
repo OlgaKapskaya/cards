@@ -21,8 +21,8 @@ type PictureFieldsPropsType = {
 
 export const PictureFields: FC<PictureFieldsPropsType> = ({ disabled, onSubmit }) => {
   const dispatch = useAppDispatch()
-  const [questionImg, setQuestionImg] = useState<string | undefined>('undefined')
-  const [answerImg, setAnswerImg] = useState<string | undefined>('undefined')
+  const [questionImg, setQuestionImg] = useState<string | undefined>(undefined)
+  const [answerImg, setAnswerImg] = useState<string | undefined>(undefined)
   const [isQuestionImgBroken, setQuestionImgBroken] = useState(false)
   const [isAnswerImgBroken, setIsAnswerImgBroken] = useState(false)
 
