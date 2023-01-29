@@ -3,11 +3,12 @@ import React, { FC } from 'react'
 import TextField from '@mui/material/TextField'
 import { FieldErrorsImpl, UseFormHandleSubmit, UseFormRegister } from 'react-hook-form'
 
-import { ButtonComponent, sxButtonColorCreator } from '../../../../../common'
-import { buttonBlue } from '../../../../../common/constants/theme'
 import { NewCardType } from '../BasicCardForm'
 
 import s from './TextFields.module.css'
+
+import { ButtonComponent, sxButtonColorCreator } from 'common'
+import { buttonBlue } from 'common/constants/theme'
 
 type TextFieldsPropsType = {
   onSubmit: (data: NewCardType) => void

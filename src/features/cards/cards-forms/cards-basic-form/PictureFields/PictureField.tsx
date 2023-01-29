@@ -4,13 +4,14 @@ import ReplayIcon from '@mui/icons-material/Replay'
 import UploadIcon from '@mui/icons-material/Upload'
 import IconButton from '@mui/material/IconButton'
 
-import errorImg from '../../../../../assets/img/errorImg.png'
-import { ButtonComponent, sxButtonColorCreator, useAppDispatch } from '../../../../../common'
-import { buttonBlue } from '../../../../../common/constants/theme'
-import { onChangeImg } from '../../../../../common/utils/convertToBase64'
 import { NewCardType } from '../BasicCardForm'
 
 import s from './PictureField.module.css'
+
+import errorImg from 'assets/img/errorImg.png'
+import { ButtonComponent, sxButtonColorCreator, useAppDispatch } from 'common'
+import { buttonBlue } from 'common/constants/theme'
+import { onChangeImg } from 'common/utils/convertToBase64'
 
 type PictureFieldsPropsType = {
   onSubmit: (data: NewCardType) => void

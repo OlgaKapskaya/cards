@@ -2,7 +2,6 @@ import { FC, memo } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 
-import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { changeUserDataTC } from '../profileSlice'
 
 import s from './ProfileAvatar.module.css'
@@ -10,6 +9,7 @@ import { useUserAvatar } from './useUserAvatar'
 
 import { ReactComponent as Camera } from 'assets/img/photo.svg'
 import { useAppDispatch } from 'common'
+import { onChangeImg } from 'common/utils/convertToBase64'
 
 type ProfileAvatarProps = {
   withButton?: boolean
