@@ -1,7 +1,7 @@
 import { ChangeEvent } from 'react'
 
-import { setAppMessage, setAppStatus } from '../../app/appSlice'
-import { AppDispatch } from '../../app/store'
+import { setAppMessage, setAppStatus } from 'app/appSlice'
+import { AppDispatch } from 'app/store'
 
 export const convertToBase64 = (file: File, callBack: (value: string) => void) => {
   const reader = new FileReader()

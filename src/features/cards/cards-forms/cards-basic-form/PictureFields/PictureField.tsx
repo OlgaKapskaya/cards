@@ -26,9 +26,8 @@ export const PictureFields: FC<PictureFieldsPropsType> = ({ disabled, onSubmit }
   const [isQuestionImgBroken, setQuestionImgBroken] = useState(false)
   const [isAnswerImgBroken, setIsAnswerImgBroken] = useState(false)
 
-  const errorHandler = (setBroken: (error: boolean) => void, setImg: (img: string) => void) => {
+  const errorHandler = (setBroken: (error: boolean) => void) => {
     setBroken(true)
-    setImg(errorImg)
   }
 
   const onChangeQuestionImg = (e: ChangeEvent<HTMLInputElement>) => {
@@ -54,7 +53,7 @@ export const PictureFields: FC<PictureFieldsPropsType> = ({ disabled, onSubmit }
             <img
               alt="img"
               src={isQuestionImgBroken ? errorImg : questionImg}
-              onError={() => errorHandler(setQuestionImgBroken, setQuestionImg)}
+              onError={() => errorHandler(setQuestionImgBroken)}
             />
           )}
         </div>
@@ -78,7 +77,7 @@ export const PictureFields: FC<PictureFieldsPropsType> = ({ disabled, onSubmit }
             <img
               alt="img"
               src={isAnswerImgBroken ? errorImg : answerImg}
-              onError={() => errorHandler(setIsAnswerImgBroken, setAnswerImg)}
+              onError={() => errorHandler(setIsAnswerImgBroken)}
             />
           )}
         </div>

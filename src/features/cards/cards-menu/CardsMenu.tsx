@@ -1,11 +1,13 @@
+import { useState } from 'react'
+
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
-import { UpdatePackPayloadType } from '../../packs/packsAPI'
 import { deleteCardPack, setPrivateStatus, updateCardPack } from '../cardsSlice'
 
 import s from './CardsMenu.module.css'
 import { useCardsMenuItems } from './hooks/useCardsMenuItems'
 
+import errorImg from 'assets/img/errorImg.png'
 import pointsMenu from 'assets/img/pointsMenu.svg'
 import {
   appStatusSelector,
@@ -26,6 +28,7 @@ import { DeleteForm } from 'common/components/forms/DeleteForm'
 import { useMenuComponent } from 'common/components/menu/useMenuComponent'
 import { PATH } from 'common/constants/path'
 import { EditPackForm } from 'features/packs/pack-forms/EditPackForm'
+import { UpdatePackPayloadType } from 'features/packs/packsAPI'
 
 export const CardsMenu = () => {
   const userId = useAppSelector(userCardsPackIdSelector)
@@ -43,6 +46,12 @@ export const CardsMenu = () => {
   const [, setUrlParams] = useSearchParams()
 
   const { open: openMenu, anchorEl, handleMenuOpen, handleMenuClose } = useMenuComponent()
+
+  const [isImgBroken, setImgBroken] = useState(false)
+
+  const errorHandler = () => {
+    setImgBroken(true)
+  }
 
   const {
     open: openModal,
@@ -100,12 +109,20 @@ export const CardsMenu = () => {
   const cardsMenuItems = useCardsMenuItems(editPackHandler, deletePackHandler, cardsCount)
 
   const isMy = userId === profileId
+  const imgElement = (
+    <img
+      className={s.cardImg}
+      alt="react-icon"
+      src={isImgBroken ? errorImg : packDeckCover}
+      onError={errorHandler}
+    />
+  )
 
   if (!isMy)
     return (
       <div className={s.titleImgBox}>
         <span className={s.titleSpan}>{packName}</span>
-        {packDeckCover && <img className={s.cardImg} alt="react-icon" src={packDeckCover} />}
+        {packDeckCover && imgElement}
       </div>
     )
 
@@ -116,7 +133,7 @@ export const CardsMenu = () => {
           <span className={s.titleSpan}>{packName}</span>
           <img src={pointsMenu} alt="points-menu" />
         </div>
-        {packDeckCover && <img className={s.cardImg} alt="react-icon" src={packDeckCover} />}
+        {packDeckCover && imgElement}
       </div>
       <MenuComponent
         anchorEl={anchorEl}
