@@ -16,10 +16,12 @@ export const AddCardForm: FC<NewCardModalType> = ({ closeModal }) => {
     useAuthForm<NewCardType>(createCardSchema)
 
   const createNewCard = (data: NewCardType) => {
-    dispatch(createCard({ ...data, grade: 0 })).then(() => {
-      closeModal()
-      reset()
-    })
+    dispatch(createCard({ ...data, grade: 0 }))
+      .then(() => {
+        closeModal()
+        reset()
+      })
+      .catch(() => {})
   }
 
   return (

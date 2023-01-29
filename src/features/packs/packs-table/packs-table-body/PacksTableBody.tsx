@@ -51,9 +51,11 @@ export const PacksTableBody = () => {
 
   const editPackHandler = (pack_id: string, name: string, onPrivate: boolean) => {
     const closeEditModal = (data: UpdatePackPayloadType) => {
-      dispatch(updatePack(data)).then(() => {
-        closeModal()
-      })
+      dispatch(updatePack(data))
+        .then(() => {
+          closeModal()
+        })
+        .catch(() => {})
     }
 
     createModal(
@@ -69,9 +71,11 @@ export const PacksTableBody = () => {
 
   const deletePackHandler = (pack_id: string, name: string) => {
     const closeDeleteModal = () => {
-      dispatch(deletePack({ id: pack_id })).then(() => {
-        closeModal()
-      })
+      dispatch(deletePack({ id: pack_id }))
+        .then(() => {
+          closeModal()
+        })
+        .catch(() => {})
     }
 
     createModal(

@@ -28,9 +28,11 @@ export const EditCardForm: FC<EditCardModalPropsType> = ({ id, question, answer,
       },
     }
 
-    dispatch(updateCard(payload)).then(() => {
-      closeModal()
-    })
+    dispatch(updateCard(payload))
+      .then(() => {
+        closeModal()
+      })
+      .catch(() => {})
   }
 
   return (

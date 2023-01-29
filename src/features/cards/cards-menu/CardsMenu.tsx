@@ -80,9 +80,11 @@ export const CardsMenu = () => {
   const deletePackHandler = () => {
     const closeDeleteModal = () => {
       closeModal()
-      dispatch(deleteCardPack({ id: packId })).then(() => {
-        navigate(PATH.PACKS)
-      })
+      dispatch(deleteCardPack({ id: packId }))
+        .then(() => {
+          navigate(PATH.PACKS)
+        })
+        .catch(() => {})
     }
 
     createModal(

@@ -17,13 +17,13 @@ import {
   ActionButton,
   appStatusSelector,
   cardsSelector,
-  useAppDispatch,
-  useAppSelector,
-  userCardsPackIdSelector,
-  userIDSelector,
   DeleteForm,
   ModalComponent,
+  useAppDispatch,
+  useAppSelector,
   useModalComponent,
+  userCardsPackIdSelector,
+  userIDSelector,
 } from 'common'
 
 export const CardsTableBody = () => {
@@ -45,9 +45,11 @@ export const CardsTableBody = () => {
   }
   const handleDeleteCard = (id: string, name: string) => {
     const closeDeleteModal = () => {
-      dispatch(deleteCard({ id })).then(() => {
-        closeModal()
-      })
+      dispatch(deleteCard({ id }))
+        .then(() => {
+          closeModal()
+        })
+        .catch(() => {})
     }
 
     createModal(
