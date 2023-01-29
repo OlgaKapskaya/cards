@@ -1,15 +1,15 @@
-import { ChangeEvent, FC, memo } from 'react'
+import { FC, memo } from 'react'
 
 import IconButton from '@mui/material/IconButton'
 
+import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { changeUserDataTC } from '../profileSlice'
 
 import s from './ProfileAvatar.module.css'
 import { useUserAvatar } from './useUserAvatar'
 
-import { setAppMessage, setAppStatus } from 'app/appSlice'
 import { ReactComponent as Camera } from 'assets/img/photo.svg'
-import { useAppDispatch, convertToBase64 } from 'common'
+import { useAppDispatch } from 'common'
 
 type ProfileAvatarProps = {
   withButton?: boolean
@@ -20,21 +20,8 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = memo(({ withButton, size })
   const dispatch = useAppDispatch()
   const avatar = useUserAvatar(size)
 
-  const onChangeAvatarHandler = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files.length > 0) {
-      const file = event.target.files[0]
-      //преобразуем размер в MB
-      const fileSizeMB = file.size / 1024 ** 2
-
-      if (fileSizeMB < 1) {
-        convertToBase64(file, (file64: string) => {
-          dispatch(changeUserDataTC({ avatar: file64 }))
-        })
-      } else {
-        dispatch(setAppMessage('The file is too large'))
-        dispatch(setAppStatus('failed'))
-      }
-    }
+  const onChangeAvatarHandler = (file64: string) => {
+    dispatch(changeUserDataTC({ avatar: file64 }))
   }
 
   return (
@@ -46,7 +33,7 @@ export const ProfileAvatar: FC<ProfileAvatarProps> = memo(({ withButton, size })
           <input
             type="file"
             hidden
-            onChange={onChangeAvatarHandler}
+            onChange={e => onChangeImg(e, dispatch, onChangeAvatarHandler)}
             accept="image/png, image/jpeg"
           />
         </IconButton>
