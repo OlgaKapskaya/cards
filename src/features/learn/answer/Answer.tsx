@@ -12,7 +12,7 @@ import {
 } from 'common'
 
 export const Answer = () => {
-  const { answer } = useAppSelector(currentCardSelector)
+  const { answer, answerImg } = useAppSelector(currentCardSelector)
 
   const dispatch = useAppDispatch()
 
@@ -20,10 +20,17 @@ export const Answer = () => {
     dispatch(upgradeGrade())
   }
 
+  const finalAnswer =
+    answerImg && answerImg !== 'noImg' ? (
+      <img alt="img" src={answerImg} style={{ width: '100%' }} />
+    ) : (
+      answer
+    )
+
   return (
     <div className={s.answer}>
       <span>
-        <b>Answer: </b> {answer}
+        <b>Answer: </b> {finalAnswer}
       </span>
       <Grades />
       <ButtonComponent sx={sxButtonMarginTopWidthCreator()} onClick={onNextHandler}>

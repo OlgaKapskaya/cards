@@ -26,8 +26,8 @@ export const useUserAvatar = (size: number) => {
         }}
       >
         {userName && userName.split(' ').length === 2
-          ? userName.split(' ')[0][0] + userName.split(' ')[1][0]
-          : userName.split(' ')[0][0]}
+          ? userName.split(' ')[0][0].toUpperCase() + userName.split(' ')[1][0].toUpperCase()
+          : userName.split(' ')[0][0].toUpperCase()}
       </Avatar>
     )
   }, [userAvatar, userName])
