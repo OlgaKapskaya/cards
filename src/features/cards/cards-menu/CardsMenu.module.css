@@ -14,3 +14,12 @@
   line-height: 27px;
   word-break: break-word;
 }
+
+.titleImgBox {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardImg {
+  width: 170px;
+}

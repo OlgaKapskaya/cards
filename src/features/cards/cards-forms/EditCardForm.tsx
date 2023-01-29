@@ -23,6 +23,8 @@ export const EditCardForm: FC<EditCardModalPropsType> = ({ id, question, answer,
         _id: id,
         answer: data.answer,
         question: data.answer,
+        questionImg: data.questionImg || 'noImg',
+        answerImg: data.answerImg || 'noImg',
       },
     }
 
@@ -42,6 +44,7 @@ export const EditCardForm: FC<EditCardModalPropsType> = ({ id, question, answer,
       register={register}
       errors={errors}
       reset={reset}
+      closeModal={closeModal}
     />
   )
 }

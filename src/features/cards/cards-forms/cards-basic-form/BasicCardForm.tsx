@@ -3,7 +3,6 @@ import React, { FC, useState } from 'react'
 import FormControl from '@mui/material/FormControl'
 import MenuItem from '@mui/material/MenuItem'
 import Select, { SelectChangeEvent } from '@mui/material/Select'
-import TextField from '@mui/material/TextField'
 import {
   FieldErrorsImpl,
   UseFormHandleSubmit,
@@ -12,13 +11,14 @@ import {
 } from 'react-hook-form'
 
 import s from './BasicCardForm.module.css'
-
-import { ButtonComponent, sxButtonColorCreator } from 'common'
-import { buttonBlue } from 'common/constants/theme'
+import { PictureFields } from './PictureFields/PictureField'
+import { TextFields } from './TextFields/TextFields'
 
 export type NewCardType = {
-  answer: string
-  question: string
+  answer?: string
+  question?: string
+  questionImg?: string
+  answerImg?: string
 }
 
 type BasicCardModalPropsType = {
@@ -31,6 +31,7 @@ type BasicCardModalPropsType = {
   register: UseFormRegister<NewCardType>
   errors: Partial<FieldErrorsImpl<{ answer: string; question: string }>>
   reset: UseFormReset<NewCardType>
+  closeModal: () => void
 }
 export const BasicCardForm: FC<BasicCardModalPropsType> = ({
   onSubmit,
@@ -41,6 +42,7 @@ export const BasicCardForm: FC<BasicCardModalPropsType> = ({
   handleSubmit,
   register,
   errors,
+  closeModal,
 }) => {
   const [select, setSelect] = useState('text')
   const handleChange = (event: SelectChangeEvent) => {
@@ -53,40 +55,26 @@ export const BasicCardForm: FC<BasicCardModalPropsType> = ({
         <div className={s.selectName}>Choose a question format</div>
         <Select value={select} onChange={handleChange} displayEmpty size="small">
           <MenuItem value={'text'}>Text</MenuItem>
-          <MenuItem value={'image'}>Image</MenuItem>
+          <MenuItem value={'picture'}>Picture</MenuItem>
         </Select>
       </FormControl>
-      <form onSubmit={handleSubmit(onSubmit)} className={s.formInput}>
-        <TextField
-          sx={{ m: 1, width: '347px' }}
-          id="question"
-          label="Question"
-          multiline
-          variant="standard"
-          {...register('question')}
-          error={!!errors.question}
-          helperText={errors.question?.message}
-          defaultValue={question}
-        />
-        <TextField
-          sx={{ m: 1, width: '347px' }}
-          id="answer"
-          label="Answer"
-          multiline
-          variant="standard"
-          {...register('answer')}
-          error={!!errors.answer}
-          helperText={errors.answer?.message}
-          defaultValue={answer}
-        />
-        <ButtonComponent
-          type="submit"
-          sx={sxButtonColorCreator(buttonBlue, '113px', '30px', '30px')}
+
+      {select === 'text' && (
+        <TextFields
+          onSubmit={onSubmit}
+          handleSubmit={handleSubmit}
+          register={register}
+          errors={errors}
+          question={question}
+          answer={answer}
+          buttonText={buttonText}
           disabled={disabled}
-        >
-          {buttonText}
-        </ButtonComponent>
-      </form>
+        />
+      )}
+
+      {select === 'picture' && (
+        <PictureFields onSubmit={onSubmit} disabled={disabled} closeModal={closeModal} />
+      )}
     </div>
   )
 }

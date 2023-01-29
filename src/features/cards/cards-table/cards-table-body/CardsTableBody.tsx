@@ -59,10 +59,23 @@ export const CardsTableBody = () => {
     <>
       <TableBody>
         {cards.map(row => {
+          const question =
+            row.questionImg && row.questionImg !== 'noImg' ? (
+              <img alt={'img'} src={row.questionImg} />
+            ) : (
+              row.question
+            )
+          const answer =
+            row.answerImg && row.answerImg !== 'noImg' ? (
+              <img alt={'img'} src={row.answerImg} />
+            ) : (
+              row.answer
+            )
+
           return (
             <TableRow key={row._id} className={s.tableRow}>
-              <TableCell className={s.cellQuestion}>{row.question}</TableCell>
-              <TableCell className={s.cellAnswer}>{row.answer}</TableCell>
+              <TableCell className={s.cellQuestion}>{question}</TableCell>
+              <TableCell className={s.cellAnswer}>{answer}</TableCell>
               <TableCell className={s.cell}>{row.updated}</TableCell>
               <TableCell className={s.cell}>
                 <Rating name="simple-controlled" readOnly value={row.grade} />

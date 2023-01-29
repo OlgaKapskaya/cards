@@ -66,6 +66,7 @@ export const getCards = createAsyncThunk('cards/getCards', async (_, { dispatch,
       dispatch(setUserPackId(response.data.packUserId))
       dispatch(setCardsTotalCount(response.data.cardsTotalCount))
       dispatch(setCardsPackName(response.data.packName))
+      dispatch(setPackDeckCover(response.data.packDeckCover))
 
       dispatch(setAppStatus('succeeded'))
     } catch (e: any) {
@@ -155,10 +156,11 @@ export const deleteCardPack = createAsyncThunk(
 
 const initialState = {
   cards: [] as CardType[],
+  userPack_id: '',
   cardsPack_id: '',
   packPrivate: false,
-  userPack_id: '',
   packName: '',
+  packDeckCover: '',
   cardsTotalCount: 0,
   found: true,
   empty: true,
@@ -211,9 +213,15 @@ export const cardsSlice = createSlice({
     setIsCardsLoaded: (state, action: PayloadAction<boolean>) => {
       state.isCardsLoaded = action.payload
     },
+    setPrivateStatus: (state, action: PayloadAction<boolean>) => {
+      state.packPrivate = action.payload
+    },
     setUrlPackParams: (state, action: PayloadAction<{ packId: string; packPrivate: boolean }>) => {
       state.cardsPack_id = action.payload.packId
       state.packPrivate = action.payload.packPrivate
+    },
+    setPackDeckCover: (state, action: PayloadAction<string>) => {
+      state.packDeckCover = action.payload
     },
   },
 })
@@ -231,6 +239,8 @@ export const {
   setCardsSort,
   setCardsPackName,
   setIsCardsLoaded,
+  setPrivateStatus,
   setUrlPackParams,
+  setPackDeckCover,
 } = cardsSlice.actions
 export const cardsReducer = cardsSlice.reducer

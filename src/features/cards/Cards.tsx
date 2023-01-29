@@ -55,7 +55,7 @@ export const Cards = () => {
     return () => {
       dispatch(setIsCardsLoaded(false))
     }
-  }, [urlParams])
+  }, [])
 
   useEffect(() => {
     dispatch(getCards())

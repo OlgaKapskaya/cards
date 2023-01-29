@@ -15,14 +15,8 @@ export const AddCardForm: FC<NewCardModalType> = ({ closeModal }) => {
   const { register, handleSubmit, errors, reset, dispatch, appStatus } =
     useAuthForm<NewCardType>(createCardSchema)
 
-  const onSubmit = (data: NewCardType) => {
-    const payload = {
-      question: data.question,
-      answer: data.answer,
-      grade: 0,
-    }
-
-    dispatch(createCard(payload)).then(() => {
+  const createNewCard = (data: NewCardType) => {
+    dispatch(createCard({ ...data, grade: 0 })).then(() => {
       closeModal()
       reset()
     })
@@ -32,12 +26,13 @@ export const AddCardForm: FC<NewCardModalType> = ({ closeModal }) => {
     <>
       <BasicCardForm
         buttonText={'Save'}
-        onSubmit={onSubmit}
+        onSubmit={createNewCard}
         disabled={appStatus === 'loading'}
         handleSubmit={handleSubmit}
         register={register}
         errors={errors}
         reset={reset}
+        closeModal={closeModal}
       />
     </>
   )

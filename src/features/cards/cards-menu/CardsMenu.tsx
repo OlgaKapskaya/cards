@@ -1,7 +1,7 @@
 import { useNavigate, useSearchParams } from 'react-router-dom'
 
 import { UpdatePackPayloadType } from '../../packs/packsAPI'
-import { deleteCardPack, updateCardPack } from '../cardsSlice'
+import { deleteCardPack, setPrivateStatus, updateCardPack } from '../cardsSlice'
 
 import s from './CardsMenu.module.css'
 import { useCardsMenuItems } from './hooks/useCardsMenuItems'
@@ -20,6 +20,7 @@ import {
   userIDSelector,
   ModalComponent,
   useModalComponent,
+  privatePackDeckCover,
 } from 'common'
 import { DeleteForm } from 'common/components/forms/DeleteForm'
 import { useMenuComponent } from 'common/components/menu/useMenuComponent'
@@ -34,6 +35,7 @@ export const CardsMenu = () => {
   const packId = useAppSelector(cardPackId)
   const packPrivate = useAppSelector(privatePackSelector)
   const cardsCount = useAppSelector(cardsTotalCountSelector)
+  const packDeckCover = useAppSelector(privatePackDeckCover)
 
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
@@ -52,13 +54,16 @@ export const CardsMenu = () => {
 
   const editPackHandler = () => {
     const closeEditModal = (data: UpdatePackPayloadType) => {
-      dispatch(updateCardPack(data)).then(() => {
-        setUrlParams({
-          packId: data.cardsPack._id?.toString(),
-          packPrivate: data.cardsPack.private?.toString() || 'false',
+      dispatch(updateCardPack(data))
+        .then(() => {
+          setUrlParams({
+            packId: data.cardsPack._id?.toString(),
+            packPrivate: data.cardsPack.private?.toString() || 'false',
+          })
+          dispatch(setPrivateStatus(data.cardsPack.private || false))
+          closeModal()
         })
-        closeModal()
-      })
+        .catch(() => {})
     }
 
     createModal(
@@ -94,13 +99,22 @@ export const CardsMenu = () => {
 
   const isMy = userId === profileId
 
-  if (!isMy) return <span className={s.titleSpan}>{packName}</span>
+  if (!isMy)
+    return (
+      <div className={s.titleImgBox}>
+        <span className={s.titleSpan}>{packName}</span>
+        {packDeckCover && <img className={s.cardImg} alt="react-icon" src={packDeckCover} />}
+      </div>
+    )
 
   return (
     <>
-      <div className={s.menuContainer} onClick={handleMenuOpen}>
-        <span className={s.titleSpan}>{packName}</span>
-        <img src={pointsMenu} alt="points-menu" />
+      <div className={s.titleImgBox}>
+        <div className={s.menuContainer} onClick={handleMenuOpen}>
+          <span className={s.titleSpan}>{packName}</span>
+          <img src={pointsMenu} alt="points-menu" />
+        </div>
+        {packDeckCover && <img className={s.cardImg} alt="react-icon" src={packDeckCover} />}
       </div>
       <MenuComponent
         anchorEl={anchorEl}

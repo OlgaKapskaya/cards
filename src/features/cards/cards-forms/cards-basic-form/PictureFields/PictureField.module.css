@@ -1,0 +1,20 @@
+.uploadField {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 347px;
+    margin-top: 40px;
+}
+
+.uploadField img {
+    height: 50px;
+}
+
+.preview {
+    /*width: 100px;*/
+}
+
+.text {
+    width: 300px;
+}

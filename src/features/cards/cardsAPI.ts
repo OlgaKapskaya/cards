@@ -35,13 +35,16 @@ export type GetCardsResponseType = {
   pageCount: number
   packUserId: string
   packName: string
+  packDeckCover: string
 }
 export type CardType = {
   _id: string
   cardsPack_id: string
   user_id: string
   answer: string
+  answerImg: string
   question: string
+  questionImg: string
   grade: number
   shots: number
   comments: string
@@ -86,19 +89,8 @@ export type UpdateCardPayloadType = {
     user_id?: string
     answer?: string
     question?: string
-    grade?: number
-    shots?: number
-    comments?: string
-    type?: string
-    rating?: number
-    more_id?: string
-    created?: string
-    updated?: string
-    __v?: number
     answerImg?: string
-    answerVideo?: string
     questionImg?: string
-    questionVideo?: string
   }
 }
 export type UpdateCardResponseType = {
@@ -108,21 +100,19 @@ export type UpdateCardResponseType = {
 }
 export type UpdateCardResponseTypeUpdatedCard = {
   _id: string
-  cardsPack_id: string
-  user_id: string
+  // cardsPack_id: string
+  // user_id: string
   answer: string
   question: string
-  grade: number
-  shots: number
-  comments: string
-  type: string
-  rating: number
-  more_id: string
-  created: string
-  updated: string
-  __v: number
   answerImg: string
-  answerVideo: string
   questionImg: string
-  questionVideo: string
+  // grade: number
+  // shots: number
+  // comments: string
+  // type: string
+  // rating: number
+  // more_id: string
+  // created: string
+  // updated: string
+  // __v: number
 }
