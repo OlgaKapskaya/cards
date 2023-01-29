@@ -1,6 +1,7 @@
 import React from 'react'
 
 import Rating from '@mui/material/Rating'
+import Skeleton from '@mui/material/Skeleton'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -74,26 +75,42 @@ export const CardsTableBody = () => {
 
           return (
             <TableRow key={row._id} className={s.tableRow}>
-              <TableCell className={s.cellQuestion}>{question}</TableCell>
-              <TableCell className={s.cellAnswer}>{answer}</TableCell>
-              <TableCell className={s.cell}>{row.updated}</TableCell>
+              <TableCell className={s.cellQuestion}>
+                {loadingStatus === 'loading' ? <Skeleton /> : question}
+              </TableCell>
+              <TableCell className={s.cellAnswer}>
+                {loadingStatus === 'loading' ? <Skeleton /> : answer}
+              </TableCell>
               <TableCell className={s.cell}>
-                <Rating name="simple-controlled" readOnly value={row.grade} />
+                {loadingStatus === 'loading' ? <Skeleton /> : row.updated}
+              </TableCell>
+              <TableCell className={s.cell}>
+                {loadingStatus === 'loading' ? (
+                  <Skeleton />
+                ) : (
+                  <Rating name="simple-controlled" readOnly value={row.grade} />
+                )}
               </TableCell>
               {isMy && (
                 <TableCell align="right" className={s.cell}>
-                  <ActionButton
-                    icon={editIcon}
-                    hint="update card"
-                    disabled={disabled}
-                    onClick={() => handleUpdateCard(row._id, row.question, row.answer)}
-                  />
-                  <ActionButton
-                    icon={deleteIcon}
-                    hint="delete card"
-                    disabled={disabled}
-                    onClick={() => handleDeleteCard(row._id, row.question)}
-                  />
+                  {loadingStatus === 'loading' ? (
+                    <Skeleton />
+                  ) : (
+                    <>
+                      <ActionButton
+                        icon={editIcon}
+                        hint="update card"
+                        disabled={disabled}
+                        onClick={() => handleUpdateCard(row._id, row.question, row.answer)}
+                      />
+                      <ActionButton
+                        icon={deleteIcon}
+                        hint="delete card"
+                        disabled={disabled}
+                        onClick={() => handleDeleteCard(row._id, row.question)}
+                      />
+                    </>
+                  )}
                 </TableCell>
               )}
             </TableRow>

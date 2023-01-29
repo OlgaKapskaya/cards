@@ -1,5 +1,6 @@
 import React from 'react'
 
+import Skeleton from '@mui/material/Skeleton'
 import TableBody from '@mui/material/TableBody'
 import TableCell from '@mui/material/TableCell'
 import TableRow from '@mui/material/TableRow'
@@ -94,48 +95,55 @@ export const PacksTableBody = () => {
               component="th"
               scope="row"
             >
-              <div className={s.name}>{p.name}</div>
+              <div className={s.name}>{loadingStatus === 'loading' ? <Skeleton /> : p.name}</div>
             </TableCell>
             <TableCell
               onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.countCell}
             >
-              {p.cardsCount}
+              {loadingStatus === 'loading' ? <Skeleton /> : p.cardsCount}
             </TableCell>
             <TableCell
               onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.cell}
             >
-              {p.updated}
+              {loadingStatus === 'loading' ? <Skeleton /> : p.updated}
             </TableCell>
             <TableCell
               onClick={() => navigateToCardsHandler(p._id, p.private)}
               align="left"
               className={s.cell}
             >
-              {p.user_name}
+              {loadingStatus === 'loading' ? <Skeleton /> : p.user_name}
             </TableCell>
             <TableCell align="left">
-              <ActionButton
-                icon={learn}
-                hint="start learning"
-                disabled={p.cardsCount === 0}
-                onClick={() => startLearnHandler(p._id)}
-              />
-              {profile_id === p.user_id && (
+              {loadingStatus === 'loading' ? (
+                <Skeleton />
+              ) : (
                 <>
                   <ActionButton
-                    icon={edit}
-                    hint="update pack"
-                    onClick={() => editPackHandler(p._id, p.name, p.private)}
+                    icon={learn}
+                    hint="start learning"
+                    disabled={p.cardsCount === 0}
+                    onClick={() => startLearnHandler(p._id)}
                   />
-                  <ActionButton
-                    icon={del}
-                    hint="delete pack"
-                    onClick={() => deletePackHandler(p._id, p.name)}
-                  />
+                  {profile_id === p.user_id && (
+                    <>
+                      <ActionButton
+                        icon={edit}
+                        hint="update pack"
+                        onClick={() => editPackHandler(p._id, p.name, p.private)}
+                      />
+
+                      <ActionButton
+                        icon={del}
+                        hint="delete pack"
+                        onClick={() => deletePackHandler(p._id, p.name)}
+                      />
+                    </>
+                  )}
                 </>
               )}
             </TableCell>
