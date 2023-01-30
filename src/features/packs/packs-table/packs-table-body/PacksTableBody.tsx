@@ -50,7 +50,12 @@ export const PacksTableBody = () => {
     navigate(`${PATH.LEARN}/${packId}`)
   }
 
-  const editPackHandler = (pack_id: string, name: string, onPrivate: boolean) => {
+  const editPackHandler = (
+    pack_id: string,
+    name: string,
+    onPrivate: boolean,
+    deckCover: string
+  ) => {
     const closeEditModal = (data: UpdatePackPayloadType) => {
       dispatch(updatePack(data))
         .then(() => {
@@ -66,6 +71,7 @@ export const PacksTableBody = () => {
         name={name}
         onPrivate={onPrivate}
         closeModal={closeEditModal}
+        deckCover={deckCover}
       />
     )
   }
@@ -159,7 +165,7 @@ export const PacksTableBody = () => {
                       <ActionButton
                         icon={edit}
                         hint="update pack"
-                        onClick={() => editPackHandler(p._id, p.name, p.private)}
+                        onClick={() => editPackHandler(p._id, p.name, p.private, p.deckCover)}
                       />
 
                       <ActionButton

@@ -49,6 +49,7 @@
 .coverImg img {
   width: 200px;
   height: 100px;
+  margin-top: 10px;
 }
 
 .changeCoverImg {
@@ -66,4 +67,11 @@
   justify-content: end;
 
   margin-top: 25px;
+}
+
+.cover {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }

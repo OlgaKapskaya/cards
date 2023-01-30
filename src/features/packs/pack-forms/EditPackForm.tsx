@@ -1,14 +1,18 @@
-import { FC } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 import { FormControlLabel } from '@mui/material'
+import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 
+import { setAppMessage, setAppStatus } from '../../../app/appSlice'
+import errorImg from '../../../assets/img/errorImg.png'
+import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { UpdatePackPayloadType } from '../packsAPI'
 
 import { AddFormType } from './AddPackForm'
-import s from './PaksFoms.module.css'
+import s from './PacksFoms.module.css'
 
 import { ButtonComponent, sxButtonColorCreator } from 'common'
 import { buttonBlue } from 'common/constants/theme'
@@ -20,6 +24,7 @@ type UpdatePackFormPropsType = {
   name: string
   closeModal: (data: UpdatePackPayloadType) => void
   onPrivate?: boolean
+  deckCover?: string
 }
 
 export const EditPackForm: FC<UpdatePackFormPropsType> = ({
@@ -27,15 +32,64 @@ export const EditPackForm: FC<UpdatePackFormPropsType> = ({
   name,
   closeModal,
   onPrivate,
+  deckCover,
 }) => {
-  const { register, handleSubmit, appStatus, errors } = useAuthForm<AddFormType>(updatePackSchema)
+  const { register, handleSubmit, appStatus, errors, dispatch } =
+    useAuthForm<AddFormType>(updatePackSchema)
+
+  const [coverImg, setCoverImg] = useState<string | undefined>(deckCover)
+
+  const onChangeCoverInput = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeImg(e, dispatch, setCoverImg)
+  }
+
+  const imgErrorHandler = (error: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    error.currentTarget.src = errorImg
+    dispatch(setAppMessage('Your img is unavailable'))
+    dispatch(setAppStatus('failed'))
+  }
+
+  const deleteCoverHandler = () => {
+    setCoverImg('')
+  }
 
   const onSubmit: SubmitHandler<AddFormType> = data => {
-    closeModal({ cardsPack: { _id: pack_id, name: data.name, private: data.private } })
+    if (deckCover !== coverImg) {
+      closeModal({
+        cardsPack: { _id: pack_id, name: data.name, private: data.private, deckCover: coverImg },
+      })
+    } else if (name !== data.name) {
+      closeModal({
+        cardsPack: { _id: pack_id, name: data.name, private: data.private, deckCover: coverImg },
+      })
+    } else {
+      dispatch(setAppMessage('Nothing was changed'))
+      dispatch(setAppStatus('failed'))
+    }
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={s.coverImg}>
+        <Button variant="text" component="label">
+          Choose cover
+          <input
+            type="file"
+            onChange={onChangeCoverInput}
+            style={{ display: 'none' }}
+            accept="image/*"
+          />
+        </Button>
+        {coverImg && (
+          <div className={s.cover}>
+            <img src={coverImg} alt="img" onError={imgErrorHandler} />
+            <Button variant="text" onClick={deleteCoverHandler}>
+              Delete cover
+            </Button>
+          </div>
+        )}
+      </div>
+
       <div className={s.input}>
         <TextField
           label="Name pack"

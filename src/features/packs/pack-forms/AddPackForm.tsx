@@ -11,7 +11,7 @@ import errorImg from '../../../assets/img/errorImg.png'
 import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { createPack } from '../packsSlice'
 
-import s from './PaksFoms.module.css'
+import s from './PacksFoms.module.css'
 
 import { ButtonComponent, sxButtonColorCreator } from 'common'
 import { buttonBlue } from 'common/constants/theme'
@@ -71,7 +71,7 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
         ) : (
           <div className={s.coverButton}>
             <Button variant="text" component="label">
-              Upload cover
+              Choose cover
               <input
                 type="file"
                 onChange={onChangeCoverInput}

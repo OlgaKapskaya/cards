@@ -116,6 +116,7 @@ export type UpdatePackPayloadType = {
     user_id?: string
     user_name?: string
     __v?: number
+    deckCover?: string
   }
 }
 
