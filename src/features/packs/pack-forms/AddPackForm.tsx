@@ -1,10 +1,12 @@
-import { FC, useState } from 'react'
+import { ChangeEvent, FC, useState } from 'react'
 
 import { FormControlLabel } from '@mui/material'
+import Button from '@mui/material/Button'
 import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 
+import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { createPack } from '../packsSlice'
 
 import s from './PaksFoms.module.css'
@@ -25,17 +27,30 @@ type AddPackFormPropsType = {
 export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
   const { register, handleSubmit, reset, dispatch, errors, appStatus } =
     useAuthForm<AddFormType>(addPackSchema)
-
   const [packStatus, setPackStatus] = useState(false)
 
+  const [coverImg, setCoverImg] = useState<string | undefined>(undefined)
+
+  const onChangeCoverInput = (e: ChangeEvent<HTMLInputElement>) => {
+    onChangeImg(e, dispatch, setCoverImg)
+  }
+
   const onSubmit: SubmitHandler<AddFormType> = data => {
-    dispatch(createPack({ cardsPack: { name: data.name, private: data.private } }))
+    dispatch(
+      createPack({ cardsPack: { name: data.name, private: data.private, deckCover: coverImg } })
+    )
     closeModal()
     reset()
   }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
+      <div className={s.cover}>
+        <Button variant="contained" component="label">
+          Upload cover
+          <input type="file" onChange={onChangeCoverInput} style={{ display: 'none' }} />
+        </Button>
+      </div>
       <div className={s.input}>
         <TextField
           label="Enter pack name"
