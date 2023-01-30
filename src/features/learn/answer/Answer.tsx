@@ -1,8 +1,11 @@
+import { useState } from 'react'
+
 import { upgradeGrade } from '../learnSlice'
 
 import s from './Answer.module.css'
 import { Grades } from './grades/Grades'
 
+import errorImg from 'assets/img/errorImg.png'
 import {
   ButtonComponent,
   useAppDispatch,
@@ -13,16 +16,25 @@ import {
 
 export const Answer = () => {
   const { answer, answerImg } = useAppSelector(currentCardSelector)
-
+  const [isImgBroken, setIsImgBroken] = useState(false)
   const dispatch = useAppDispatch()
 
   const onNextHandler = () => {
     dispatch(upgradeGrade())
   }
 
+  const errorHandler = (setBroken: (error: boolean) => void) => {
+    setBroken(true)
+  }
+
   const finalAnswer =
     answerImg && answerImg !== 'noImg' ? (
-      <img alt="img" src={answerImg} style={{ width: '100%' }} />
+      <img
+        alt="img"
+        src={isImgBroken ? errorImg : answerImg}
+        onError={() => errorHandler(setIsImgBroken)}
+        style={{ width: '100%' }}
+      />
     ) : (
       answer
     )
