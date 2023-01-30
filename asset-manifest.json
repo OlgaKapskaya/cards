@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/cards/static/css/main.a1793191.css",
-    "main.js": "/cards/static/js/main.50091648.js",
+    "main.css": "/cards/static/css/main.b6f5703d.css",
+    "main.js": "/cards/static/js/main.7598042a.js",
     "static/media/404.svg": "/cards/static/media/404.9ec31c0ba8d95b0480272e46af98c955.svg",
     "static/media/emailImg.svg": "/cards/static/media/emailImg.565755d5f2f689197fc13d3fc9c94e9e.svg",
     "static/media/incubator-logo.svg": "/cards/static/media/incubator-logo.66aa37dd1366aaf98fa95be1206c3b1e.svg",
@@ -20,7 +20,7 @@
     "static/media/pointsMenu.svg": "/cards/static/media/pointsMenu.88e6d5bb20852e90d40ff92d76da0a3b.svg"
   },
   "entrypoints": [
-    "static/css/main.a1793191.css",
-    "static/js/main.50091648.js"
+    "static/css/main.b6f5703d.css",
+    "static/js/main.7598042a.js"
   ]
 }
