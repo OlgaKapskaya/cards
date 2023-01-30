@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 
 import Skeleton from '@mui/material/Skeleton'
 import TableBody from '@mui/material/TableBody'
@@ -40,8 +40,6 @@ export const PacksTableBody = () => {
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
 
   const dispatch = useAppDispatch()
-
-  const [isAvaBroken, setIsAvaBroken] = useState<boolean>(false)
 
   const navigateToCardsHandler = (packId: string, packPrivate: boolean) => {
     dispatch(setCardsPageCount(4))
@@ -91,8 +89,8 @@ export const PacksTableBody = () => {
     )
   }
 
-  const imgErrorHandler = () => {
-    setIsAvaBroken(true)
+  const imgErrorHandler = (error: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    error.currentTarget.src = errorImg
   }
 
   return (
@@ -114,7 +112,7 @@ export const PacksTableBody = () => {
                     {p.deckCover && (
                       <img
                         alt="img"
-                        src={isAvaBroken ? errorImg : p.deckCover}
+                        src={p.deckCover}
                         className={s.cover}
                         onError={imgErrorHandler}
                       />

@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useState } from 'react'
+import React, { ChangeEvent, FC, useState } from 'react'
 
 import { FormControlLabel } from '@mui/material'
 import Button from '@mui/material/Button'
@@ -6,6 +6,8 @@ import Checkbox from '@mui/material/Checkbox'
 import TextField from '@mui/material/TextField'
 import { SubmitHandler } from 'react-hook-form'
 
+import { setAppMessage, setAppStatus } from '../../../app/appSlice'
+import errorImg from '../../../assets/img/errorImg.png'
 import { onChangeImg } from '../../../common/utils/convertToBase64'
 import { createPack } from '../packsSlice'
 
@@ -35,6 +37,13 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
     onChangeImg(e, dispatch, setCoverImg)
   }
 
+  const imgErrorHandler = (error: React.SyntheticEvent<HTMLImageElement, Event>) => {
+    error.currentTarget.src = errorImg
+    setCoverImg(undefined)
+    dispatch(setAppMessage('Your img is unavailable'))
+    dispatch(setAppStatus('failed'))
+  }
+
   const onSubmit: SubmitHandler<AddFormType> = data => {
     dispatch(
       createPack({ cardsPack: { name: data.name, private: data.private, deckCover: coverImg } })
@@ -45,18 +54,39 @@ export const AddPackForm: FC<AddPackFormPropsType> = ({ closeModal }) => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <div className={s.cover}>
-        <Button variant="contained" component="label">
-          Upload cover
-          <input type="file" onChange={onChangeCoverInput} style={{ display: 'none' }} />
-        </Button>
+      <div>
+        {coverImg ? (
+          <div className={s.coverImg}>
+            <Button variant="text" component="label">
+              Change cover
+              <input
+                type="file"
+                onChange={onChangeCoverInput}
+                style={{ display: 'none' }}
+                accept="image/*"
+              />
+            </Button>
+            <img src={coverImg} alt="img" onError={imgErrorHandler} />
+          </div>
+        ) : (
+          <div className={s.coverButton}>
+            <Button variant="text" component="label">
+              Upload cover
+              <input
+                type="file"
+                onChange={onChangeCoverInput}
+                style={{ display: 'none' }}
+                accept="image/*"
+              />
+            </Button>
+          </div>
+        )}
       </div>
       <div className={s.input}>
         <TextField
           label="Enter pack name"
           multiline
           variant="standard"
-          autoFocus
           {...register('name')}
           error={!!errors.name}
           helperText={errors.name?.message}

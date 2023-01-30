@@ -36,3 +36,34 @@
 
   opacity: 0.2;
 }
+
+.coverImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 25px;
+}
+
+.coverImg img {
+  width: 200px;
+  height: 100px;
+}
+
+.changeCoverImg {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 25px;
+}
+
+.coverButton {
+  display: flex;
+  align-items: center;
+  justify-content: end;
+
+  margin-top: 25px;
+}
