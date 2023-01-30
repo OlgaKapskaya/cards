@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import Skeleton from '@mui/material/Skeleton'
 import TableBody from '@mui/material/TableBody'
@@ -13,6 +13,7 @@ import { deletePack, updatePack } from '../../packsSlice'
 import s from './PacksTableBody.module.css'
 
 import edit from 'assets/img/edit.svg'
+import errorImg from 'assets/img/errorImg.png'
 import learn from 'assets/img/teacher.svg'
 import del from 'assets/img/trash.svg'
 import {
@@ -39,6 +40,8 @@ export const PacksTableBody = () => {
   const { open, modalTitle, modalChildren, closeModal, createModal } = useModalComponent()
 
   const dispatch = useAppDispatch()
+
+  const [isAvaBroken, setIsAvaBroken] = useState<boolean>(false)
 
   const navigateToCardsHandler = (packId: string, packPrivate: boolean) => {
     dispatch(setCardsPageCount(4))
@@ -88,6 +91,10 @@ export const PacksTableBody = () => {
     )
   }
 
+  const imgErrorHandler = () => {
+    setIsAvaBroken(true)
+  }
+
   return (
     <>
       <TableBody>
@@ -99,7 +106,23 @@ export const PacksTableBody = () => {
               component="th"
               scope="row"
             >
-              <div className={s.name}>{loadingStatus === 'loading' ? <Skeleton /> : p.name}</div>
+              <div className={s.nameContainer}>
+                {loadingStatus === 'loading' ? (
+                  <Skeleton />
+                ) : (
+                  <div style={{ display: 'flex' }}>
+                    {p.deckCover && (
+                      <img
+                        alt="img"
+                        src={isAvaBroken ? errorImg : p.deckCover}
+                        className={s.cover}
+                        onError={imgErrorHandler}
+                      />
+                    )}
+                    <div className={s.name}>{p.name}</div>
+                  </div>
+                )}
+              </div>
             </TableCell>
             <TableCell
               onClick={() => navigateToCardsHandler(p._id, p.private)}

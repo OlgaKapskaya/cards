@@ -44,6 +44,7 @@ export type PackType = {
   created: string
   updated: string
   private: boolean
+  deckCover: string
 }
 
 export type CreatePackPayloadType = {
